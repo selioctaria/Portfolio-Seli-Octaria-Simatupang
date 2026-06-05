@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Seli Octaria Simatupang</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ════════════════════════════════════════
+       CONTACT LAYOUT
+    ════════════════════════════════════════ */
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1.1fr;
+      gap: 5rem; align-items: start; margin-top: 3rem;
+    }
+
+    /* ── Availability Badge ─────────────── */
+    .avail-badge {
+      display: inline-flex; align-items: center; gap: .55rem;
+      padding: .45rem 1.1rem;
+      background: rgba(98,201,176,.10);
+      border: 1px solid rgba(98,201,176,.25);
+      border-radius: 99px;
+      font-size: .74rem; font-weight: 600; color: var(--mint);
+      letter-spacing: .07em; margin-bottom: 1.6rem;
+    }
+    .avail-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--mint);
+      animation: blink 1.5s ease-in-out infinite;
+    }
+
+    /* ── Contact Links ──────────────────── */
+    .c-links { display: flex; flex-direction: column; gap: .8rem; margin: 2rem 0; }
+    .c-link {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1.05rem 1.25rem; border-radius: var(--r);
+      background: var(--card); border: 1px solid var(--border);
+      text-decoration: none; color: var(--text);
+      transition: all .25s var(--ease);
+    }
+    .c-link:hover { border-color: var(--border-hi); background: var(--card2); transform: translateX(6px); }
+    .c-icon {
+      width: 42px; height: 42px; border-radius: 11px; flex-shrink: 0;
+      background: var(--rose-d); border: 1px solid rgba(220,110,155,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: var(--rose2);
+      transition: background .25s, border-color .25s;
+    }
+    .c-link:hover .c-icon { background: rgba(220,110,155,.18); border-color: rgba(220,110,155,.38); }
+    .cl-label { font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--rose); }
+    .cl-val { font-size: .86rem; font-weight: 500; color: var(--text2); margin-top: .1rem; }
+    .cl-arrow { margin-left: auto; color: var(--text3); font-size: .75rem; transition: transform .22s var(--ease), color .22s; }
+    .c-link:hover .cl-arrow { transform: translateX(4px); color: var(--rose2); }
+
+    /* ── Open-to-work box ───────────────── */
+    .otw-box {
+      background: linear-gradient(135deg, var(--rose-d), var(--lav-d));
+      border: 1px solid var(--border-hi);
+      border-radius: var(--r-lg); padding: 1.4rem 1.6rem;
+      margin-top: .5rem;
+    }
+    .otw-title { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--rose); margin-bottom: .7rem; }
+    .otw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .55rem; }
+    .otw-item {
+      display: flex; align-items: center; gap: .5rem;
+      font-size: .8rem; color: var(--text2); font-weight: 500;
+    }
+    .otw-item i { color: var(--rose2); font-size: .75rem; width: 14px; }
+
+    /* ── FORM CARD ──────────────────────── */
+    .form-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r-xl); overflow: hidden;
+    }
+    .form-card-header {
+      padding: 2rem 2.4rem 1.4rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .form-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.65rem; font-weight: 700; color: var(--text);
+      display: flex; align-items: center; gap: .65rem;
+      margin-bottom: .35rem;
+    }
+    .form-card-title i { color: var(--rose2); font-size: 1.3rem; }
+    .form-card-sub { font-size: .84rem; color: var(--text2); }
+
+    .form-body { padding: 1.8rem 2.4rem 2.2rem; }
+
+    /* Row layout for name/email */
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
+
+    .c-field { margin-bottom: .9rem; }
+    .c-field label {
+      display: flex; align-items: center; gap: .4rem;
+      font-size: .68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .09em; color: var(--text3); margin-bottom: .38rem;
+    }
+    .c-field label i { color: var(--rose2); font-size: .65rem; }
+    .required { color: var(--rose) !important; }
+
+    .c-field input,
+    .c-field textarea,
+    .c-field select {
+      width: 100%; padding: .82rem 1rem; border-radius: 10px;
+      border: 1px solid var(--border); background: var(--bg2);
+      font-family: 'Outfit', sans-serif; font-size: .88rem; color: var(--text);
+      outline: none; resize: none;
+      transition: border-color .22s, box-shadow .22s;
+      -webkit-appearance: none;
+    }
+    .c-field input:focus,
+    .c-field textarea:focus,
+    .c-field select:focus {
+      border-color: rgba(220,110,155,.42);
+      box-shadow: 0 0 0 3px rgba(220,110,155,.08);
+    }
+    .c-field textarea { height: 110px; }
+    .c-field input::placeholder,
+    .c-field textarea::placeholder { color: var(--text3); }
+    .c-field select option { background: var(--bg2); }
+
+    /* Character count */
+    .char-count { font-size: .68rem; color: var(--text3); text-align: right; margin-top: .25rem; }
+
+    .c-send {
+      width: 100%; padding: .9rem; border-radius: 10px;
+      background: linear-gradient(135deg, var(--rose), var(--gold));
+      color: var(--bg); font-family: 'Outfit', sans-serif;
+      font-size: .9rem; font-weight: 700; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+      transition: transform .22s var(--ease), box-shadow .22s, opacity .2s;
+      margin-top: .4rem;
+    }
+    .c-send:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(220,110,155,.30); }
+    .c-send:active { transform: translateY(0); }
+
+    .cf-feedback {
+      font-size: .8rem; font-weight: 600; text-align: center;
+      min-height: 1.2em; margin-top: .65rem;
+      transition: opacity .3s;
+    }
+
+    /* ── Map / Location visual ──────────── */
+    .location-box {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r-lg); padding: 1.4rem 1.6rem;
+      display: flex; align-items: center; gap: 1rem; margin-top: 1rem;
+    }
+    .loc-icon {
+      width: 44px; height: 44px; border-radius: 11px; flex-shrink: 0;
+      background: var(--rose-d); border: 1px solid rgba(220,110,155,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: var(--rose2);
+    }
+    .loc-label { font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--text3); margin-bottom: .2rem; }
+    .loc-val { font-size: .88rem; font-weight: 600; color: var(--text2); }
+    .loc-sub { font-size: .76rem; color: var(--text3); margin-top: .1rem; }
+
+    /* ── FAQ / Response time ────────────── */
+    .response-row {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: .9rem; margin-top: 1.2rem;
+    }
+    .resp-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 1rem; text-align: center;
+    }
+    .resp-icon { font-size: 1.3rem; margin-bottom: .4rem; }
+    .resp-val { font-size: .9rem; font-weight: 700; color: var(--text); margin-bottom: .1rem; }
+    .resp-lbl { font-size: .7rem; color: var(--text3); }
+  </style>
+</head>
+<body>
+<div class="ambient"></div>
+<div class="grain"></div>
+<canvas id="particles"></canvas>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a class="nav-logo" href="index.html">Seli Octaria ✿</a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="skill.html">Skills</a></li>
+    <li><a href="experience.html">Experience</a></li>
+    <li><a href="project.html">Projects</a></li>
+    <li><a href="sertifikat.html">Sertifikat</a></li>
+    <li><a href="contact.html" class="nav-cta">Hire Me ✨</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-hero">
+  <div class="page-hero-inner reveal">
+    <div>
+      <p class="page-eyebrow">Get In Touch</p>
+      <h1 class="page-title">Mari <em>Berkolaborasi!</em></h1>
+    </div>
+    <div class="page-breadcrumb">
+      <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+      <i class="fa-solid fa-chevron-right"></i>
+      <span style="color:var(--rose2)">Contact</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-wrap">
+  <div class="contact-grid">
+
+    <!-- LEFT: Info -->
+    <div>
+      <div class="reveal">
+        <div class="avail-badge">
+          <span class="avail-dot"></span>
+          Open to Work — Tersedia Sekarang
+        </div>
+
+        <h2 class="sec-title">Hubungi <em style="font-family:'Cormorant Garamond',serif;font-style:italic;background:linear-gradient(130deg,var(--rose),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Aku</em></h2>
+        <p class="sec-desc" style="margin-top:.6rem;">
+          Terbuka untuk peluang kerja <strong style="color:var(--rose2)">full-time</strong>, <strong style="color:var(--gold2)">part-time</strong>, maupun <strong style="color:var(--lav2)">freelance</strong> di bidang UI/UX Design, Mobile Development, Web Development, atau Data Analytics.
+        </p>
+      </div>
+
+      <!-- Contact links -->
+      <div class="c-links reveal d1">
+        <a class="c-link" href="mailto:selioctarias@gmail.com">
+          <div class="c-icon"><i class="fa-solid fa-envelope"></i></div>
+          <div style="flex:1">
+            <div class="cl-label">Email</div>
+            <div class="cl-val">selioctarias@gmail.com</div>
+          </div>
+          <i class="fa-solid fa-arrow-right cl-arrow"></i>
+        </a>
+
+        <a class="c-link" href="https://www.linkedin.com/in/seli-octaria-simatupang-a46891343" target="_blank" rel="noopener">
+          <div class="c-icon" style="background:rgba(10,102,194,.12);border-color:rgba(10,102,194,.25)">
+            <i class="fa-brands fa-linkedin" style="color:#0a66c2"></i>
+          </div>
+          <div style="flex:1">
+            <div class="cl-label" style="color:#0a66c2">LinkedIn</div>
+            <div class="cl-val">seli-octaria-simatupang</div>
+          </div>
+          <i class="fa-solid fa-arrow-right cl-arrow"></i>
+        </a>
+
+        <a class="c-link" href="https://github.com/selioctaria" target="_blank" rel="noopener">
+          <div class="c-icon" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1)">
+            <i class="fa-brands fa-github" style="color:var(--text2)"></i>
+          </div>
+          <div style="flex:1">
+            <div class="cl-label" style="color:var(--text3)">GitHub</div>
+            <div class="cl-val">github.com/selioctaria</div>
+          </div>
+          <i class="fa-solid fa-arrow-right cl-arrow"></i>
+        </a>
+
+        <a class="c-link" href="https://www.instagram.com/cellyy_28" target="_blank" rel="noopener">
+          <div class="c-icon" style="background:rgba(225,48,108,.10);border-color:rgba(225,48,108,.22)">
+            <i class="fa-brands fa-instagram" style="color:#e1306c"></i>
+          </div>
+          <div style="flex:1">
+            <div class="cl-label" style="color:#e1306c">Instagram</div>
+            <div class="cl-val">@cellyy_28</div>
+          </div>
+          <i class="fa-solid fa-arrow-right cl-arrow"></i>
+        </a>
+      </div>
+
+      <!-- Open-to-work box -->
+      <div class="otw-box reveal d2">
+        <div class="otw-title"><i class="fa-solid fa-suitcase"></i> &nbsp;Terbuka Untuk</div>
+        <div class="otw-grid">
+          <div class="otw-item"><i class="fa-solid fa-check"></i> Full-time Employment</div>
+          <div class="otw-item"><i class="fa-solid fa-check"></i> Part-time / Remote</div>
+          <div class="otw-item"><i class="fa-solid fa-check"></i> Freelance Project</div>
+          <div class="otw-item"><i class="fa-solid fa-check"></i> Internship / Magang</div>
+          <div class="otw-item"><i class="fa-solid fa-check"></i> Kolaborasi Proyek</div>
+          <div class="otw-item"><i class="fa-solid fa-check"></i> Konsultasi UI/UX</div>
+        </div>
+      </div>
+
+      <!-- Location -->
+      <div class="location-box reveal d3">
+        <div class="loc-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <div>
+          <div class="loc-label">Lokasi</div>
+          <div class="loc-val">Batam, Kepulauan Riau, Indonesia</div>
+          <div class="loc-sub">Remote friendly · Siap relokasi</div>
+        </div>
+      </div>
+
+      <!-- Response time cards -->
+      <div class="response-row reveal d4">
+        <div class="resp-card">
+          <div class="resp-icon">⚡</div>
+          <div class="resp-val">&lt; 24 jam</div>
+          <div class="resp-lbl">Response Time</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon">🌏</div>
+          <div class="resp-val">Remote Ready</div>
+          <div class="resp-lbl">Work Mode</div>
+        </div>
+        <div class="resp-card">
+          <div class="resp-icon">🤝</div>
+          <div class="resp-val">Fleksibel</div>
+          <div class="resp-lbl">Jadwal Kerja</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Form Card -->
+    <div class="form-card reveal d1">
+      <div class="form-card-header">
+        <div class="form-card-title">
+          <i class="fa-solid fa-paper-plane"></i>
+          Kirim Pesan
+        </div>
+        <div class="form-card-sub">Isi form di bawah dan aku akan membalas dalam 24 jam.</div>
+      </div>
+
+      <div class="form-body">
+        <!-- Name + Email row -->
+        <div class="form-row">
+          <div class="c-field">
+            <label>
+              <i class="fa-solid fa-user"></i> Nama
+              <span class="required">*</span>
+            </label>
+            <input type="text" id="cf-name" placeholder="Nama lengkap kamu" autocomplete="name" />
+          </div>
+          <div class="c-field">
+            <label>
+              <i class="fa-solid fa-at"></i> Email
+              <span class="required">*</span>
+            </label>
+            <input type="email" id="cf-email" placeholder="email@contoh.com" autocomplete="email" />
+          </div>
+        </div>
+
+        <!-- Company -->
+        <div class="c-field">
+          <label>
+            <i class="fa-solid fa-building"></i> Perusahaan / Instansi
+          </label>
+          <input type="text" id="cf-company" placeholder="Nama perusahaan (opsional)" />
+        </div>
+
+        <!-- Subject / Type -->
+        <div class="c-field">
+          <label>
+            <i class="fa-solid fa-tag"></i> Tujuan
+            <span class="required">*</span>
+          </label>
+          <select id="cf-subj">
+            <option value="" disabled selected>Pilih tujuan pesan...</option>
+            <option value="job">💼 Tawaran Kerja / Rekrutmen</option>
+            <option value="freelance">🛠️ Proyek Freelance</option>
+            <option value="collab">🤝 Kolaborasi Proyek</option>
+            <option value="internship">🎓 Magang / Internship</option>
+            <option value="consult">💡 Konsultasi UI/UX</option>
+            <option value="other">✉️ Lainnya</option>
+          </select>
+        </div>
+
+        <!-- Message -->
+        <div class="c-field">
+          <label>
+            <i class="fa-solid fa-message"></i> Pesan
+            <span class="required">*</span>
+          </label>
+          <textarea id="cf-msg" placeholder="Ceritakan kebutuhanmu — posisi yang ditawarkan, deskripsi proyek, atau apa pun yang ingin kamu sampaikan..." maxlength="800" oninput="document.getElementById('charCount').textContent=this.value.length+'/800'"></textarea>
+          <div class="char-count" id="charCount">0/800</div>
+        </div>
+
+        <button class="c-send" id="cf-send">
+          <i class="fa-solid fa-paper-plane"></i> Kirim Pesan
+        </button>
+
+        <div class="cf-feedback" id="cf-feedback"></div>
+      </div>
+    </div>
+
+  </div><!-- /contact-grid -->
+</div><!-- /section-wrap -->
+
+<footer>
+  <span class="footer-logo">Seli Octaria ✿</span>
+  <div class="footer-mid">
+    <div class="footer-copy">Made with <i class="fa-solid fa-heart" style="color:var(--rose)"></i> by <span class="grad">Seli Octaria Simatupang</span> · © 2026</div>
+    <div class="footer-sub"><i class="fa-solid fa-graduation-cap" style="color:var(--gold)"></i> Teknik Informatika · UMRAH</div>
+  </div>
+  <div class="footer-socials">
+    <a class="footer-social" href="mailto:selioctarias@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+    <a class="footer-social" href="https://linkedin.com/in/seli-octaria-simatupang-a46891343" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+    <a class="footer-social" href="https://github.com/selioctaria" target="_blank"><i class="fa-brands fa-github"></i></a>
+    <a class="footer-social" href="https://www.instagram.com/cellyy_28" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

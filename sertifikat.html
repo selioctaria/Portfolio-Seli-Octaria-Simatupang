@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sertifikat — Seli Octaria Simatupang</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&family=Dancing+Script:wght@600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --bg:        #07070f;
+      --bg1:       #0b0b18;
+      --bg2:       #0f0f20;
+      --card:      #111122;
+      --card2:     #181830;
+      --border:    rgba(255,255,255,0.065);
+      --border-hi: rgba(220,110,155,0.26);
+      --rose:      #dc6e9b;
+      --rose2:     #f0a3c1;
+      --rose-d:    rgba(220,110,155,0.10);
+      --gold:      #d2a050;
+      --gold2:     #e8c07a;
+      --gold-d:    rgba(210,160,80,0.10);
+      --lav:       #a48fd0;
+      --lav2:      #c0aee0;
+      --lav-d:     rgba(164,143,208,0.10);
+      --mint:      #62c9b0;
+      --mint-d:    rgba(98,201,176,0.10);
+      --text:      #ece8f4;
+      --text2:     #948faa;
+      --text3:     #524d68;
+      --nav-h:     70px;
+      --r:         14px;
+      --r-lg:      22px;
+      --r-xl:      30px;
+      --ease:      cubic-bezier(0.22,1,0.36,1);
+    }
+
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body {
+      font-family:'Outfit',sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+      min-width:320px;
+      line-height:1.6;
+    }
+
+    /* ── Ambient ── */
+    .ambient {
+      position:fixed; inset:0; z-index:-2; pointer-events:none;
+      background:
+        radial-gradient(ellipse 55% 50% at 6% 10%, rgba(220,110,155,.08) 0%, transparent 62%),
+        radial-gradient(ellipse 45% 55% at 94% 88%, rgba(164,143,208,.10) 0%, transparent 62%),
+        var(--bg);
+    }
+    .grain {
+      position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.35;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    }
+    #particles { position:fixed; inset:0; z-index:0; pointer-events:none; }
+    .cursor-glow {
+      width:320px; height:320px; border-radius:50%;
+      position:fixed; pointer-events:none; z-index:1;
+      background:radial-gradient(circle, rgba(220,110,155,.05) 0%, transparent 70%);
+      transform:translate(-50%,-50%); transition:left .09s,top .09s;
+    }
+
+    ::-webkit-scrollbar { width:5px; }
+    ::-webkit-scrollbar-track { background:var(--bg2); }
+    ::-webkit-scrollbar-thumb { background:linear-gradient(to bottom,var(--rose),var(--lav)); border-radius:99px; }
+
+    /* ── NAV ── */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:500;
+      height:var(--nav-h);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 5rem;
+      background:rgba(7,7,15,.80);
+      backdrop-filter:blur(28px) saturate(1.5);
+      border-bottom:1px solid var(--border);
+      transition:background .35s,border-color .35s;
+    }
+    nav.scrolled { background:rgba(7,7,15,.96); border-color:var(--border-hi); }
+    .nav-logo {
+      font-family:'Dancing Script',cursive; font-size:1.62rem;
+      background:linear-gradient(130deg,var(--rose),var(--gold));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      text-decoration:none;
+    }
+    .nav-links { display:flex; gap:2rem; list-style:none; align-items:center; }
+    .nav-links a {
+      font-size:.78rem; font-weight:600; color:var(--text2);
+      text-decoration:none; letter-spacing:.08em; text-transform:uppercase;
+      position:relative; padding-bottom:3px; transition:color .22s;
+    }
+    .nav-links a::after {
+      content:''; position:absolute; bottom:0; left:0; width:0; height:1.5px;
+      background:linear-gradient(90deg,var(--rose),var(--gold));
+      border-radius:99px; transition:width .3s var(--ease);
+    }
+    .nav-links a:hover,.nav-links a.active { color:var(--rose2); }
+    .nav-links a:hover::after,.nav-links a.active::after { width:100%; }
+    .nav-cta {
+      padding:.46rem 1.3rem !important; border-radius:99px !important;
+      background:linear-gradient(135deg,var(--rose),var(--gold)) !important;
+      color:var(--bg) !important; font-weight:700 !important;
+      letter-spacing:.04em !important; text-transform:none !important;
+      transition:opacity .2s,transform .2s !important;
+    }
+    .nav-cta::after { display:none !important; }
+    .nav-cta:hover { opacity:.84; transform:translateY(-1px); color:var(--bg) !important; }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding:calc(var(--nav-h) + 5rem) 5rem 3rem;
+      position:relative; z-index:1;
+    }
+    .page-hero-inner {
+      display:flex; align-items:flex-end; justify-content:space-between;
+      border-bottom:1px solid var(--border); padding-bottom:2.5rem;
+    }
+    .page-eyebrow {
+      font-size:.68rem; font-weight:700; letter-spacing:.15em;
+      text-transform:uppercase; color:var(--rose);
+      display:flex; align-items:center; gap:.5rem; margin-bottom:.55rem;
+    }
+    .page-eyebrow::before {
+      content:''; width:20px; height:1.5px;
+      background:linear-gradient(var(--rose),var(--gold)); border-radius:99px;
+    }
+    .page-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size:3.4rem; font-weight:700; line-height:1.05; color:var(--text);
+    }
+    .page-title em {
+      font-style:italic;
+      background:linear-gradient(130deg,var(--rose),var(--gold));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .page-breadcrumb {
+      font-size:.78rem; font-weight:500; color:var(--text3);
+      display:flex; align-items:center; gap:.45rem;
+    }
+    .page-breadcrumb a { color:var(--text3); text-decoration:none; transition:color .2s; }
+    .page-breadcrumb a:hover { color:var(--rose2); }
+
+    /* ── SECTION WRAP ── */
+    .section-wrap { padding:3rem 5rem 6rem; position:relative; z-index:1; }
+
+    /* ═══════════════════════════════════════
+       FEATURED CERTIFICATE — 3D MOCKUP HERO
+    ═══════════════════════════════════════ */
+    .featured-wrap {
+      position:relative; margin-bottom:5rem;
+      background:linear-gradient(135deg, rgba(220,110,155,.06), rgba(210,160,80,.04));
+      border:1px solid var(--border-hi);
+      border-radius:var(--r-xl);
+      overflow:hidden;
+      padding:3.5rem 4rem;
+      display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center;
+    }
+    .featured-wrap::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg, var(--rose), var(--gold), var(--lav));
+    }
+    .featured-wrap::after {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:radial-gradient(ellipse 60% 50% at 80% 50%, rgba(220,110,155,.05) 0%, transparent 70%);
+    }
+
+    .featured-left {}
+    .feat-badge {
+      display:inline-flex; align-items:center; gap:.45rem;
+      padding:.3rem .9rem; border-radius:99px;
+      background:linear-gradient(135deg, rgba(220,110,155,.15), rgba(210,160,80,.15));
+      border:1px solid rgba(220,110,155,.3);
+      font-size:.68rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+      color:var(--gold2); margin-bottom:1.2rem;
+    }
+    .feat-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size:2.4rem; font-weight:700; color:var(--text);
+      line-height:1.1; margin-bottom:.8rem;
+    }
+    .feat-title span {
+      background:linear-gradient(130deg,var(--rose),var(--gold));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .feat-org {
+      font-size:.78rem; font-weight:600; color:var(--text2);
+      margin-bottom:1.2rem; display:flex; align-items:center; gap:.4rem;
+    }
+    .feat-org i { color:var(--rose2); }
+    .feat-desc {
+      font-size:.9rem; color:var(--text2); line-height:1.82; margin-bottom:1.5rem;
+    }
+    .feat-meta { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1.8rem; }
+    .feat-badge-sm {
+      display:inline-flex; align-items:center; gap:.32rem;
+      padding:.22rem .65rem; border-radius:99px;
+      font-size:.67rem; font-weight:600;
+    }
+    .fb-gold  { background:rgba(210,160,80,.12); color:var(--gold2); border:1px solid rgba(210,160,80,.22); }
+    .fb-rose  { background:rgba(220,110,155,.12); color:var(--rose2); border:1px solid rgba(220,110,155,.22); }
+    .fb-mint  { background:rgba(98,201,176,.12); color:var(--mint); border:1px solid rgba(98,201,176,.22); }
+    .fb-lav   { background:rgba(164,143,208,.12); color:var(--lav2); border:1px solid rgba(164,143,208,.22); }
+
+    .feat-skills { display:flex; flex-wrap:wrap; gap:.38rem; }
+    .t-chip {
+      display:inline-flex; align-items:center; gap:.38rem;
+      padding:.27rem .82rem; border-radius:8px;
+      font-size:.72rem; font-weight:500;
+      background:var(--card2); color:var(--text3);
+      border:1px solid var(--border);
+      transition:all .2s;
+    }
+    .t-chip:hover { background:var(--rose-d); color:var(--rose2); border-color:rgba(220,110,155,.28); transform:translateY(-2px); }
+
+    /* ── 3D CERT MOCKUP ── */
+    .featured-right {
+      display:flex; align-items:center; justify-content:center;
+      perspective:1000px;
+    }
+    .cert-mockup-scene {
+      position:relative; width:420px; height:300px;
+    }
+    .cert-mockup-card {
+      width:400px; height:280px;
+      border-radius:16px;
+      transform-style:preserve-3d;
+      transform:rotateY(-12deg) rotateX(6deg);
+      transition:transform .6s var(--ease), box-shadow .6s;
+      cursor:pointer;
+      box-shadow:
+        -20px 20px 60px rgba(0,0,0,.6),
+        0 0 0 1px rgba(220,110,155,.2),
+        inset 0 0 0 1px rgba(255,255,255,.04);
+      position:relative; overflow:hidden;
+    }
+    .cert-mockup-card:hover {
+      transform:rotateY(0deg) rotateX(0deg) scale(1.04);
+      box-shadow:0 30px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(220,110,155,.4);
+    }
+    .cert-mockup-bg {
+      position:absolute; inset:0;
+      background:linear-gradient(135deg, #1a0a8c 0%, #5b21b6 30%, #be185d 65%, #dc6e9b 100%);
+    }
+    .cert-mockup-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(160deg, rgba(255,255,255,.08) 0%, transparent 50%);
+    }
+    .cert-mockup-content {
+      position:absolute; inset:0; padding:1.6rem 2rem;
+      display:flex; flex-direction:column; justify-content:space-between;
+    }
+    .cert-top-logos {
+      display:flex; gap:.6rem; align-items:center;
+    }
+    .cert-logo-pill {
+      background:rgba(255,255,255,.15); backdrop-filter:blur(4px);
+      border:1px solid rgba(255,255,255,.2);
+      border-radius:6px; padding:.25rem .6rem;
+      font-size:.6rem; font-weight:700; color:#fff; letter-spacing:.06em;
+    }
+    .cert-main-text { text-align:center; }
+    .cert-main-text .cert-word {
+      font-size:.65rem; letter-spacing:.15em; text-transform:uppercase;
+      color:rgba(255,255,255,.7); margin-bottom:.3rem;
+    }
+    .cert-main-text .cert-name {
+      font-family:'Cormorant Garamond',serif;
+      font-size:1.55rem; font-weight:700; color:#fff; line-height:1.1;
+      text-shadow:0 2px 12px rgba(0,0,0,.3);
+    }
+    .cert-main-text .cert-uni {
+      font-size:.55rem; color:rgba(255,255,255,.65); margin-top:.25rem;
+    }
+    .cert-badge-highlight {
+      display:inline-block; margin-top:.5rem;
+      padding:.22rem .8rem; border-radius:99px;
+      background:linear-gradient(135deg, #f43f5e, #fb923c);
+      font-size:.6rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+      color:#fff; box-shadow:0 4px 14px rgba(244,63,94,.4);
+    }
+    .cert-bottom {
+      display:flex; justify-content:space-between; align-items:flex-end;
+    }
+    .cert-sig { display:flex; flex-direction:column; align-items:center; gap:.15rem; }
+    .cert-sig-line {
+      width:60px; height:18px;
+      border-bottom:1.5px solid rgba(255,255,255,.5);
+      position:relative;
+    }
+    .cert-sig-script {
+      font-family:'Dancing Script',cursive;
+      font-size:.75rem; color:rgba(255,255,255,.7);
+      position:absolute; bottom:2px; left:0; width:100%;
+      text-align:center;
+    }
+    .cert-sig-label { font-size:.45rem; color:rgba(255,255,255,.5); letter-spacing:.06em; text-transform:uppercase; }
+    .cert-id-mono {
+      font-family:'Space Mono',monospace;
+      font-size:.45rem; color:rgba(255,255,255,.4); letter-spacing:.04em;
+    }
+
+    /* Floating glow shadow behind card */
+    .cert-mockup-shadow {
+      position:absolute; bottom:-20px; left:10px; right:30px; height:40px;
+      background:linear-gradient(90deg, rgba(220,110,155,.4), rgba(164,143,208,.3));
+      filter:blur(20px); border-radius:50%;
+      transition:all .6s var(--ease);
+    }
+    .cert-mockup-card:hover ~ .cert-mockup-shadow {
+      bottom:-30px; left:20px; right:20px;
+      background:linear-gradient(90deg, rgba(220,110,155,.6), rgba(164,143,208,.5));
+    }
+
+    /* Floating elements */
+    .float-tag {
+      position:absolute;
+      background:var(--card2); border:1px solid var(--border-hi);
+      border-radius:12px; padding:.55rem .9rem;
+      font-size:.7rem; font-weight:600;
+      backdrop-filter:blur(12px);
+      animation:floatEl 4s ease-in-out infinite;
+    }
+    .float-tag-1 {
+      top:-10px; right:-5px;
+      color:var(--gold2); border-color:rgba(210,160,80,.3);
+      background:rgba(210,160,80,.08);
+      animation-delay:0s;
+    }
+    .float-tag-2 {
+      bottom:10px; left:-15px;
+      color:var(--mint); border-color:rgba(98,201,176,.3);
+      background:rgba(98,201,176,.08);
+      animation-delay:2s;
+    }
+    @keyframes floatEl {
+      0%,100% { transform:translateY(0px) rotate(-1deg); }
+      50% { transform:translateY(-8px) rotate(1deg); }
+    }
+
+    /* Hint text */
+    .mockup-hint {
+      position:absolute; bottom:-2.5rem; left:0; right:0;
+      text-align:center; font-size:.7rem; color:var(--text3);
+      display:flex; align-items:center; justify-content:center; gap:.4rem;
+    }
+    .mockup-hint i { color:var(--rose2); animation:blink 2s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    /* ══════════════════════════════════
+       STATS ROW
+    ══════════════════════════════════ */
+    .cert-stats {
+      display:grid; grid-template-columns:repeat(4,1fr);
+      gap:1.2rem; margin-bottom:3.5rem;
+    }
+    .cert-stat {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:var(--r-lg); padding:1.5rem 1.4rem;
+      text-align:center; position:relative; overflow:hidden;
+      transition:border-color .3s,transform .3s;
+    }
+    .cert-stat::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg,var(--rose),var(--gold));
+      transform:scaleX(0); transform-origin:left; transition:transform .4s var(--ease);
+    }
+    .cert-stat:hover { border-color:var(--border-hi); transform:translateY(-4px); }
+    .cert-stat:hover::before { transform:scaleX(1); }
+    .cs-icon { font-size:1.4rem; margin-bottom:.45rem; }
+    .cs-num {
+      font-family:'Cormorant Garamond',serif;
+      font-size:2.4rem; font-weight:700; line-height:1;
+      background:linear-gradient(135deg,var(--rose),var(--gold));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      margin-bottom:.15rem;
+    }
+    .cs-lbl { font-size:.76rem; font-weight:500; color:var(--text3); }
+
+    /* ══════════════════════════════════
+       CERTIFICATE GRID — NEW VISUAL
+    ══════════════════════════════════ */
+    .cert-grid {
+      display:grid; grid-template-columns:repeat(2,1fr); gap:2rem;
+    }
+
+    /* Card wrapper */
+    .cert-card {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:var(--r-xl); overflow:hidden;
+      display:flex; flex-direction:column; cursor:pointer;
+      transition:border-color .35s var(--ease), transform .35s var(--ease), box-shadow .35s;
+      position:relative;
+    }
+    .cert-card:hover {
+      border-color:var(--border-hi); transform:translateY(-8px);
+      box-shadow:0 28px 64px rgba(220,110,155,.13), 0 0 0 1px rgba(220,110,155,.1);
+    }
+
+    /* ── Thumbnail / Preview Area ── */
+    .cert-thumb {
+      position:relative; width:100%; aspect-ratio:16/9; overflow:hidden;
+      background:linear-gradient(135deg,#111128 0%,#1e1040 50%,#2a0a30 100%);
+      flex-shrink:0;
+    }
+    .cert-thumb-img {
+      width:100%; height:100%; object-fit:cover; display:block;
+      transition:transform .55s var(--ease), filter .4s;
+      filter:brightness(.95) saturate(1.05);
+    }
+    .cert-card:hover .cert-thumb-img {
+      transform:scale(1.06);
+      filter:brightness(1.05) saturate(1.1);
+    }
+
+    /* Fallback placeholder when no image */
+    .cert-thumb-placeholder {
+      position:absolute; inset:0;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:.6rem;
+    }
+    .cert-thumb-placeholder i { font-size:2.8rem; opacity:.25; }
+    .cert-thumb-placeholder span { font-size:.72rem; color:var(--text3); letter-spacing:.08em; text-transform:uppercase; }
+
+    /* Gradient overlay on thumb bottom */
+    .cert-thumb-fade {
+      position:absolute; bottom:0; left:0; right:0; height:60%;
+      background:linear-gradient(to top, var(--card) 0%, transparent 100%);
+      pointer-events:none;
+    }
+
+    /* Overlay on hover with action buttons */
+    .cert-thumb-overlay {
+      position:absolute; inset:0;
+      background:rgba(7,7,15,.72);
+      backdrop-filter:blur(4px);
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:.75rem;
+      opacity:0; transition:opacity .3s var(--ease);
+    }
+    .cert-card:hover .cert-thumb-overlay { opacity:1; }
+    .cert-overlay-actions { display:flex; gap:.6rem; }
+    .cert-overlay-btn {
+      display:inline-flex; align-items:center; gap:.38rem;
+      padding:.55rem 1.2rem; border-radius:99px;
+      font-size:.76rem; font-weight:700; font-family:'Outfit',sans-serif;
+      border:none; cursor:pointer; letter-spacing:.02em;
+      transition:transform .2s var(--ease), box-shadow .2s;
+    }
+    .cert-overlay-btn:hover { transform:translateY(-2px); }
+    .cob-primary {
+      background:linear-gradient(135deg,var(--rose),var(--gold));
+      color:var(--bg); box-shadow:0 4px 18px rgba(220,110,155,.4);
+    }
+    .cob-primary:hover { box-shadow:0 8px 28px rgba(220,110,155,.55); }
+    .cob-ghost {
+      background:rgba(255,255,255,.1); color:#fff;
+      border:1px solid rgba(255,255,255,.2) !important;
+      backdrop-filter:blur(8px);
+    }
+    .cob-ghost:hover { background:rgba(255,255,255,.18); }
+    .cert-overlay-hint {
+      font-size:.68rem; color:rgba(255,255,255,.45); letter-spacing:.06em;
+    }
+
+    /* Badge on thumb corner */
+    .cert-thumb-badge {
+      position:absolute; top:.85rem; left:.85rem; z-index:2;
+      display:inline-flex; align-items:center; gap:.3rem;
+      padding:.22rem .7rem; border-radius:99px;
+      font-size:.62rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+      backdrop-filter:blur(8px);
+    }
+    .ctb-rose { background:rgba(220,110,155,.22); color:var(--rose2); border:1px solid rgba(220,110,155,.3); }
+    .ctb-gold { background:rgba(210,160,80,.22);  color:var(--gold2); border:1px solid rgba(210,160,80,.3); }
+    .ctb-lav  { background:rgba(164,143,208,.22); color:var(--lav2);  border:1px solid rgba(164,143,208,.3); }
+    .ctb-mint { background:rgba(98,201,176,.22);  color:var(--mint);  border:1px solid rgba(98,201,176,.3); }
+
+    /* Year tag thumb top-right */
+    .cert-thumb-year {
+      position:absolute; top:.85rem; right:.85rem; z-index:2;
+      padding:.22rem .65rem; border-radius:8px;
+      background:rgba(7,7,15,.6); border:1px solid rgba(255,255,255,.12);
+      font-size:.62rem; font-weight:700; color:rgba(255,255,255,.7);
+      font-family:'Space Mono',monospace; backdrop-filter:blur(6px);
+    }
+
+    /* ── Card Body (below thumb) ── */
+    .cert-body { padding:1.4rem 1.6rem 1.5rem; flex:1; display:flex; flex-direction:column; }
+
+    .cert-org-row {
+      display:flex; align-items:center; gap:.5rem; margin-bottom:.55rem;
+    }
+    .cert-org-icon {
+      width:28px; height:28px; border-radius:8px; flex-shrink:0;
+      display:flex; align-items:center; justify-content:center;
+      font-size:.85rem; border:1px solid var(--border);
+    }
+    .cert-org-name {
+      font-size:.65rem; font-weight:700; text-transform:uppercase;
+      letter-spacing:.09em; color:var(--rose);
+    }
+
+    .cert-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size:1.18rem; font-weight:700; color:var(--text); line-height:1.25;
+      margin-bottom:.75rem;
+    }
+
+    .cert-meta { display:flex; flex-wrap:wrap; gap:.38rem; margin-bottom:.85rem; }
+    .cert-badge-s {
+      display:inline-flex; align-items:center; gap:.3rem;
+      padding:.2rem .6rem; border-radius:99px;
+      font-size:.62rem; font-weight:600;
+    }
+    .cb-date  { background:rgba(210,160,80,.10);  color:var(--gold2); border:1px solid rgba(210,160,80,.22); }
+    .cb-type  { background:rgba(220,110,155,.10); color:var(--rose2); border:1px solid rgba(220,110,155,.22); }
+    .cb-valid { background:rgba(98,201,176,.10);  color:var(--mint);  border:1px solid rgba(98,201,176,.22); }
+    .cb-id    { background:rgba(164,143,208,.10); color:var(--lav2);  border:1px solid rgba(164,143,208,.22); }
+
+    .cert-desc { font-size:.83rem; color:var(--text2); line-height:1.78; flex:1; margin-bottom:.9rem; }
+    .cert-skills { display:flex; flex-wrap:wrap; gap:.35rem; margin-bottom:.9rem; }
+
+    .cert-footer {
+      display:flex; align-items:center; justify-content:space-between;
+      padding-top:.85rem; border-top:1px solid var(--border);
+    }
+    .cert-view-btn {
+      display:inline-flex; align-items:center; gap:.4rem;
+      font-size:.76rem; font-weight:600; color:var(--rose2);
+      background:none; border:none; cursor:pointer;
+      font-family:'Outfit',sans-serif; transition:gap .2s var(--ease), color .2s; padding:0;
+    }
+    .cert-card:hover .cert-view-btn { gap:.65rem; }
+    .cert-verify { display:inline-flex; align-items:center; gap:.35rem; font-size:.7rem; font-weight:600; color:var(--mint); }
+
+    /* Download quick-btn in footer */
+    .cert-dl-quick {
+      display:inline-flex; align-items:center; gap:.32rem;
+      padding:.28rem .72rem; border-radius:99px;
+      font-size:.65rem; font-weight:700; font-family:'Outfit',sans-serif;
+      background:rgba(210,160,80,.1); color:var(--gold2);
+      border:1px solid rgba(210,160,80,.22);
+      text-decoration:none; cursor:pointer;
+      transition:background .2s, transform .2s;
+    }
+    .cert-dl-quick:hover { background:rgba(210,160,80,.22); transform:translateY(-1px); }
+
+    /* ══════════════════════════════════
+       MODAL
+    ══════════════════════════════════ */
+    .cert-modal-overlay {
+      position:fixed; inset:0; z-index:900;
+      background:rgba(7,7,15,.88);
+      backdrop-filter:blur(18px);
+      display:flex; align-items:center; justify-content:center; padding:2rem;
+      opacity:0; pointer-events:none; transition:opacity .3s;
+    }
+    .cert-modal-overlay.open { opacity:1; pointer-events:all; }
+    .cert-modal {
+      background:var(--card2); border:1px solid var(--border-hi);
+      border-radius:var(--r-xl); width:100%; max-width:660px;
+      max-height:92vh; overflow-y:auto;
+      transform:translateY(24px) scale(.96); transition:transform .38s var(--ease);
+      position:relative;
+    }
+    .cert-modal-overlay.open .cert-modal { transform:translateY(0) scale(1); }
+
+    /* Modal 3D cert preview */
+    .modal-cert-preview {
+      height:200px; position:relative; overflow:hidden;
+      border-radius:var(--r-xl) var(--r-xl) 0 0;
+      background:linear-gradient(135deg,#1a0a8c 0%,#5b21b6 30%,#be185d 65%,#dc6e9b 100%);
+    }
+    .modal-cert-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(160deg,rgba(255,255,255,.07) 0%,transparent 50%);
+    }
+    .modal-cert-text {
+      position:absolute; inset:0; display:flex; flex-direction:column;
+      align-items:center; justify-content:center; gap:.5rem;
+    }
+    .modal-cert-text .mct-small { font-size:.65rem; color:rgba(255,255,255,.65); letter-spacing:.12em; text-transform:uppercase; }
+    .modal-cert-text .mct-name {
+      font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:700; color:#fff;
+      text-shadow:0 2px 16px rgba(0,0,0,.3);
+    }
+    .modal-cert-text .mct-badge {
+      padding:.2rem .85rem; border-radius:99px;
+      background:linear-gradient(135deg,#f43f5e,#fb923c);
+      font-size:.62rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:#fff;
+      box-shadow:0 4px 16px rgba(244,63,94,.4);
+    }
+
+    .modal-img {
+      width:100%; border-radius:var(--r-xl) var(--r-xl) 0 0; display:none;
+    }
+    .modal-close {
+      position:absolute; top:1.1rem; right:1.1rem;
+      width:34px; height:34px; border-radius:9px;
+      background:rgba(7,7,15,.6); border:1px solid var(--border);
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; color:var(--text2); font-size:.9rem;
+      transition:all .2s; z-index:10;
+    }
+    .modal-close:hover { border-color:var(--border-hi); color:var(--rose2); }
+    .modal-inner { padding:2rem 2.4rem; }
+    .modal-org { font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--rose); margin-bottom:.4rem; }
+    .modal-title { font-family:'Cormorant Garamond',serif; font-size:1.75rem; font-weight:700; color:var(--text); line-height:1.15; margin-bottom:1rem; }
+    .modal-meta { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1.2rem; }
+    .modal-divider { height:1px; background:var(--border); margin:1.2rem 0; }
+    .modal-desc-title { font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--text3); margin-bottom:.5rem; }
+    .modal-desc { font-size:.9rem; color:var(--text2); line-height:1.82; }
+    .modal-id-box {
+      display:flex; align-items:center; justify-content:space-between;
+      background:var(--bg2); border:1px solid var(--border); border-radius:10px;
+      padding:.8rem 1rem; margin-top:1.2rem;
+    }
+    .modal-id-label { font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.09em; color:var(--text3); }
+    .modal-id-val { font-size:.82rem; font-weight:600; color:var(--lav2); margin-top:.15rem; font-family:'Space Mono',monospace; }
+    .modal-copy-btn {
+      padding:.36rem .9rem; border-radius:8px;
+      background:var(--lav-d); border:1px solid rgba(164,143,208,.22);
+      color:var(--lav2); font-size:.72rem; font-weight:600;
+      cursor:pointer; font-family:'Outfit',sans-serif; transition:all .2s;
+    }
+    .modal-copy-btn:hover { background:rgba(164,143,208,.2); }
+    .modal-actions { display:flex; gap:.75rem; margin-top:1.6rem; flex-wrap:wrap; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display:inline-flex; align-items:center; gap:.48rem;
+      padding:.76rem 1.8rem; border-radius:99px;
+      font-size:.88rem; font-weight:600;
+      font-family:'Outfit',sans-serif;
+      text-decoration:none; border:none; cursor:pointer;
+      transition:transform .22s var(--ease),box-shadow .22s,opacity .2s;
+    }
+    .btn:hover { transform:translateY(-2px); }
+    .btn-primary {
+      background:linear-gradient(135deg,var(--rose),var(--gold));
+      color:var(--bg); box-shadow:0 4px 24px rgba(220,110,155,.3);
+    }
+    .btn-primary:hover { box-shadow:0 10px 36px rgba(220,110,155,.45); }
+    .btn-ghost {
+      background:transparent; color:var(--text2);
+      border:1px solid var(--border-hi);
+    }
+    .btn-ghost:hover { color:var(--rose2); border-color:rgba(220,110,155,.42); }
+    .btn-sm { padding:.44rem 1.1rem; font-size:.78rem; }
+
+    /* ── CTA ── */
+    .cert-cta {
+      margin-top:4rem; padding:2.8rem 3rem;
+      background:linear-gradient(135deg,rgba(220,110,155,.06),rgba(164,143,208,.06));
+      border:1px solid var(--border-hi); border-radius:var(--r-xl);
+      display:flex; align-items:center; justify-content:space-between; gap:2rem;
+    }
+    .cert-cta-text h3 { font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:700; color:var(--text); margin-bottom:.4rem; }
+    .cert-cta-text p { font-size:.88rem; color:var(--text2); line-height:1.72; }
+
+    /* ── REVEAL ── */
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s var(--ease),transform .7s var(--ease); }
+    .reveal.vis { opacity:1; transform:translateY(0); }
+    .d1 { transition-delay:.06s !important; }
+    .d2 { transition-delay:.12s !important; }
+    .d3 { transition-delay:.18s !important; }
+    .d4 { transition-delay:.24s !important; }
+
+    /* ── FOOTER ── */
+    footer {
+      position:relative; z-index:1; border-top:1px solid var(--border);
+      padding:2.8rem 5rem;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .footer-logo {
+      font-family:'Dancing Script',cursive; font-size:1.35rem;
+      background:linear-gradient(130deg,var(--rose),var(--gold));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .footer-mid { text-align:center; }
+    .footer-copy { font-size:.82rem; color:var(--text3); }
+    .footer-copy .grad {
+      background:linear-gradient(130deg,var(--rose),var(--gold));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-weight:600;
+    }
+    .footer-sub { font-size:.72rem; color:var(--text3); margin-top:.22rem; }
+    .footer-socials { display:flex; gap:.7rem; }
+    .footer-social {
+      width:36px; height:36px; border-radius:9px;
+      background:var(--card); border:1px solid var(--border);
+      display:flex; align-items:center; justify-content:center;
+      text-decoration:none; color:var(--text3); font-size:.9rem; transition:all .22s;
+    }
+    .footer-social:hover { background:var(--rose-d); border-color:var(--border-hi); color:var(--rose2); transform:translateY(-2px); }
+
+    /* Section divider label */
+    .section-label {
+      display:flex; align-items:center; gap:1rem; margin-bottom:2rem;
+    }
+    .section-label-line {
+      flex:1; height:1px;
+      background:linear-gradient(90deg,var(--border-hi),transparent);
+    }
+    .section-label-text {
+      font-size:.68rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase;
+      color:var(--rose); display:flex; align-items:center; gap:.4rem; white-space:nowrap;
+    }
+
+    @media (max-width:900px) {
+      nav { padding:0 1.5rem; }
+      .nav-links { display:none; }
+      .page-hero { padding:calc(var(--nav-h)+3rem) 1.5rem 2rem; }
+      .section-wrap { padding:2rem 1.5rem 4rem; }
+      .featured-wrap { grid-template-columns:1fr; padding:2rem; }
+      .cert-mockup-scene { width:100%; }
+      .cert-grid { grid-template-columns:1fr; }
+      .cert-stats { grid-template-columns:repeat(2,1fr); }
+      footer { padding:2rem 1.5rem; flex-wrap:wrap; gap:1.5rem; justify-content:center; text-align:center; }
+      .cert-cta { flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+<div class="ambient"></div>
+<div class="grain"></div>
+<canvas id="particles"></canvas>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a class="nav-logo" href="index.html">Seli Octaria ✿</a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="skill.html">Skills</a></li>
+    <li><a href="experience.html">Experience</a></li>
+    <li><a href="project.html">Projects</a></li>
+    <li><a href="sertifikat.html" class="active">Sertifikat</a></li>
+    <li><a href="contact.html" class="nav-cta">Hire Me ✨</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-hero">
+  <div class="page-hero-inner reveal">
+    <div>
+      <p class="page-eyebrow">Credentials</p>
+      <h1 class="page-title">Sertifikat &amp; <em>Kompetensi</em></h1>
+    </div>
+    <div class="page-breadcrumb">
+      <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+      <i class="fa-solid fa-chevron-right"></i>
+      <span style="color:var(--rose2)">Sertifikat</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-wrap">
+
+  <!-- ══════════════════════════════════
+       FEATURED — BEST PROJECT CERT
+  ══════════════════════════════════ -->
+  <div class="section-label reveal">
+    <span class="section-label-text"><i class="fa-solid fa-trophy"></i> Sertifikat Unggulan</span>
+    <div class="section-label-line"></div>
+  </div>
+
+  <div class="featured-wrap reveal d1"
+    data-cert="feat"
+    data-title="Best Project — Kampus Merdeka Mandiri Batch 8"
+    data-org="Infinite Learning × Kemendikbudristek"
+    data-date="July 2025"
+    data-certid="247/IL-SIB/COLLAB/VII/2025"
+    data-desc="Sertifikat penghargaan Best Project dalam program Kampus Merdeka Mandiri Batch 8 dengan kolaborasi AI Development dan Web Development di Infinite Learning, Batam. Seli Octaria Simatupang berperan sebagai Hipster (Mobile) dalam tim Luminara, berhasil menyelesaikan proyek mobile dengan pencapaian terbaik selama periode Maret – Juli 2025. Sertifikat ini diakui oleh Kemendikbudristek RI."
+    data-img="247-Seli Octaria Simatupang.jpg"
+    data-pdf="247-Seli Octaria Simatupang.pdf">
+
+    <div class="featured-left">
+      <div class="feat-badge">
+        <i class="fa-solid fa-trophy"></i> Best Project Award 🏆
+      </div>
+      <h2 class="feat-title">
+        <span>Best Project</span><br/>
+        Kampus Merdeka Batch 8
+      </h2>
+      <div class="feat-org">
+        <i class="fa-solid fa-building"></i>
+        Infinite Learning × Kemendikbudristek RI
+      </div>
+      <p class="feat-desc">
+        Penghargaan tertinggi sebagai <strong style="color:var(--text)">Hipster (Mobile)</strong> dalam tim Luminara — mobile development collaboration program AI &amp; Web Development. Periode Maret – Juli 2025 di Infinite Learning Batam.
+      </p>
+      <div class="feat-meta">
+        <span class="feat-badge-sm fb-gold"><i class="fa-solid fa-calendar"></i> Juli 2025</span>
+        <span class="feat-badge-sm fb-rose"><i class="fa-solid fa-trophy"></i> Best Project</span>
+        <span class="feat-badge-sm fb-mint"><i class="fa-solid fa-shield-check"></i> Terverifikasi</span>
+        <span class="feat-badge-sm fb-lav"><i class="fa-solid fa-fingerprint"></i> 247/IL-SIB/COLLAB/VII/2025</span>
+      </div>
+      <div class="feat-skills">
+        <span class="t-chip"><i class="fa-brands fa-figma" style="color:#f24e1e"></i> Figma</span>
+        <span class="t-chip"><i class="fa-solid fa-mobile-screen" style="color:var(--rose2)"></i> Mobile UI/UX</span>
+        <span class="t-chip"><i class="fa-solid fa-code" style="color:#7F52FF"></i> Kotlin</span>
+        <span class="t-chip"><i class="fa-solid fa-robot" style="color:var(--lav2)"></i> AI Integration</span>
+        <span class="t-chip"><i class="fa-solid fa-users" style="color:var(--gold2)"></i> Luminara</span>
+      </div>
+    </div>
+
+    <div class="featured-right">
+      <div class="cert-mockup-scene" id="mockupScene">
+        <div class="cert-mockup-card" id="mockupCard">
+          <img
+            src="247-Seli Octaria Simatupang.jpg"
+            alt="Sertifikat Best Project — Seli Octaria Simatupang"
+            style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;border-radius:16px;"
+            onerror="this.style.display='none';document.getElementById('certMockupFallback').style.display='block';"
+          />
+          <div id="certMockupFallback" style="display:none;position:absolute;inset:0;border-radius:16px;overflow:hidden;">
+            <div class="cert-mockup-bg"></div>
+            <div class="cert-mockup-overlay"></div>
+            <div class="cert-mockup-content">
+              <div class="cert-top-logos">
+                <div class="cert-logo-pill">INFINITE<br>LEARNING</div>
+                <div class="cert-logo-pill">KAMPUS<br>MERDEKA</div>
+              </div>
+              <div class="cert-main-text">
+                <div class="cert-word">This Certificate Proudly Present To</div>
+                <div class="cert-name">Seli Octaria<br>Simatupang</div>
+                <div class="cert-uni">Universitas Maritim Raja Ali Haji · Teknik Informatika</div>
+                <div class="cert-badge-highlight">🏆 Best Project</div>
+              </div>
+              <div class="cert-bottom">
+                <div class="cert-sig">
+                  <div class="cert-sig-line">
+                    <span class="cert-sig-script">Ari N.</span>
+                  </div>
+                  <div class="cert-sig-label">Program Director</div>
+                </div>
+                <div class="cert-id-mono">No. 247/IL-SIB/COLLAB/VII/2025</div>
+                <div class="cert-sig">
+                  <div class="cert-sig-line">
+                    <span class="cert-sig-script">Nara D.</span>
+                  </div>
+                  <div class="cert-sig-label">Director</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Gloss overlay -->
+          <div style="position:absolute;inset:0;border-radius:16px;pointer-events:none;
+            background:linear-gradient(135deg,rgba(255,255,255,.09) 0%,transparent 45%,rgba(0,0,0,.06) 100%);"></div>
+        </div>
+        <div class="cert-mockup-shadow" id="mockupShadow"></div>
+
+        <div class="float-tag float-tag-1">
+          <i class="fa-solid fa-star" style="color:var(--gold2)"></i> Best Project Award
+        </div>
+        <div class="float-tag float-tag-2">
+          <i class="fa-solid fa-shield-check" style="color:var(--mint)"></i> Terverifikasi
+        </div>
+
+        <div class="mockup-hint">
+          <i class="fa-solid fa-hand-pointer"></i> Klik untuk detail lengkap
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       STATS
+  ══════════════════════════════════ -->
+  <div class="cert-stats">
+    <div class="cert-stat reveal">
+      <div class="cs-icon">🏆</div>
+      <div class="cs-num" data-target="5">0+</div>
+      <div class="cs-lbl">Total Sertifikat</div>
+    </div>
+    <div class="cert-stat reveal d1">
+      <div class="cs-icon">✨</div>
+      <div class="cs-num" data-target="2">0+</div>
+      <div class="cs-lbl">Program MSIB</div>
+    </div>
+    <div class="cert-stat reveal d2">
+      <div class="cs-icon">🏅</div>
+      <div class="cs-num" data-target="1">0+</div>
+      <div class="cs-lbl">Best Project Award</div>
+    </div>
+    <div class="cert-stat reveal d3">
+      <div class="cs-icon">📅</div>
+      <div class="cs-num" data-target="2">0×</div>
+      <div class="cs-lbl">Tahun Aktif</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       SECTION LABEL — OTHER CERTS
+  ══════════════════════════════════ -->
+  <div class="section-label reveal">
+    <span class="section-label-text"><i class="fa-solid fa-certificate"></i> Sertifikat Lainnya</span>
+    <div class="section-label-line"></div>
+  </div>
+
+  <!-- CERT GRID -->
+  <div class="cert-grid">
+
+    <!-- CERT 1 — MSIB Batch 7 (Kepesertaan) -->
+    <div class="cert-card reveal"
+      data-cert="1"
+      data-title="Sertifikat Kepesertaan MSIB — Studi Independen Batch 7"
+      data-org="Kampus Merdeka × PT Kinema Systrans Multimedia"
+      data-date="2024"
+      data-certid="9706408"
+      data-desc="Sertifikat Kepesertaan program Studi Independen Bersertifikat (MSIB) Angkatan 7 di PT Kinema Systrans Multimedia. Seli Octaria Simatupang (NIM: 2201020024) menyelesaikan seluruh kewajibannya sebagai peserta program. Sertifikat diterbitkan oleh Pelaksana Pusat Kampus Merdeka, Kemendikbudristek RI."
+      data-img="sertifikat-msib-batch7.JPEG"
+      data-pdf="sertifikat-msib-batch7.pdf">
+
+      <!-- Thumbnail -->
+      <div class="cert-thumb">
+        <img class="cert-thumb-img" src="sertifikat-msib-batch7.JPEG" alt="Sertifikat MSIB Batch 7"
+          onerror="this.style.display='none';" />
+        <div class="cert-thumb-fade"></div>
+        <span class="cert-thumb-badge ctb-rose"><i class="fa-solid fa-graduation-cap"></i> MSIB</span>
+        <span class="cert-thumb-year">2024</span>
+        <div class="cert-thumb-overlay">
+          <div class="cert-overlay-actions">
+            <button class="cert-overlay-btn cob-primary open-modal-btn">
+              <i class="fa-solid fa-expand"></i> Lihat Detail
+            </button>
+            <a class="cert-overlay-btn cob-ghost" href="sertifikat-msib-batch7.pdf" download onclick="event.stopPropagation()">
+              <i class="fa-solid fa-download"></i> PDF
+            </a>
+          </div>
+          <div class="cert-overlay-hint">klik untuk detail lengkap</div>
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div class="cert-body">
+        <div class="cert-org-row">
+          <div class="cert-org-icon" style="background:var(--rose-d);border-color:rgba(220,110,155,.2)">
+            <i class="fa-solid fa-university" style="color:var(--rose2)"></i>
+          </div>
+          <span class="cert-org-name">Kampus Merdeka × PT Kinema Systrans Multimedia</span>
+        </div>
+        <div class="cert-title">Sertifikat Kepesertaan — Studi Independen Batch 7</div>
+        <div class="cert-meta">
+          <span class="cert-badge-s cb-date"><i class="fa-solid fa-calendar"></i> 2024</span>
+          <span class="cert-badge-s cb-type"><i class="fa-solid fa-briefcase"></i> Studi Independen</span>
+          <span class="cert-badge-s cb-valid"><i class="fa-solid fa-shield-check"></i> Terverifikasi</span>
+        </div>
+        <p class="cert-desc">Program <strong style="color:var(--text)">Studi Independen Bersertifikat Angkatan 7</strong> di PT Kinema Systrans Multimedia. ID Kegiatan: 9706408, diakui resmi Kemendikbudristek RI.</p>
+        <div class="cert-skills">
+          <span class="t-chip"><i class="fa-brands fa-figma" style="color:#f24e1e"></i> Figma</span>
+          <span class="t-chip"><i class="fa-solid fa-pen-ruler" style="color:var(--rose2)"></i> UI/UX</span>
+          <span class="t-chip"><i class="fa-brands fa-android" style="color:#3ddc84"></i> Android</span>
+          <span class="t-chip"><i class="fa-solid fa-code" style="color:#7F52FF"></i> Kotlin</span>
+          <span class="t-chip"><i class="fa-solid fa-layer-group" style="color:var(--lav2)"></i> Prototyping</span>
+        </div>
+        <div class="cert-footer">
+          <button class="cert-view-btn open-modal-btn">Lihat Detail <i class="fa-solid fa-arrow-right"></i></button>
+          <a class="cert-dl-quick" href="sertifikat-msib-batch7.pdf" download onclick="event.stopPropagation()">
+            <i class="fa-solid fa-file-pdf"></i> Unduh PDF
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CERT 2 — Ganti dengan sertifikat ke-2 -->
+    <div class="cert-card reveal d1"
+      data-cert="2"
+      data-title="MSIB CERTIFICATE"
+      data-org="Kampus Merdeka × PT Kinema Systrans Multimedia"
+      data-date="2024"
+      data-certid="4482/IL-SIB/XII/2024"
+      data-desc="Program Studi Independen Bersertifikat (MSIB) Batch 7 di Infinite Learning Batam yang berfokus pada Android Mobile Development &amp; UI/UX Design. Selama program yang berlangsung dari September hingga Desember 2024, saya mempelajari proses pengembangan aplikasi mobile secara end-to-end, mulai dari riset pengguna, perancangan antarmuka menggunakan Figma, pembuatan prototype, hingga implementasi aplikasi Android menggunakan Kotlin. Program ini juga melatih kemampuan problem solving, kolaborasi tim, dan pengembangan produk digital berdasarkan kebutuhan pengguna dan industri."
+      data-img="sertifikat2-msib-batch7.JPEG"
+      data-pdf="4482-Seli Octaria Simatupang.pdf">
+
+      <div class="cert-thumb">
+        <img class="cert-thumb-img" src="sertifikat2-msib-batch7.JPEG" alt="Sertifikat #2"
+          onerror="this.style.display='none';" />
+        <div class="cert-thumb-fade"></div>
+        <span class="cert-thumb-badge ctb-gold"><i class="fa-solid fa-star"></i> Sertifikat</span>
+        <span class="cert-thumb-year">2024</span>
+        <div class="cert-thumb-overlay">
+          <div class="cert-overlay-actions">
+            <button class="cert-overlay-btn cob-primary open-modal-btn">
+              <i class="fa-solid fa-expand"></i> Lihat Detail
+            </button>
+            <a class="cert-overlay-btn cob-ghost" href="sertifikat-2.pdf" download onclick="event.stopPropagation()">
+              <i class="fa-solid fa-download"></i> PDF
+            </a>
+          </div>
+          <div class="cert-overlay-hint">klik untuk detail lengkap</div>
+        </div>
+      </div>
+
+      <div class="cert-body">
+        <div class="cert-org-row">
+          <div class="cert-org-icon" style="background:var(--gold-d);border-color:rgba(210,160,80,.22)">
+            <i class="fa-solid fa-award" style="color:var(--gold2)"></i>
+          </div>
+          <span class="cert-org-name">Kampus Merdeka × PT Kinema Systrans Multimedia</span>
+        </div>
+        <div class="cert-title">MSIB CERTIFICATE</div>
+        <div class="cert-meta">
+          <span class="cert-badge-s cb-date"><i class="fa-solid fa-calendar"></i> 2024</span>
+          <span class="cert-badge-s cb-type"><i class="fa-solid fa-certificate"></i> Studi Independen</span>
+          <span class="cert-badge-s cb-valid"><i class="fa-solid fa-shield-check"></i> Terverifikasi</span>
+        </div>
+        <p class="cert-desc">Program <strong style="color:var(--text)">Studi Independen Bersertifikat Angkatan 7</strong> di PT Kinema Systrans Multimedia. At Infinte Learning From September 6, 2024 to December 31, 2024.</p>
+        <div class="cert-skills">
+          <span class="t-chip"><i class="fa-brands fa-figma" style="color:#f24e1e"></i> Figma</span>
+          <span class="t-chip"><i class="fa-solid fa-pen-ruler" style="color:var(--rose2)"></i> UI/UX</span>
+          <span class="t-chip"><i class="fa-brands fa-android" style="color:#3ddc84"></i> Android</span>
+          <span class="t-chip"><i class="fa-solid fa-code" style="color:#7F52FF"></i> Kotlin</span>
+          <span class="t-chip"><i class="fa-solid fa-layer-group" style="color:var(--lav2)"></i> Prototyping</span>
+        </div>
+        <div class="cert-footer">
+          <button class="cert-view-btn open-modal-btn">Lihat Detail <i class="fa-solid fa-arrow-right"></i></button>
+          <a class="cert-dl-quick" href="sertifikat-2.pdf" download onclick="event.stopPropagation()">
+            <i class="fa-solid fa-file-pdf"></i> Unduh PDF
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CERT 3 — Ganti dengan sertifikat ke-3 -->
+    <div class="cert-card reveal d2"
+      data-cert="3"
+      data-title="Sertifikat Kepesertaan MSIB Mandiri — Batch 8"
+      data-org="Kampus Merdeka Mandiri × PT Kinema Systrans Multimedia"
+      data-date="2025"
+      data-certid="0503/IL-KMM/VII/2025"
+      data-desc="Sertifikat ini diberikan atas keberhasilan menyelesaikan Program Kampus Merdeka Mandiri Batch 8 di Infinite Learning Batam 
+      pada bidang Android Mobile Development &amp; UI/UX Design. Selama program berlangsung dari Maret hingga Juli 2025, 
+      saya mengembangkan kompetensi dalam perancangan antarmuka pengguna (UI/UX), pembuatan wireframe dan prototype menggunakan Figma, 
+      serta pengembangan aplikasi Android menggunakan Kotlin."
+      data-img="sertifikat3-msib-batch7.JPEG"
+      data-pdf="503-Seli Octaria Simatupang.pdf">
+
+      <div class="cert-thumb">
+        <img class="cert-thumb-img" src="sertifikat3-msib-batch7.JPEG" alt="Sertifikat #3"
+          onerror="this.style.display='none';" />
+        <div class="cert-thumb-fade"></div>
+        <span class="cert-thumb-badge ctb-lav"><i class="fa-solid fa-medal"></i> Sertifikat</span>
+        <span class="cert-thumb-year">2025</span>
+        <div class="cert-thumb-overlay">
+          <div class="cert-overlay-actions">
+            <button class="cert-overlay-btn cob-primary open-modal-btn">
+              <i class="fa-solid fa-expand"></i> Lihat Detail
+            </button>
+            <a class="cert-overlay-btn cob-ghost" href="sertifikat-3.pdf" download onclick="event.stopPropagation()">
+              <i class="fa-solid fa-download"></i> PDF
+            </a>
+          </div>
+          <div class="cert-overlay-hint">klik untuk detail lengkap</div>
+        </div>
+      </div>
+
+      <div class="cert-body">
+        <div class="cert-org-row">
+          <div class="cert-org-icon" style="background:var(--lav-d);border-color:rgba(164,143,208,.22)">
+            <i class="fa-solid fa-medal" style="color:var(--lav2)"></i>
+          </div>
+          <span class="cert-org-name" style="color:var(--lav2)">Kampus Merdeka Mandiri × PT Kinema Systrans Multimedia</span>
+        </div>
+        <div class="cert-title">Sertifikat Kepesertaan MSIB Mandiri — Batch 8</div>
+        <div class="cert-meta">
+          <span class="cert-badge-s cb-date"><i class="fa-solid fa-calendar"></i> 2025</span>
+          <span class="cert-badge-s cb-type"><i class="fa-solid fa-briefcase"></i> Studi Independen</span>
+          <span class="cert-badge-s cb-valid"><i class="fa-solid fa-shield-check"></i> Terverifikasi</span>
+        </div>
+        <p class="cert-desc">Program <strong style="color:var(--text)">Studi Independen Bersertifikat Mandiri Angkatan 8</strong> di PT Kinema Systrans Multimedia. At Infinte Learning From March 2025 to July 2025.</p>
+        <div class="cert-skills">
+          <span class="t-chip"><i class="fa-brands fa-figma" style="color:#f24e1e"></i> Figma</span>
+          <span class="t-chip"><i class="fa-solid fa-pen-ruler" style="color:var(--rose2)"></i> UI/UX</span>
+          <span class="t-chip"><i class="fa-brands fa-android" style="color:#3ddc84"></i> Android</span>
+          <span class="t-chip"><i class="fa-solid fa-code" style="color:#7F52FF"></i> Kotlin</span>
+          <span class="t-chip"><i class="fa-solid fa-layer-group" style="color:var(--lav2)"></i> Prototyping</span>
+        </div>
+        <div class="cert-footer">
+          <button class="cert-view-btn open-modal-btn" style="color:var(--lav2)">Lihat Detail <i class="fa-solid fa-arrow-right"></i></button>
+          <a class="cert-dl-quick" href="sertifikat-3.pdf" download onclick="event.stopPropagation()"
+            style="background:rgba(164,143,208,.1);color:var(--lav2);border-color:rgba(164,143,208,.22)">
+            <i class="fa-solid fa-file-pdf"></i> Unduh PDF
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CERT 4 — Ganti dengan sertifikat ke-4 -->
+    <div class="cert-card reveal d3"
+      data-cert="4"
+      data-title="MSIB MANDIRI CERTIFICATE"
+      data-org="Kampus Merdeka Mandiri × PT Kinema Systrans Multimedia"
+      data-date="2025"
+      data-certid="0503/IL-KMM/VII/2025"
+      data-desc="Sertifikat ini menandai keberhasilan saya menyelesaikan program magang di Infinite Learning Batam pada bidang 
+      Android Mobile Development &amp; UI/UX Design. Selama masa magang, saya terlibat langsung dalam pengembangan produk digital 
+      melalui proses riset pengguna, desain antarmuka, pembuatan prototype, implementasi fitur aplikasi Android, 
+      serta pengujian dan evaluasi produk. Pengalaman ini memberikan pemahaman praktis mengenai alur kerja industri, 
+      komunikasi tim, dan penerapan teknologi untuk menghasilkan solusi yang fungsional dan berorientasi pada pengguna."
+      data-img="sertifikat4-msib-batch7.JPEG"
+      data-pdf="503-1-Seli Octaria Simatupang.pdf">
+
+      <div class="cert-thumb">
+        <img class="cert-thumb-img" src="sertifikat4-msib-batch7.JPEG" alt="Sertifikat #4"
+          onerror="this.style.display='none';" />
+        <div class="cert-thumb-fade"></div>
+        <span class="cert-thumb-badge ctb-mint"><i class="fa-solid fa-graduation-cap"></i> Sertifikat</span>
+        <span class="cert-thumb-year">2025</span>
+        <div class="cert-thumb-overlay">
+          <div class="cert-overlay-actions">
+            <button class="cert-overlay-btn cob-primary open-modal-btn">
+              <i class="fa-solid fa-expand"></i> Lihat Detail
+            </button>
+            <a class="cert-overlay-btn cob-ghost" href="sertifikat-4.pdf" download onclick="event.stopPropagation()">
+              <i class="fa-solid fa-download"></i> PDF
+            </a>
+          </div>
+          <div class="cert-overlay-hint">klik untuk detail lengkap</div>
+        </div>
+      </div>
+
+      <div class="cert-body">
+        <div class="cert-org-row">
+          <div class="cert-org-icon" style="background:var(--mint-d);border-color:rgba(98,201,176,.22)">
+            <i class="fa-solid fa-graduation-cap" style="color:var(--mint)"></i>
+          </div>
+          <span class="cert-org-name" style="color:var(--mint)">Kampus Merdeka Mandiri × PT Kinema Systrans Multimedia</span>
+        </div>
+        <div class="cert-title">MSIB MANDIRI CERTIFICATE</div>
+        <div class="cert-meta">
+          <span class="cert-badge-s cb-date"><i class="fa-solid fa-calendar"></i> 2025</span>
+          <span class="cert-badge-s cb-type"><i class="fa-solid fa-briefcase"></i> Studi Independen</span>
+          <span class="cert-badge-s cb-valid"><i class="fa-solid fa-shield-check"></i> Terverifikasi</span>
+        </div>
+        <p class="cert-desc">Program <strong style="color:var(--text)">Studi Independen Bersertifikat Mandiri Angkatan 8</strong> di PT Kinema Systrans Multimedia. At Infinte Learning From March 2025 to July 2025.</p>
+        <div class="cert-skills">
+          <span class="t-chip"><i class="fa-brands fa-figma" style="color:#f24e1e"></i> Figma</span>
+          <span class="t-chip"><i class="fa-solid fa-pen-ruler" style="color:var(--rose2)"></i> UI/UX</span>
+          <span class="t-chip"><i class="fa-brands fa-android" style="color:#3ddc84"></i> Android</span>
+          <span class="t-chip"><i class="fa-solid fa-code" style="color:#7F52FF"></i> Kotlin</span>
+          <span class="t-chip"><i class="fa-solid fa-layer-group" style="color:var(--lav2)"></i> Prototyping</span>
+        </div>
+        <div class="cert-footer">
+          <button class="cert-view-btn open-modal-btn" style="color:var(--mint)">Lihat Detail <i class="fa-solid fa-arrow-right"></i></button>
+          <a class="cert-dl-quick" href="sertifikat-4.pdf" download onclick="event.stopPropagation()"
+            style="background:rgba(98,201,176,.1);color:var(--mint);border-color:rgba(98,201,176,.22)">
+            <i class="fa-solid fa-file-pdf"></i> Unduh PDF
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /cert-grid -->
+
+  <!-- CTA -->
+  <div class="cert-cta reveal" style="margin-top:4rem">
+    <div class="cert-cta-text">
+      <h3>Tertarik Berkolaborasi?</h3>
+      <p>Sertifikat-sertifikat ini mencerminkan komitmenku terhadap pertumbuhan profesional yang berkelanjutan. Mari wujudkan ide menjadi produk nyata bersama!</p>
+    </div>
+    <div style="display:flex;gap:.8rem;flex-shrink:0">
+      <a class="btn btn-primary" href="contact.html"><i class="fa-solid fa-envelope"></i> Hire Me</a>
+      <a class="btn btn-ghost" href="project.html"><i class="fa-solid fa-folder-open"></i> Lihat Projects</a>
+    </div>
+  </div>
+</div><!-- /section-wrap -->
+
+<!-- ════════════ MODAL ════════════ -->
+<div class="cert-modal-overlay" id="certOverlay">
+  <div class="cert-modal" id="certModal">
+    <button class="modal-close" id="certClose"><i class="fa-solid fa-xmark"></i></button>
+
+    <!-- Default mock preview (shown if no img) -->
+    <div class="modal-cert-preview" id="mPreview">
+      <div class="modal-cert-overlay"></div>
+      <div class="modal-cert-text">
+        <div class="mct-small">Certificate of Achievement</div>
+        <div class="mct-name" id="mModalName">Seli Octaria Simatupang</div>
+        <div class="mct-badge" id="mModalBadge">Best Project</div>
+      </div>
+    </div>
+    <img id="mImg" class="modal-img" src="" alt="Sertifikat" />
+
+    <div class="modal-inner">
+      <div class="modal-org" id="mOrg"></div>
+      <div class="modal-title" id="mTitle"></div>
+      <div class="modal-meta">
+        <span class="cert-badge-s cb-date"><i class="fa-solid fa-calendar"></i> <span id="mDate"></span></span>
+        <span class="cert-badge-s cb-valid"><i class="fa-solid fa-shield-check"></i> Terverifikasi &amp; Valid</span>
+      </div>
+      <div class="modal-divider"></div>
+      <div class="modal-desc-title"><i class="fa-solid fa-circle-info"></i> &nbsp;Tentang Sertifikat</div>
+      <p class="modal-desc" id="mDesc"></p>
+      <div class="modal-id-box">
+        <div>
+          <div class="modal-id-label"><i class="fa-solid fa-fingerprint"></i> &nbsp;ID Sertifikat</div>
+          <div class="modal-id-val" id="mId"></div>
+        </div>
+        <button class="modal-copy-btn" id="mCopyBtn"><i class="fa-solid fa-copy"></i> Salin</button>
+      </div>
+      <div class="modal-actions">
+        <a class="btn btn-primary btn-sm" id="mDownloadLink" href="#" download style="display:none;">
+          <i class="fa-solid fa-download"></i> Unduh PDF
+        </a>
+        <span class="btn btn-ghost btn-sm" id="mNoPdfNote" style="display:none;cursor:default;opacity:.5;">
+          <i class="fa-solid fa-file-slash"></i> PDF belum tersedia
+        </span>
+        <button class="btn btn-ghost btn-sm" id="certClose2">
+          <i class="fa-solid fa-xmark"></i> Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-logo">Seli Octaria ✿</span>
+  <div class="footer-mid">
+    <div class="footer-copy">Made with <i class="fa-solid fa-heart" style="color:var(--rose)"></i> by <span class="grad">Seli Octaria Simatupang</span> · © 2026</div>
+    <div class="footer-sub"><i class="fa-solid fa-graduation-cap" style="color:var(--gold)"></i> Teknik Informatika · UMRAH</div>
+  </div>
+  <div class="footer-socials">
+    <a class="footer-social" href="mailto:selioctarias@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+    <a class="footer-social" href="https://linkedin.com/in/seli-octaria-simatupang-a46891343" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+    <a class="footer-social" href="https://github.com/selioctaria" target="_blank"><i class="fa-brands fa-github"></i></a>
+    <a class="footer-social" href="https://www.instagram.com/cellyy_28" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+  </div>
+</footer>
+
+<script>
+'use strict';
+
+/* ── Nav ── */
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40), {passive:true});
+
+/* ── Cursor Glow ── */
+const glow = document.getElementById('cursorGlow');
+document.addEventListener('mousemove', e => { glow.style.left = e.clientX+'px'; glow.style.top = e.clientY+'px'; });
+
+/* ── Particles ── */
+(function() {
+  const c = document.getElementById('particles');
+  const ctx = c.getContext('2d');
+  let W, H, pts;
+  function init() {
+    W = c.width = innerWidth; H = c.height = innerHeight;
+    pts = Array.from({length:40}, () => ({
+      x:Math.random()*W, y:Math.random()*H,
+      vx:(Math.random()-.5)*.28, vy:(Math.random()-.5)*.28,
+      r:Math.random()*1.4+.5,
+      col:Math.random()>.5?'rgba(220,110,155,':'rgba(210,160,80,'
+    }));
+  }
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p => {
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>W) p.vx*=-1;
+      if(p.y<0||p.y>H) p.vy*=-1;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.col+'.25)'; ctx.fill();
+    });
+    for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++) {
+      const d=Math.hypot(pts[i].x-pts[j].x,pts[i].y-pts[j].y);
+      if(d<85) {
+        ctx.beginPath(); ctx.moveTo(pts[i].x,pts[i].y); ctx.lineTo(pts[j].x,pts[j].y);
+        ctx.strokeStyle=`rgba(220,110,155,${.08*(1-d/85)})`; ctx.lineWidth=.5; ctx.stroke();
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', init, {passive:true});
+  init(); draw();
+})();
+
+/* ── Reveal ── */
+(function() {
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if(e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); }
+  }), {threshold:.07});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+})();
+
+/* ── Counter ── */
+(function() {
+  function animCount(el, target) {
+    const raw = el.textContent;
+    const suffix = raw.includes('×') ? '×' : '+';
+    const dur = 1500; let start = 0;
+    const step = ts => {
+      if(!start) start = ts;
+      const p = Math.min((ts-start)/dur,1);
+      const e = 1-Math.pow(1-p,3);
+      el.textContent = Math.round(e*target)+suffix;
+      if(p<1) requestAnimationFrame(step);
+      else el.textContent = target+suffix;
+    };
+    requestAnimationFrame(step);
+  }
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if(e.isIntersecting) { animCount(e.target, +e.target.dataset.target); io.unobserve(e.target); }
+  }), {threshold:.5});
+  document.querySelectorAll('[data-target]').forEach(el => io.observe(el));
+})();
+
+/* ── 3D Mockup Tilt ── */
+(function() {
+  const card = document.getElementById('mockupCard');
+  const scene = document.getElementById('mockupScene');
+  if(!card||!scene) return;
+  scene.addEventListener('mousemove', e => {
+    const rect = scene.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - .5;
+    const y = (e.clientY - rect.top) / rect.height - .5;
+    card.style.transform = `rotateY(${x*24}deg) rotateX(${-y*16}deg) scale(1.04)`;
+  });
+  scene.addEventListener('mouseleave', () => {
+    card.style.transform = 'rotateY(-12deg) rotateX(6deg)';
+  });
+})();
+
+/* ── Modal ── */
+(function() {
+  const overlay    = document.getElementById('certOverlay');
+  const close1     = document.getElementById('certClose');
+  const close2     = document.getElementById('certClose2');
+  const copyBtn    = document.getElementById('mCopyBtn');
+  const dlLink     = document.getElementById('mDownloadLink');
+  const noPdfNote  = document.getElementById('mNoPdfNote');
+
+  document.querySelectorAll('.cert-card, .featured-wrap').forEach(card => {
+    card.addEventListener('click', e => {
+      if(e.target.closest('.cert-view-btn') || e.target === card || card.contains(e.target)) {
+        const d = card.dataset;
+        if(!d.cert && !d.title) return;
+        document.getElementById('mTitle').textContent = d.title||'';
+        document.getElementById('mOrg').textContent   = d.org||'';
+        document.getElementById('mDate').textContent  = d.date||'';
+        document.getElementById('mId').textContent    = d.certid||'—';
+        document.getElementById('mDesc').textContent  = d.desc||'';
+
+        // ── Gambar preview di modal ──
+        const img     = document.getElementById('mImg');
+        const preview = document.getElementById('mPreview');
+        if(d.img && d.img.trim()!=='') {
+          img.src = d.img; img.style.display = 'block'; preview.style.display = 'none';
+        } else {
+          img.style.display = 'none'; preview.style.display = 'block';
+          document.getElementById('mModalBadge').textContent = d.cert==='feat' ? '🏆 Best Project' : d.type||'Sertifikat';
+        }
+
+        // ── Tombol Unduh PDF ──
+        if(d.pdf && d.pdf.trim()!=='') {
+          dlLink.href = d.pdf;
+          dlLink.setAttribute('download', d.pdf.split('/').pop());
+          dlLink.style.display = 'inline-flex';
+          noPdfNote.style.display = 'none';
+        } else {
+          dlLink.style.display = 'none';
+          noPdfNote.style.display = 'inline-flex';
+        }
+
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+  });
+
+  function closeModal() { overlay.classList.remove('open'); document.body.style.overflow=''; }
+  close1?.addEventListener('click', closeModal);
+  close2?.addEventListener('click', closeModal);
+  overlay?.addEventListener('click', e => { if(e.target===overlay) closeModal(); });
+  document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+
+  copyBtn?.addEventListener('click', () => {
+    const id = document.getElementById('mId').textContent;
+    navigator.clipboard.writeText(id).then(() => {
+      copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Tersalin!';
+      copyBtn.style.color = 'var(--mint)';
+      setTimeout(() => { copyBtn.innerHTML = '<i class="fa-solid fa-copy"></i> Salin'; copyBtn.style.color=''; }, 2000);
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seli Octaria Simatupang — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* ════════════════════════════════════════
+       DESIGN TOKENS
+    ════════════════════════════════════════ */
+    :root {
+      --bg:          #080810;
+      --bg1:         #0c0c17;
+      --bg2:         #111120;
+      --bg3:         #181828;
+      --card:        #13131f;
+      --card2:       #1a1a2e;
+      --surface:     rgba(255,255,255,0.025);
+      --border:      rgba(255,255,255,0.06);
+      --border-hi:   rgba(236,120,160,0.22);
+      --rose:        #ec78a0;
+      --rose2:       #f4a8c2;
+      --rose-d:      rgba(236,120,160,0.10);
+      --rose-glow:   rgba(236,120,160,0.22);
+      --gold:        #d9a45c;
+      --gold2:       #ecc97e;
+      --gold-d:      rgba(217,164,92,0.10);
+      --lav:         #a891d4;
+      --lav-d:       rgba(168,145,212,0.10);
+      --mint:        #6dcfb5;
+      --text:        #ede9f5;
+      --text2:       #9991b2;
+      --text3:       #5b5470;
+      --nav-h:       68px;
+      --r:           16px;
+      --r-lg:        24px;
+      --r-xl:        32px;
+      --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      min-width: 1024px;
+    }
+
+    /* ── Ambient BG ─────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: -2;
+      background:
+        radial-gradient(ellipse 55% 55% at  8% 12%, rgba(236,120,160,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 45% 55% at 92% 85%, rgba(168,145,212,0.09) 0%, transparent 60%),
+        radial-gradient(ellipse 35% 40% at 50% 50%, rgba(217,164,92,0.04)  0%, transparent 55%),
+        var(--bg);
+    }
+
+    /* ── Noise grain overlay ────────────── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      opacity: .5;
+    }
+
+    #particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg2); }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(var(--rose), var(--lav)); border-radius: 99px; }
+
+    /* ════════════════════════════════════════
+       NAV
+    ════════════════════════════════════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+      height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5rem;
+      background: rgba(8,8,16,0.82);
+      backdrop-filter: blur(24px) saturate(1.4);
+      border-bottom: 1px solid var(--border);
+      transition: background .3s;
+    }
+    nav.scrolled { background: rgba(8,8,16,0.95); }
+
+    .nav-logo {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      background: linear-gradient(135deg, var(--rose), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      text-decoration: none;
+      letter-spacing: .01em;
+    }
+
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; align-items: center; }
+    .nav-links a {
+      font-size: .82rem; font-weight: 500; color: var(--text2);
+      text-decoration: none; letter-spacing: .06em; text-transform: uppercase;
+      position: relative; padding-bottom: 3px;
+      transition: color .2s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1.5px;
+      background: linear-gradient(90deg, var(--rose), var(--gold));
+      border-radius: 99px; transition: width .3s var(--ease-out);
+    }
+    .nav-links a:hover { color: var(--rose2); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      padding: .48rem 1.35rem !important;
+      border-radius: 99px !important;
+      background: linear-gradient(135deg, var(--rose), var(--gold)) !important;
+      color: var(--bg) !important;
+      font-weight: 700 !important;
+      letter-spacing: .04em !important;
+      transition: opacity .2s, transform .2s !important;
+      text-transform: none !important;
+    }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { opacity: .85; transform: translateY(-1px); color: var(--bg) !important; }
+
+    /* ════════════════════════════════════════
+       HERO
+    ════════════════════════════════════════ */
+    #hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1.05fr;
+      align-items: center;
+      padding: var(--nav-h) 5rem 0;
+      gap: 3rem;
+      position: relative; z-index: 1;
+    }
+    .hero-left { display: flex; flex-direction: column; gap: 1.6rem; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .38rem 1rem;
+      background: var(--rose-d);
+      border: 1px solid var(--border-hi);
+      border-radius: 99px;
+      font-size: .72rem; font-weight: 600; color: var(--rose2);
+      letter-spacing: .09em; text-transform: uppercase;
+      width: fit-content;
+      animation: fadeUp .7s var(--ease-out) both;
+    }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rose); animation: blink 1.6s ease-in-out infinite; }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5.4rem; line-height: .97; font-weight: 700;
+      animation: fadeUp .8s var(--ease-out) both .08s;
+      letter-spacing: -.01em;
+    }
+    .hero-name em {
+      font-style: italic;
+      background: linear-gradient(130deg, var(--rose) 0%, var(--gold) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .hero-tagline {
+      font-size: .97rem; font-weight: 400; color: var(--text2); line-height: 1.75;
+      animation: fadeUp .8s var(--ease-out) both .16s;
+    }
+    .hero-tagline strong { color: var(--rose2); font-weight: 600; }
+
+    .hero-divider {
+      width: 48px; height: 2px;
+      background: linear-gradient(90deg, var(--rose), var(--gold));
+      border-radius: 99px;
+      animation: fadeUp .8s var(--ease-out) both .22s;
+    }
+
+    .hero-pills { display: flex; flex-wrap: wrap; gap: .45rem; animation: fadeUp .8s var(--ease-out) both .28s; }
+    .pill {
+      display: inline-flex; align-items: center; gap: .35rem;
+      padding: .3rem .85rem; border-radius: 99px;
+      font-size: .73rem; font-weight: 600; border: 1px solid;
+    }
+    .pill-r { background: var(--rose-d); border-color: rgba(236,120,160,.22); color: var(--rose2); }
+    .pill-g { background: var(--gold-d); border-color: rgba(217,164,92,.22);  color: var(--gold2); }
+    .pill-l { background: var(--lav-d);  border-color: rgba(168,145,212,.22); color: var(--lav); }
+    .pill-m { background: rgba(109,207,181,.08); border-color: rgba(109,207,181,.2); color: var(--mint); }
+
+    .hero-btns { display: flex; gap: .9rem; animation: fadeUp .8s var(--ease-out) both .36s; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .78rem 1.8rem; border-radius: 99px;
+      font-size: .88rem; font-weight: 600; font-family: 'Outfit', sans-serif;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: transform .22s var(--ease-out), box-shadow .22s, opacity .2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--rose), var(--gold));
+      color: var(--bg);
+      box-shadow: 0 4px 24px var(--rose-glow);
+    }
+    .btn-primary:hover { box-shadow: 0 10px 36px rgba(236,120,160,.4); }
+    .btn-ghost {
+      background: transparent; color: var(--text2);
+      border: 1px solid var(--border-hi);
+    }
+    .btn-ghost:hover { color: var(--rose2); border-color: rgba(236,120,160,.4); }
+
+    /* ── Hero Visual ─────────────────────── */
+    .hero-right {
+      display: flex; align-items: center; justify-content: center;
+      animation: fadeIn .9s var(--ease-out) both .3s;
+      position: relative; z-index: 1;
+    }
+    .profile-visual { position: relative; width: 540px; height: 540px; }
+
+    .ring {
+      position: absolute; border-radius: 50%;
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+    }
+    .ring-1 { width: 460px; height: 460px; border: 1px dashed rgba(236,120,160,.18); animation: spinFwd 22s linear infinite; }
+    .ring-2 { width: 520px; height: 520px; border: 1px dashed rgba(217,164,92,.10);  animation: spinFwd 35s linear infinite reverse; }
+    .ring-3 { width: 380px; height: 380px; border: 1px solid rgba(168,145,212,.08);  animation: spinFwd 50s linear infinite; }
+
+    .photo-wrap {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 320px; height: 320px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--bg3), var(--card2));
+      border: 2px solid rgba(236,120,160,.28);
+      box-shadow: 0 0 0 12px rgba(236,120,160,.05), 0 24px 64px rgba(236,120,160,.14);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .photo-wrap img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .photo-placeholder { font-size: 5rem; }
+
+    .orbit-chip {
+      position: absolute; top: 50%; left: 50%;
+      display: flex; align-items: center; gap: .32rem;
+      padding: .3rem .75rem; border-radius: 99px;
+      font-size: .71rem; font-weight: 600; white-space: nowrap;
+      background: var(--card2); border: 1px solid var(--border-hi);
+      box-shadow: 0 4px 20px rgba(0,0,0,.35); color: var(--rose2);
+    }
+    .orbit-chip i { color: var(--gold); font-size: .7rem; }
+
+    .fcard {
+      position: absolute;
+      background: var(--card2); border: 1px solid var(--border-hi);
+      border-radius: 14px; padding: .65rem .95rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,.35);
+      display: flex; align-items: center; gap: .55rem;
+    }
+    .fcard-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 700; line-height: 1;
+      background: linear-gradient(135deg, var(--rose), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .fcard-lbl { font-size: .66rem; font-weight: 500; color: var(--text3); line-height: 1.4; }
+    .fc-a { top: 4%;    left: -2%;  animation: float1 4.2s ease-in-out infinite; }
+    .fc-b { bottom: 4%; right: -2%; animation: float1 4.2s ease-in-out infinite .9s; }
+    .fc-c { top: 46%;   right: -6%; animation: float1 4.2s ease-in-out infinite 1.8s; }
+
+    /* ════════════════════════════════════════
+       SECTION SHARED
+    ════════════════════════════════════════ */
+    section { padding: 7rem 5rem; position: relative; z-index: 1; }
+
+    .sec-eyebrow {
+      font-size: .68rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--rose); margin-bottom: .6rem;
+      display: flex; align-items: center; gap: .55rem;
+    }
+    .sec-eyebrow::before { content: ''; width: 22px; height: 1.5px; background: linear-gradient(var(--rose), var(--gold)); border-radius: 99px; }
+
+    .sec-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem; font-weight: 700; color: var(--text);
+      line-height: 1.08; margin-bottom: .9rem;
+    }
+    .sec-desc { font-size: .94rem; color: var(--text2); line-height: 1.85; max-width: 520px; }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-hi), transparent);
+      margin: 0 5rem;
+    }
+
+    /* ════════════════════════════════════════
+       STATS BAR
+    ════════════════════════════════════════ */
+    #stats { padding: 2.8rem 5rem; }
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4rem; }
+    .stat-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r-lg); padding: 1.8rem 1.6rem;
+      text-align: center; position: relative; overflow: hidden;
+      transition: border-color .3s, transform .3s;
+    }
+    .stat-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--rose), var(--gold));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .4s var(--ease-out);
+    }
+    .stat-card:hover { border-color: var(--border-hi); transform: translateY(-5px); }
+    .stat-card:hover::before { transform: scaleX(1); }
+    .stat-icon { font-size: 1.5rem; margin-bottom: .5rem; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.9rem; font-weight: 700; line-height: 1;
+      background: linear-gradient(135deg, var(--rose), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: .2rem;
+    }
+    .stat-lbl { font-size: .8rem; font-weight: 500; color: var(--text3); }
+
+    /* ════════════════════════════════════════
+       ABOUT
+    ════════════════════════════════════════ */
+    .about-grid { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 5rem; align-items: start; margin-top: 3rem; }
+    .about-text p { font-size: .95rem; color: var(--text2); line-height: 1.95; margin-bottom: 1.3rem; }
+    .about-text mark { background: none; color: var(--rose2); font-weight: 600; }
+
+    .info-grid { display: grid; grid-template-columns: 1fr; gap: .75rem; }
+    .info-card {
+      display: flex; align-items: flex-start; gap: .9rem;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 1rem 1.15rem;
+      transition: border-color .25s, transform .25s;
+    }
+    .info-card:hover { border-color: var(--border-hi); transform: translateX(4px); }
+    .info-icon {
+      width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0;
+      background: var(--rose-d); border: 1px solid rgba(236,120,160,.18);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .95rem; color: var(--rose2);
+    }
+    .info-label { font-size: .63rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--rose); margin-bottom: .18rem; }
+    .info-val { font-size: .83rem; font-weight: 500; color: var(--text2); line-height: 1.5; }
+
+    /* ════════════════════════════════════════
+       SKILLS
+    ════════════════════════════════════════ */
+    .skills-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 5rem; align-items: start; margin-top: 3rem; }
+
+    #radar-wrap { width: 320px; height: 320px; }
+    #radarCanvas { width: 100%; height: 100%; }
+
+    .skill-bars { display: flex; flex-direction: column; gap: 1rem; }
+    .skill-row { }
+    .skill-row-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: .42rem; }
+    .skill-name { display: flex; align-items: center; gap: .5rem; font-size: .87rem; font-weight: 600; color: var(--text); }
+    .skill-name i { width: 16px; text-align: center; color: var(--rose2); font-size: .85rem; }
+    .skill-pct { font-size: .75rem; font-weight: 700; color: var(--rose2); }
+    .bar-bg { height: 5px; background: var(--bg3); border-radius: 99px; overflow: hidden; }
+    .bar-fill {
+      height: 100%; border-radius: 99px;
+      background: linear-gradient(90deg, var(--rose), var(--gold));
+      width: 0; transition: width 1.3s cubic-bezier(.4,0,.2,1);
+    }
+
+    .tech-grid {
+      display: flex; flex-wrap: wrap; gap: .42rem; margin-top: 2rem;
+    }
+    .t-chip {
+      display: inline-flex; align-items: center; gap: .4rem;
+      padding: .28rem .82rem; border-radius: 8px;
+      font-size: .73rem; font-weight: 500;
+      background: var(--card2); color: var(--text3);
+      border: 1px solid var(--border);
+      transition: all .2s; cursor: default;
+    }
+    .t-chip i { font-size: .75rem; }
+    .t-chip:hover {
+      background: var(--rose-d); color: var(--rose2);
+      border-color: rgba(236,120,160,.28); transform: translateY(-2px);
+    }
+
+    /* tools section */
+    .tools-section { margin-top: 2.4rem; }
+    .tools-title { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--text3); margin-bottom: .9rem; }
+    .tools-row { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .tool-chip {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .35rem 1rem; border-radius: 10px;
+      font-size: .78rem; font-weight: 600;
+      background: var(--card); border: 1px solid var(--border);
+      transition: all .2s; cursor: default;
+    }
+    .tool-chip:hover { transform: translateY(-2px); border-color: var(--border-hi); }
+    .tool-chip .ti { font-size: 1rem; }
+    .tc-word  { color: #2b7cd3; }
+    .tc-excel { color: #1d7a45; }
+    .tc-canva { color: #00c4cc; }
+    .tc-figma { color: #f24e1e; }
+    .tc-git   { color: #f05032; }
+
+    /* ════════════════════════════════════════
+       EXPERIENCE
+    ════════════════════════════════════════ */
+    .exp-wrap { position: relative; margin-top: 3.5rem; padding-left: 2rem; }
+    .exp-wrap::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1.5px;
+      background: linear-gradient(to bottom, var(--rose), var(--lav), transparent);
+    }
+
+    .exp-item { position: relative; margin-bottom: 3rem; padding-left: 2.4rem; }
+    .exp-item::before {
+      content: ''; position: absolute; left: -2.75rem; top: 1.2rem;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--rose), var(--gold));
+      box-shadow: 0 0 0 4px rgba(236,120,160,.15);
+    }
+
+    .exp-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r-lg); padding: 2rem 2.2rem;
+      position: relative; overflow: hidden;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+    }
+    .exp-card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0;
+      background: linear-gradient(to bottom, var(--rose), var(--gold));
+      transition: height .4s var(--ease-out);
+    }
+    .exp-card:hover { border-color: var(--border-hi); transform: translateX(6px); box-shadow: 0 12px 40px rgba(236,120,160,.07); }
+    .exp-card:hover::before { height: 100%; }
+
+    .exp-meta { display: flex; align-items: center; gap: .7rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .exp-badge {
+      padding: .26rem .8rem; border-radius: 99px;
+      font-size: .66rem; font-weight: 700; letter-spacing: .07em;
+      background: var(--rose-d); color: var(--rose2);
+      border: 1px solid rgba(236,120,160,.2);
+    }
+    .exp-badge-gold {
+      background: var(--gold-d); color: var(--gold2);
+      border-color: rgba(217,164,92,.2);
+    }
+    .exp-msib {
+      padding: .24rem .7rem; border-radius: 99px;
+      font-size: .64rem; font-weight: 700;
+      background: var(--lav-d); color: var(--lav);
+      border: 1px solid rgba(168,145,212,.2);
+    }
+    .exp-role { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: .3rem; }
+    .exp-company {
+      display: flex; align-items: center; gap: .45rem;
+      font-size: .86rem; font-weight: 600; color: var(--gold2); margin-bottom: .8rem;
+    }
+    .exp-desc { font-size: .88rem; color: var(--text2); line-height: 1.8; }
+    .exp-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.1rem; }
+    .exp-tag {
+      display: inline-flex; align-items: center; gap: .3rem;
+      padding: .22rem .65rem; border-radius: 7px;
+      font-size: .67rem; font-weight: 600;
+      background: var(--gold-d); color: var(--gold2);
+      border: 1px solid rgba(217,164,92,.2);
+    }
+    .exp-tag i { font-size: .62rem; }
+
+    /* ════════════════════════════════════════
+       PROJECTS
+    ════════════════════════════════════════ */
+    .proj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; margin-top: 3rem; }
+    .proj-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+    }
+    .proj-card:hover { border-color: var(--border-hi); transform: translateY(-7px); box-shadow: 0 20px 52px rgba(236,120,160,.1); }
+
+    .proj-thumb {
+      height: 145px; display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; position: relative; overflow: hidden;
+    }
+    .proj-thumb i { font-size: 2.8rem; z-index: 1; }
+    .pt-1 { background: linear-gradient(135deg, rgba(236,120,160,.15), rgba(217,164,92,.08)); }
+    .pt-2 { background: linear-gradient(135deg, rgba(168,145,212,.15), rgba(236,120,160,.08)); }
+    .pt-3 { background: linear-gradient(135deg, rgba(217,164,92,.15), rgba(168,145,212,.08)); }
+    .pt-1 i { color: var(--rose2); }
+    .pt-2 i { color: var(--lav); }
+    .pt-3 i { color: var(--gold2); }
+
+    .proj-body { padding: 1.4rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
+    .proj-cat { font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--rose); margin-bottom: .3rem; }
+    .proj-title { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: .5rem; }
+    .proj-desc { font-size: .83rem; color: var(--text2); line-height: 1.75; flex: 1; }
+    .proj-foot { display: flex; flex-wrap: wrap; gap: .4rem; padding: 1rem 1.5rem 1.3rem; }
+
+    /* ════════════════════════════════════════
+       CONTACT
+    ════════════════════════════════════════ */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; margin-top: 3rem; }
+
+    .c-links { display: flex; flex-direction: column; gap: .75rem; margin-top: 2rem; }
+    .c-link {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.2rem; border-radius: var(--r); text-decoration: none;
+      background: var(--card); border: 1px solid var(--border);
+      color: var(--text); transition: all .25s var(--ease-out);
+    }
+    .c-link:hover { border-color: var(--border-hi); background: var(--card2); transform: translateX(6px); }
+    .c-icon {
+      width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+      background: var(--rose-d); border: 1px solid rgba(236,120,160,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: var(--rose2);
+    }
+    .cl-label { font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--rose); }
+    .cl-val { font-size: .85rem; font-weight: 500; color: var(--text2); margin-top: .1rem; }
+
+    .c-form-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r-xl); padding: 2.4rem;
+    }
+    .c-form-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.55rem; font-weight: 700; color: var(--text); margin-bottom: 1.4rem;
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .c-form-title i { color: var(--rose2); font-size: 1.2rem; }
+
+    .c-field { margin-bottom: .85rem; }
+    .c-field label { display: block; font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--text3); margin-bottom: .38rem; }
+    .c-field input, .c-field textarea {
+      width: 100%; padding: .82rem 1rem; border-radius: 10px;
+      border: 1px solid var(--border); background: var(--bg2);
+      font-family: 'Outfit', sans-serif; font-size: .88rem; color: var(--text);
+      outline: none; resize: none; transition: border-color .2s, box-shadow .2s;
+    }
+    .c-field input:focus, .c-field textarea:focus {
+      border-color: rgba(236,120,160,.4);
+      box-shadow: 0 0 0 3px rgba(236,120,160,.07);
+    }
+    .c-field textarea { height: 96px; }
+    .c-field input::placeholder, .c-field textarea::placeholder { color: var(--text3); }
+
+    .c-send {
+      width: 100%; padding: .88rem; border-radius: 10px;
+      background: linear-gradient(135deg, var(--rose), var(--gold));
+      color: var(--bg); font-family: 'Outfit', sans-serif;
+      font-size: .9rem; font-weight: 700; border: none; cursor: pointer;
+      transition: transform .22s var(--ease-out), box-shadow .22s;
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+    }
+    .c-send:hover { transform: translateY(-2px); box-shadow: 0 10px 28px var(--rose-glow); }
+    .c-feedback { font-size: .79rem; text-align: center; font-weight: 600; min-height: 1.2em; margin-top: .6rem; }
+
+    /* ════════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════════ */
+    footer {
+      text-align: center; padding: 2.5rem 5rem;
+      border-top: 1px solid var(--border);
+      font-size: .83rem; color: var(--text3);
+    }
+    footer .grad { background: linear-gradient(135deg, var(--rose), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600; }
+
+    /* ════════════════════════════════════════
+       ANIMATIONS
+    ════════════════════════════════════════ */
+    @keyframes fadeUp   { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn   { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: scale(1); } }
+    @keyframes spinFwd  { to { transform: translate(-50%,-50%) rotate(360deg); } }
+    @keyframes float1   { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+    @keyframes blink    { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity .7s var(--ease-out), transform .7s var(--ease-out);
+    }
+    .reveal.vis { opacity: 1; transform: translateY(0); }
+
+    /* ════════════════════════════════════════
+       CURSOR GLOW
+    ════════════════════════════════════════ */
+    .cursor-glow {
+      width: 320px; height: 320px; border-radius: 50%;
+      position: fixed; pointer-events: none; z-index: 0;
+      background: radial-gradient(circle, rgba(236,120,160,.04) 0%, transparent 70%);
+      transform: translate(-50%,-50%);
+      transition: left .08s, top .08s;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- ════ NAV ════ -->
+<nav id="mainNav">
+  <a class="nav-logo" href="#hero">Seli Octaria ✿</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact" class="nav-cta">Hire Me ✨</a></li>
+  </ul>
+</nav>
+
+<!-- ════ HERO ════ -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Available for Opportunities
+    </div>
+
+    <h1 class="hero-name">
+      Seli<br/><em>Octaria</em><br/>Simatupang
+    </h1>
+
+    <p class="hero-tagline">
+      <strong>UI/UX Designer · Frontend · Backend · Data Analytics</strong><br/>
+      Teknik Informatika — Universitas Maritim Raja Ali Haji
+    </p>
+
+    <div class="hero-divider"></div>
+
+    <div class="hero-pills">
+      <span class="pill pill-r"><i class="fa-solid fa-globe"></i> Web Dev</span>
+      <span class="pill pill-l"><i class="fa-solid fa-mobile-screen"></i> Mobile Dev</span>
+      <span class="pill pill-g"><i class="fa-solid fa-pen-ruler"></i> UI/UX</span>
+      <span class="pill pill-r"><i class="fa-solid fa-chart-bar"></i> Data Analytics</span>
+      <span class="pill pill-m"><i class="fa-solid fa-bolt"></i> Frontend</span>
+      <span class="pill pill-l"><i class="fa-solid fa-server"></i> Backend</span>
+    </div>
+
+    <div class="hero-btns">
+      <a class="btn btn-primary" href="#projects"><i class="fa-solid fa-sparkles"></i> Lihat Projects</a>
+      <a class="btn btn-ghost"   href="#contact"><i class="fa-solid fa-envelope"></i> Hubungi Aku</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="profile-visual">
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-3"></div>
+
+      <div class="orbit-chip" id="op1"><i class="fa-solid fa-pen-ruler"></i> UI/UX</div>
+      <div class="orbit-chip" id="op2"><i class="fa-solid fa-mobile-screen"></i> Mobile</div>
+      <div class="orbit-chip" id="op3"><i class="fa-solid fa-globe"></i> Web</div>
+      <div class="orbit-chip" id="op4"><i class="fa-solid fa-chart-bar"></i> Data</div>
+      <div class="orbit-chip" id="op5"><i class="fa-brands fa-flutter"></i> Flutter</div>
+
+      <div class="photo-wrap">
+        <img src="foto.jpeg" alt="Seli Octaria Simatupang" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <span class="photo-placeholder" style="display:none;">👩‍💻</span>
+      </div>
+
+      <div class="fcard fc-a">
+        <div class="fcard-num">2×</div>
+        <div><div class="fcard-lbl">Magang<br/>MSIB</div></div>
+      </div>
+      <div class="fcard fc-b">
+        <div class="fcard-num">7+</div>
+        <div><div class="fcard-lbl">Bahasa<br/>Pemrog.</div></div>
+      </div>
+      <div class="fcard fc-c">
+        <div class="fcard-num"><i class="fa-solid fa-graduation-cap" style="font-size:1.1rem;color:var(--gold)"></i></div>
+        <div><div class="fcard-lbl">Fresh<br/>Graduate</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════ STATS ════ -->
+<section id="stats">
+  <div class="stats-row">
+    <div class="stat-card reveal">
+      <div class="stat-icon"><i class="fa-solid fa-briefcase" style="color:var(--rose2)"></i></div>
+      <div class="stat-num" data-target="2">0</div>
+      <div class="stat-lbl">Magang MSIB</div>
+    </div>
+    <div class="stat-card reveal" style="transition-delay:.08s">
+      <div class="stat-icon"><i class="fa-solid fa-code" style="color:var(--gold2)"></i></div>
+      <div class="stat-num" data-target="7">0</div>
+      <div class="stat-lbl">Bahasa Pemrograman</div>
+    </div>
+    <div class="stat-card reveal" style="transition-delay:.16s">
+      <div class="stat-icon"><i class="fa-solid fa-layer-group" style="color:var(--lav)"></i></div>
+      <div class="stat-num" data-target="10">0</div>
+      <div class="stat-lbl">Proyek Selesai</div>
+    </div>
+    <div class="stat-card reveal" style="transition-delay:.24s">
+      <div class="stat-icon"><i class="fa-solid fa-star" style="color:var(--mint)"></i></div>
+      <div class="stat-num" data-target="3">0</div>
+      <div class="stat-lbl">Bidang Keahlian</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════ ABOUT ════ -->
+<section id="about">
+  <div class="reveal">
+    <p class="sec-eyebrow">About Me</p>
+    <h2 class="sec-title">Hii, Aku <em style="font-family:'Cormorant Garamond',serif;font-style:italic;background:linear-gradient(135deg,var(--rose),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Seli!</em></h2>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-text reveal" style="transition-delay:.1s">
+      <p>
+        Seorang <mark>fresh graduate</mark> Teknik Informatika yang deeply passionate di dunia web, mobile development, dan UI/UX design. Lahir dan besar di <mark>Batam</mark>, aku percaya bahwa teknologi yang baik harus terasa indah sekaligus fungsional.
+      </p>
+      <p>
+        Selama perkuliahan, aku aktif mengikuti berbagai proyek — mulai dari proyek perkuliahan, lomba, hingga <mark>2 kali magang</mark> di Infinite Learning Batam sebagai Android Mobile UI/UX & Developer. Aku sudah <mark>lulus sidang skripsi</mark> dan kini menunggu wisuda, siap terjun penuh ke dunia profesional!
+      </p>
+      <p>
+        Minatku mencakup desain antarmuka yang cantik dan intuitif, pengembangan aplikasi mobile lintas platform, serta analisis data untuk menghasilkan insight yang bermakna.
+      </p>
+      <div style="display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.4rem;">
+        <span class="pill pill-r"><i class="fa-solid fa-graduation-cap"></i> Fresh Graduate</span>
+        <span class="pill pill-g"><i class="fa-solid fa-location-dot"></i> Batam, Indonesia</span>
+        <span class="pill pill-l"><i class="fa-solid fa-cake-candles"></i> 28 Oktober 2003</span>
+        <span class="pill pill-r"><i class="fa-solid fa-trophy"></i> 2× Magang MSIB</span>
+        <span class="pill pill-m"><i class="fa-solid fa-lightbulb"></i> Problem Solver</span>
+      </div>
+    </div>
+
+    <div class="info-grid reveal" style="transition-delay:.18s">
+      <div class="info-card">
+        <div class="info-icon"><i class="fa-solid fa-university"></i></div>
+        <div><div class="info-label">Universitas</div><div class="info-val">UMRAH — Universitas Maritim Raja Ali Haji</div></div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon"><i class="fa-solid fa-book-open"></i></div>
+        <div><div class="info-label">Jurusan</div><div class="info-val">Teknik Informatika — Fakultas Teknik</div></div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div><div class="info-label">Status</div><div class="info-val">Lulus Sidang Skripsi — Menunggu Wisuda</div></div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon"><i class="fa-solid fa-briefcase"></i></div>
+        <div><div class="info-label">Magang</div><div class="info-val">Infinite Learning Batam (2024 & 2025)</div></div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon"><i class="fa-solid fa-pen-ruler"></i></div>
+        <div><div class="info-label">Role Terakhir</div><div class="info-val">Hipster / Designer — Android Mobile</div></div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon"><i class="fa-solid fa-crosshairs"></i></div>
+        <div><div class="info-label">Fokus</div><div class="info-val">Web · Mobile · UI/UX · Data</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════ SKILLS ════ -->
+<section id="skills">
+  <div class="reveal">
+    <p class="sec-eyebrow">Tech Stack</p>
+    <h2 class="sec-title">Skills &amp; Teknologi</h2>
+    <p class="sec-desc">Kemampuan teknis yang aku kuasai dan terus aku kembangkan di setiap proyek.</p>
+  </div>
+
+  <div class="skills-grid">
+    <div class="reveal" style="transition-delay:.1s">
+      <div id="radar-wrap">
+        <canvas id="radarCanvas" width="320" height="320"></canvas>
+      </div>
+    </div>
+
+    <div class="reveal" style="transition-delay:.18s">
+      <div class="skill-bars">
+        <div class="skill-row">
+          <div class="skill-row-head">
+            <span class="skill-name"><i class="fa-solid fa-pen-ruler"></i> UI/UX Design</span>
+            <span class="skill-pct">90%</span>
+          </div>
+          <div class="bar-bg"><div class="bar-fill" data-w="90"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-head">
+            <span class="skill-name"><i class="fa-solid fa-globe"></i> Web Development</span>
+            <span class="skill-pct">85%</span>
+          </div>
+          <div class="bar-bg"><div class="bar-fill" data-w="85"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-head">
+            <span class="skill-name"><i class="fa-solid fa-mobile-screen"></i> Mobile Development</span>
+            <span class="skill-pct">88%</span>
+          </div>
+          <div class="bar-bg"><div class="bar-fill" data-w="88"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-head">
+            <span class="skill-name"><i class="fa-solid fa-chart-bar"></i> Data Analytics</span>
+            <span class="skill-pct">75%</span>
+          </div>
+          <div class="bar-bg"><div class="bar-fill" data-w="75"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-row-head">
+            <span class="skill-name"><i class="fa-solid fa-database"></i> Backend / Database</span>
+            <span class="skill-pct">80%</span>
+          </div>
+          <div class="bar-bg"><div class="bar-fill" data-w="80"></div></div>
+        </div>
+      </div>
+
+      <!-- Programming Languages -->
+      <div class="tech-grid" style="margin-top:1.8rem;">
+        <span class="t-chip"><i class="fa-brands fa-html5" style="color:#e34c26"></i> HTML</span>
+        <span class="t-chip"><i class="fa-brands fa-css3-alt" style="color:#264de4"></i> CSS</span>
+        <span class="t-chip"><i class="fa-brands fa-js" style="color:#f7df1e"></i> JavaScript</span>
+        <span class="t-chip"><i class="fa-brands fa-php" style="color:#8892be"></i> PHP</span>
+        <span class="t-chip"><i class="fa-brands fa-python" style="color:#3776ab"></i> Python</span>
+        <span class="t-chip"><i class="fa-solid fa-k" style="color:#7f52ff"></i> Kotlin</span>
+        <span class="t-chip"><i class="fa-solid fa-d" style="color:#0175c2"></i> Dart</span>
+        <span class="t-chip"><i class="fa-solid fa-r" style="color:#276dc3"></i> R</span>
+        <span class="t-chip"><i class="fa-solid fa-c" style="color:#5f8dd3"></i> C / C++</span>
+        <span class="t-chip"><i class="fa-brands fa-flutter" style="color:#54c5f8"></i> Flutter</span>
+        <span class="t-chip"><i class="fa-brands fa-react" style="color:#61dafb"></i> React Native</span>
+        <span class="t-chip"><i class="fa-solid fa-database" style="color:#f29111"></i> MySQL</span>
+        <span class="t-chip"><i class="fa-brands fa-git-alt" style="color:#f05032"></i> Git / GitHub</span>
+        <span class="t-chip"><i class="fa-brands fa-android" style="color:#3ddc84"></i> Android Studio</span>
+        <span class="t-chip"><i class="fa-solid fa-code" style="color:#007acc"></i> VS Code</span>
+      </div>
+
+      <!-- Tools -->
+      <div class="tools-section">
+        <div class="tools-title"><i class="fa-solid fa-toolbox"></i> &nbsp;Design &amp; Productivity Tools</div>
+        <div class="tools-row">
+          <div class="tool-chip">
+            <span class="ti" style="color:#f24e1e"><i class="fa-brands fa-figma"></i></span>
+            <span style="color:var(--text2)">Figma</span>
+          </div>
+          <div class="tool-chip">
+            <!-- Microsoft Word blue icon -->
+            <span class="ti tc-word"><i class="fa-solid fa-file-word"></i></span>
+            <span style="color:var(--text2)">Microsoft Word</span>
+          </div>
+          <div class="tool-chip">
+            <!-- Excel green -->
+            <span class="ti tc-excel"><i class="fa-solid fa-file-excel"></i></span>
+            <span style="color:var(--text2)">Microsoft Excel</span>
+          </div>
+          <div class="tool-chip">
+            <!-- Canva teal -->
+            <span class="ti tc-canva"><i class="fa-solid fa-swatchbook"></i></span>
+            <span style="color:var(--text2)">Canva</span>
+          </div>
+          <div class="tool-chip">
+            <span class="ti tc-git"><i class="fa-brands fa-github"></i></span>
+            <span style="color:var(--text2)">GitHub</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════ EXPERIENCE ════ -->
+<section id="experience">
+  <div class="reveal">
+    <p class="sec-eyebrow">Journey</p>
+    <h2 class="sec-title">Pengalaman Magang</h2>
+    <p class="sec-desc">Perjalanan belajar dan berkembang bersama tim profesional di industri nyata.</p>
+  </div>
+
+  <div class="exp-wrap">
+    <!-- 2025 -->
+    <div class="exp-item reveal" style="transition-delay:.1s">
+      <div class="exp-card">
+        <div class="exp-meta">
+          <span class="exp-badge">2025</span>
+          <span style="font-size:.72rem;color:var(--text3)"><i class="fa-solid fa-circle-dot" style="color:var(--rose)"></i> Jalur Mandiri</span>
+        </div>
+        <h3 class="exp-role">Android Mobile UI/UX Designer</h3>
+        <p class="exp-company"><i class="fa-solid fa-building"></i> Infinite Learning — Batam</p>
+        <p class="exp-desc">
+          Kembali bergabung dengan jalur mandiri sebagai <strong style="color:var(--text)">Hipster / Designer</strong>. Bertanggung jawab penuh atas proses desain UI/UX aplikasi Android — dari riset pengguna, wireframing, hingga high-fidelity prototype yang siap diimplementasikan tim developer.
+        </p>
+        <div class="exp-tags">
+          <span class="exp-tag"><i class="fa-brands fa-figma"></i> Figma</span>
+          <span class="exp-tag"><i class="fa-solid fa-pen-ruler"></i> UI/UX</span>
+          <span class="exp-tag"><i class="fa-solid fa-layer-group"></i> Prototyping</span>
+          <span class="exp-tag"><i class="fa-solid fa-magnifying-glass"></i> User Research</span>
+          <span class="exp-tag"><i class="fa-brands fa-android"></i> Android</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2024 MSIB -->
+    <div class="exp-item reveal" style="transition-delay:.2s">
+      <div class="exp-card">
+        <div class="exp-meta">
+          <span class="exp-badge exp-badge-gold">2024</span>
+          <span class="exp-msib"><i class="fa-solid fa-certificate"></i> MSIB Bersertifikat</span>
+        </div>
+        <h3 class="exp-role">Android Mobile UI/UX &amp; Development</h3>
+        <p class="exp-company"><i class="fa-solid fa-building"></i> Infinite Learning — Batam</p>
+        <p class="exp-desc">
+          Program magang MSIB (Magang dan Studi Independen Bersertifikat). Berkolaborasi dalam tim lintas fungsi membangun aplikasi Android end-to-end, dari desain antarmuka hingga implementasi kode native maupun cross-platform dengan Kotlin, Flutter, dan React Native.
+        </p>
+        <div class="exp-tags">
+          <span class="exp-tag"><i class="fa-solid fa-k"></i> Kotlin</span>
+          <span class="exp-tag"><i class="fa-brands fa-flutter"></i> Flutter</span>
+          <span class="exp-tag"><i class="fa-brands fa-react"></i> React Native</span>
+          <span class="exp-tag"><i class="fa-solid fa-pen-ruler"></i> UI/UX</span>
+          <span class="exp-tag"><i class="fa-brands fa-android"></i> Android</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════ PROJECTS ════ -->
+<section id="projects">
+  <div class="reveal">
+    <p class="sec-eyebrow">Portfolio</p>
+    <h2 class="sec-title">Proyek Magang</h2>
+    <p class="sec-desc">Proyek yang dikerjakan selama magang di Infinite Learning Batam. Ganti dengan proyek aslimu!</p>
+  </div>
+
+  <div class="proj-grid">
+    <div class="proj-card reveal" style="transition-delay:.05s">
+      <div class="proj-thumb pt-1"><i class="fa-solid fa-mobile-screen"></i></div>
+      <div class="proj-body">
+        <p class="proj-cat"><i class="fa-brands fa-android"></i> Android Mobile App</p>
+        <h3 class="proj-title">Nama Aplikasi Android #1</h3>
+        <p class="proj-desc">Deskripsi singkat proyek kamu. Ceritakan problem yang diselesaikan, fitur utama, dan dampaknya bagi pengguna.</p>
+      </div>
+      <div class="proj-foot">
+        <span class="pill pill-r" style="font-size:.7rem"><i class="fa-solid fa-k"></i> Kotlin</span>
+        <span class="pill pill-l" style="font-size:.7rem"><i class="fa-brands fa-figma"></i> Figma</span>
+        <span class="pill pill-g" style="font-size:.7rem"><i class="fa-solid fa-pen-ruler"></i> UI/UX</span>
+      </div>
+    </div>
+
+    <div class="proj-card reveal" style="transition-delay:.1s">
+      <div class="proj-thumb pt-2"><i class="fa-solid fa-pen-ruler"></i></div>
+      <div class="proj-body">
+        <p class="proj-cat"><i class="fa-solid fa-swatchbook"></i> UI/UX Design</p>
+        <h3 class="proj-title">Nama Desain / App #2</h3>
+        <p class="proj-desc">Deskripsi singkat proyek desain kamu. Ceritakan proses, tools yang dipakai, dan hasil akhirnya.</p>
+      </div>
+      <div class="proj-foot">
+        <span class="pill pill-l" style="font-size:.7rem"><i class="fa-brands fa-figma"></i> Figma</span>
+        <span class="pill pill-r" style="font-size:.7rem"><i class="fa-solid fa-layer-group"></i> Prototyping</span>
+        <span class="pill pill-g" style="font-size:.7rem"><i class="fa-brands fa-android"></i> Android</span>
+      </div>
+    </div>
+
+    <div class="proj-card reveal" style="transition-delay:.15s">
+      <div class="proj-thumb pt-3"><i class="fa-brands fa-flutter"></i></div>
+      <div class="proj-body">
+        <p class="proj-cat"><i class="fa-solid fa-mobile-screen"></i> Mobile Development</p>
+        <h3 class="proj-title">Nama Aplikasi / Proyek #3</h3>
+        <p class="proj-desc">Deskripsi singkat proyek. Tambah lebih banyak card sesuai jumlah proyek aslimu!</p>
+      </div>
+      <div class="proj-foot">
+        <span class="pill pill-g" style="font-size:.7rem"><i class="fa-brands fa-flutter"></i> Flutter</span>
+        <span class="pill pill-r" style="font-size:.7rem"><i class="fa-solid fa-d"></i> Dart</span>
+        <span class="pill pill-l" style="font-size:.7rem"><i class="fa-solid fa-fire"></i> Firebase</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════ CONTACT ════ -->
+<section id="contact">
+  <div class="reveal">
+    <p class="sec-eyebrow">Get In Touch</p>
+    <h2 class="sec-title">Mari<br/><em style="font-family:'Cormorant Garamond',serif;font-style:italic;background:linear-gradient(135deg,var(--rose),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Berkolaborasi!</em></h2>
+    <p class="sec-desc" style="margin-top:.6rem;">Terbuka untuk peluang kerja, kolaborasi proyek, atau sekadar ngobrol seputar tech & design.</p>
+  </div>
+
+  <div class="contact-grid">
+    <div>
+      <div class="c-links reveal" style="transition-delay:.08s">
+        <a class="c-link" href="mailto:selioctarias@gmail.com">
+          <div class="c-icon"><i class="fa-solid fa-envelope"></i></div>
+          <div><div class="cl-label">Email</div><div class="cl-val">selioctarias@gmail.com</div></div>
+        </a>
+        <a class="c-link" href="https://www.linkedin.com/in/seli-octaria-simatupang-a46891343" target="_blank" rel="noopener">
+          <div class="c-icon" style="background:rgba(10,102,194,.12);border-color:rgba(10,102,194,.25)"><i class="fa-brands fa-linkedin" style="color:#0a66c2"></i></div>
+          <div><div class="cl-label">LinkedIn</div><div class="cl-val">seli-octaria-simatupang</div></div>
+        </a>
+        <a class="c-link" href="https://github.com/selioctaria/" target="_blank" rel="noopener">
+          <div class="c-icon" style="background:rgba(248,248,248,.06);border-color:rgba(255,255,255,.12)"><i class="fa-brands fa-github" style="color:var(--text2)"></i></div>
+          <div><div class="cl-label">GitHub</div><div class="cl-val">github.com/selioctaria</div></div>
+        </a>
+        <a class="c-link" href="https://www.instagram.com/cellyy_28" target="_blank" rel="noopener">
+          <div class="c-icon" style="background:rgba(225,48,108,.1);border-color:rgba(225,48,108,.22)"><i class="fa-brands fa-instagram" style="color:#e1306c"></i></div>
+          <div><div class="cl-label">Instagram</div><div class="cl-val">@cellyy_28</div></div>
+        </a>
+      </div>
+    </div>
+
+    <div class="c-form-card reveal" style="transition-delay:.16s">
+      <div class="c-form-title"><i class="fa-solid fa-paper-plane"></i> Kirim Pesan</div>
+      <div class="c-field">
+        <label><i class="fa-solid fa-user"></i> &nbsp;Nama</label>
+        <input type="text" id="cf-name" placeholder="Nama kamu" />
+      </div>
+      <div class="c-field">
+        <label><i class="fa-solid fa-at"></i> &nbsp;Email</label>
+        <input type="email" id="cf-email" placeholder="Email kamu" />
+      </div>
+      <div class="c-field">
+        <label><i class="fa-solid fa-message"></i> &nbsp;Pesan</label>
+        <textarea id="cf-msg" placeholder="Tulis pesanmu di sini..."></textarea>
+      </div>
+      <button class="c-send" onclick="sendMsg()">
+        <i class="fa-solid fa-paper-plane"></i> Kirim Pesan
+      </button>
+      <div class="c-feedback" id="c-feedback"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <p>Made with <i class="fa-solid fa-heart" style="color:var(--rose)"></i> by <span class="grad">Seli Octaria Simatupang</span> · © 2025</p>
+  <p style="margin-top:.3rem;font-size:.74rem;"><i class="fa-solid fa-graduation-cap" style="color:var(--gold)"></i> Teknik Informatika · UMRAH · Batam</p>
+</footer>
+
+<!-- ════ SCRIPTS ════ -->
+<script>
+/* ─── Particles ─────────────────────────────── */
+const cv = document.getElementById('particles');
+const cx2 = cv.getContext('2d');
+let W, H, pts;
+function initPart() {
+  W = cv.width  = innerWidth;
+  H = cv.height = innerHeight;
+  pts = Array.from({length:42}, () => ({
+    x: Math.random()*W, y: Math.random()*H,
+    vx:(Math.random()-.5)*.3, vy:(Math.random()-.5)*.3,
+    r: Math.random()*1.6+.5,
+    c: Math.random()>.5 ? 'rgba(236,120,160,' : 'rgba(217,164,92,'
+  }));
+}
+function drawPart() {
+  cx2.clearRect(0,0,W,H);
+  pts.forEach(p => {
+    p.x+=p.vx; p.y+=p.vy;
+    if(p.x<0||p.x>W) p.vx*=-1;
+    if(p.y<0||p.y>H) p.vy*=-1;
+    cx2.beginPath(); cx2.arc(p.x,p.y,p.r,0,Math.PI*2);
+    cx2.fillStyle=p.c+'.3)'; cx2.fill();
+  });
+  for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++){
+    const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y, d=Math.hypot(dx,dy);
+    if(d<95){
+      cx2.beginPath(); cx2.moveTo(pts[i].x,pts[i].y); cx2.lineTo(pts[j].x,pts[j].y);
+      cx2.strokeStyle=`rgba(236,120,160,${.1*(1-d/95)})`; cx2.lineWidth=.5; cx2.stroke();
+    }
+  }
+  requestAnimationFrame(drawPart);
+}
+addEventListener('resize', initPart);
+initPart(); drawPart();
+
+/* ─── Cursor Glow ───────────────────────────── */
+const glow = document.getElementById('cursorGlow');
+document.addEventListener('mousemove', e => { glow.style.left=e.clientX+'px'; glow.style.top=e.clientY+'px'; });
+
+/* ─── Nav scroll tint ───────────────────────── */
+const nav = document.getElementById('mainNav');
+addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+
+/* ─── Orbit Chips ───────────────────────────── */
+const chips = ['op1','op2','op3','op4','op5'];
+const OCX=270, OCY=270, OR=255;
+function animOrbit(t) {
+  chips.forEach((id,i) => {
+    const el=document.getElementById(id); if(!el) return;
+    const a=(t*.00045)+(i/chips.length)*Math.PI*2;
+    el.style.left=(OCX+OR*Math.cos(a)-el.offsetWidth/2)+'px';
+    el.style.top =(OCY+OR*Math.sin(a)-el.offsetHeight/2)+'px';
+    el.style.transform='none';
+  });
+  requestAnimationFrame(animOrbit);
+}
+requestAnimationFrame(animOrbit);
+
+/* ─── Scroll Reveal ─────────────────────────── */
+const ro = new IntersectionObserver(
+  en => en.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); }),
+  {threshold:.07}
+);
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+/* ─── Counters ──────────────────────────────── */
+function animCount(el, target) {
+  let start=0; const dur=1500;
+  const step=ts => {
+    if(!start) start=ts;
+    const prog=Math.min((ts-start)/dur,1), ease=1-Math.pow(1-prog,3);
+    el.textContent=Math.round(ease*target)+(target>=10?'+':'×');
+    if(prog<1) requestAnimationFrame(step);
+    else el.textContent=target+(target>=10?'+':'×');
+  };
+  requestAnimationFrame(step);
+}
+const co = new IntersectionObserver(en => {
+  en.forEach(e => { if(e.isIntersecting){ animCount(e.target,+e.target.dataset.target); co.unobserve(e.target); } });
+},{threshold:.5});
+document.querySelectorAll('.stat-num[data-target]').forEach(el => co.observe(el));
+
+/* ─── Skill Bars ────────────────────────────── */
+const bo = new IntersectionObserver(en => {
+  en.forEach(e => { if(e.isIntersecting){ e.target.style.width=e.target.dataset.w+'%'; bo.unobserve(e.target); } });
+},{threshold:.3});
+document.querySelectorAll('.bar-fill').forEach(b => bo.observe(b));
+
+/* ─── Radar Chart ───────────────────────────── */
+(function(){
+  const c=document.getElementById('radarCanvas');
+  const ct=c.getContext('2d');
+  const labels=['UI/UX','Web','Mobile','Data','Backend'];
+  const vals=[.9,.85,.88,.75,.80];
+  const N=labels.length, cx=160, cy=160, R=110;
+  const px=(i,r)=>cx+r*Math.cos((i/N)*Math.PI*2-Math.PI/2);
+  const py=(i,r)=>cy+r*Math.sin((i/N)*Math.PI*2-Math.PI/2);
+
+  function draw(p){
+    ct.clearRect(0,0,320,320);
+    // grid
+    [.25,.5,.75,1].forEach(s=>{
+      ct.beginPath();
+      for(let i=0;i<N;i++) i===0?ct.moveTo(px(i,R*s),py(i,R*s)):ct.lineTo(px(i,R*s),py(i,R*s));
+      ct.closePath(); ct.strokeStyle='rgba(236,120,160,.1)'; ct.lineWidth=1; ct.stroke();
+    });
+    // spokes
+    for(let i=0;i<N;i++){
+      ct.beginPath(); ct.moveTo(cx,cy); ct.lineTo(px(i,R),py(i,R));
+      ct.strokeStyle='rgba(236,120,160,.09)'; ct.lineWidth=1; ct.stroke();
+    }
+    // fill
+    ct.beginPath();
+    for(let i=0;i<N;i++){
+      const r=R*vals[i]*p;
+      i===0?ct.moveTo(px(i,r),py(i,r)):ct.lineTo(px(i,r),py(i,r));
+    }
+    ct.closePath();
+    const g=ct.createRadialGradient(cx,cy,0,cx,cy,R);
+    g.addColorStop(0,'rgba(236,120,160,.35)'); g.addColorStop(1,'rgba(217,164,92,.06)');
+    ct.fillStyle=g; ct.fill();
+    ct.strokeStyle='rgba(236,120,160,.55)'; ct.lineWidth=1.5; ct.stroke();
+    // dots
+    for(let i=0;i<N;i++){
+      const r=R*vals[i]*p;
+      ct.beginPath(); ct.arc(px(i,r),py(i,r),4,0,Math.PI*2);
+      ct.fillStyle='#ec78a0'; ct.fill();
+      ct.strokeStyle='#080810'; ct.lineWidth=2; ct.stroke();
+    }
+    // labels
+    ct.font='600 12px "Outfit",sans-serif'; ct.textAlign='center'; ct.textBaseline='middle';
+    for(let i=0;i<N;i++){ ct.fillStyle='#9991b2'; ct.fillText(labels[i],px(i,R+24),py(i,R+22)); }
+  }
+
+  const obs=new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting){
+      const s=performance.now();
+      (function tick(now){ const prog=Math.min((now-s)/1200,1); draw(1-Math.pow(1-prog,3)); if(prog<1) requestAnimationFrame(tick); })(s);
+      obs.unobserve(c);
+    }
+  },{threshold:.3});
+  obs.observe(c); draw(0);
+})();
+
+/* ─── Contact form ──────────────────────────── */
+function sendMsg(){
+  const n=document.getElementById('cf-name').value.trim();
+  const e=document.getElementById('cf-email').value.trim();
+  const m=document.getElementById('cf-msg').value.trim();
+  const out=document.getElementById('c-feedback');
+  if(!n||!e||!m){ out.textContent='⚠ Isi semua field dulu ya!'; out.style.color='var(--rose)'; return; }
+  out.textContent='✓ Terima kasih '+n+'! Pesan kamu sudah diterima 🌸';
+  out.style.color='var(--gold2)';
+  document.getElementById('cf-name').value='';
+  document.getElementById('cf-email').value='';
+  document.getElementById('cf-msg').value='';
+}
+</script>
+</body>
+</html>

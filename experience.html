@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experience — Seli Octaria Simatupang</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── 3D Canvas ──────────────────────────────── */
+    #bg3d { position:fixed; inset:0; z-index:-1; pointer-events:none; }
+
+    /* ── PAGE HEADER compact ────────────────────── */
+    .exp-page-header {
+      padding: calc(var(--nav-h) + 3rem) 5rem 2.5rem;
+      position: relative; z-index:1;
+      border-bottom: 1px solid var(--border);
+    }
+    .eph-inner {
+      display:flex; align-items:flex-end; justify-content:space-between;
+    }
+    .eph-left {}
+    .eph-eyebrow {
+      font-size:.68rem; font-weight:700; letter-spacing:.15em;
+      text-transform:uppercase; color:var(--rose);
+      display:flex; align-items:center; gap:.5rem; margin-bottom:.55rem;
+    }
+    .eph-eyebrow::before { content:''; width:20px; height:1.5px; background:linear-gradient(var(--rose),var(--gold)); border-radius:99px; }
+    .eph-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size:3.2rem; font-weight:700; line-height:1.05; color:var(--text);
+    }
+    .eph-title em {
+      font-style:italic;
+      background:linear-gradient(130deg,var(--rose),var(--gold));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+
+    /* Stat pills in header */
+    .eph-stats {
+      display:flex; gap:.75rem; align-items:center;
+      padding-bottom:.35rem;
+    }
+    .eph-stat {
+      display:flex; flex-direction:column; align-items:center;
+      padding:.65rem 1.1rem; border-radius:var(--r);
+      background:var(--card); border:1px solid var(--border);
+      min-width:80px;
+    }
+    .eph-stat-num {
+      font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:700; line-height:1;
+      background:linear-gradient(135deg,var(--rose),var(--gold));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .eph-stat-lbl { font-size:.63rem; font-weight:600; color:var(--text3); text-transform:uppercase; letter-spacing:.07em; margin-top:.15rem; }
+
+    /* Ticker strip below header */
+    .ticker-strip {
+      overflow:hidden; border-bottom:1px solid var(--border);
+      padding:.48rem 0; background:rgba(7,7,15,.7);
+      backdrop-filter:blur(10px); position:relative; z-index:1;
+    }
+    .ticker-track {
+      display:flex; white-space:nowrap;
+      animation:tickerRun 20s linear infinite;
+    }
+    @keyframes tickerRun { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .ticker-item {
+      display:inline-flex; align-items:center; gap:.55rem;
+      padding:0 2rem; font-size:.68rem; font-weight:600;
+      letter-spacing:.09em; text-transform:uppercase; color:var(--text3);
+    }
+    .ticker-item i { color:var(--rose2); font-size:.62rem; }
+    .ticker-dot { color:var(--border-hi); font-size:.5rem; }
+
+    /* ── MAIN CONTENT LAYOUT ────────────────────── */
+    .exp-main {
+      display:grid; grid-template-columns:260px 1fr;
+      gap:0; padding:3.5rem 5rem;
+      position:relative; z-index:1;
+    }
+
+    /* Left nav sidebar */
+    .exp-sidebar {
+      padding-right:3rem;
+      position:sticky; top:calc(var(--nav-h) + 1.5rem);
+      height:fit-content;
+    }
+    .esb-label {
+      font-size:.63rem; font-weight:700; text-transform:uppercase;
+      letter-spacing:.12em; color:var(--text3); margin-bottom:1rem;
+    }
+
+    /* Timeline nav items */
+    .esb-nav { display:flex; flex-direction:column; gap:.5rem; margin-bottom:2rem; }
+    .esb-nav-item {
+      display:flex; align-items:center; gap:.75rem;
+      padding:.75rem .95rem; border-radius:var(--r);
+      background:var(--card); border:1px solid var(--border);
+      text-decoration:none; cursor:pointer;
+      transition:all .22s var(--ease);
+    }
+    .esb-nav-item:hover,
+    .esb-nav-item.active {
+      border-color:var(--border-hi); background:var(--rose-d); color:var(--rose2);
+    }
+    .esb-nav-dot {
+      width:28px; height:28px; border-radius:8px; flex-shrink:0;
+      background:var(--rose-d); border:1px solid rgba(220,110,155,.2);
+      display:flex; align-items:center; justify-content:center;
+      font-size:.75rem; color:var(--rose2);
+    }
+    .esb-nav-year { font-size:.85rem; font-weight:700; color:var(--text); }
+    .esb-nav-role { font-size:.7rem; color:var(--text3); margin-top:.05rem; }
+    .esb-nav-item.active .esb-nav-year { color:var(--rose2); }
+    .esb-nav-item.active .esb-nav-role { color:rgba(220,110,155,.7); }
+
+    /* Sidebar stat mini-grid */
+    .esb-stats { display:grid; grid-template-columns:1fr 1fr; gap:.55rem; margin-bottom:2rem; }
+    .esb-stat {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:var(--r); padding:.8rem .9rem; text-align:center;
+    }
+    .esb-stat-num {
+      font-family:'Cormorant Garamond',serif; font-size:1.7rem; font-weight:700; line-height:1;
+      background:linear-gradient(135deg,var(--rose),var(--gold));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .esb-stat-lbl { font-size:.62rem; color:var(--text3); font-weight:500; margin-top:.12rem; }
+
+    /* Cert quick-buttons in sidebar */
+    .esb-cert-title {
+      font-size:.63rem; font-weight:700; text-transform:uppercase;
+      letter-spacing:.12em; color:var(--text3); margin-bottom:.65rem;
+    }
+    .esb-cert-btns { display:flex; flex-direction:column; gap:.45rem; }
+    .esb-cert-btn {
+      display:flex; align-items:center; gap:.6rem;
+      padding:.65rem .9rem; border-radius:var(--r);
+      background:var(--card); border:1px solid var(--border);
+      cursor:pointer; font-family:'Outfit',sans-serif;
+      font-size:.78rem; font-weight:600; color:var(--text2);
+      transition:all .22s; text-decoration:none;
+    }
+    .esb-cert-btn:hover { border-color:var(--border-hi); background:var(--rose-d); color:var(--rose2); transform:translateX(3px); }
+    .esb-cert-btn i { font-size:.8rem; }
+
+    /* ── TIMELINE (right col) ────────────────────── */
+    .exp-timeline {
+      border-left:2px solid var(--border);
+      padding-left:3rem;
+    }
+
+    .tl-entry { position:relative; padding-bottom:3.5rem; }
+    .tl-entry:last-child { padding-bottom:0; }
+
+    /* timeline dot */
+    .tl-dot {
+      position:absolute; left:-3.44rem; top:1.2rem;
+      width:14px; height:14px; border-radius:50%;
+      background:linear-gradient(135deg,var(--rose),var(--gold));
+      box-shadow:0 0 0 5px rgba(220,110,155,.15);
+      transition:transform .2s, box-shadow .2s;
+    }
+    .tl-entry:hover .tl-dot {
+      transform:scale(1.4);
+      box-shadow:0 0 0 8px rgba(220,110,155,.1);
+    }
+    .tl-entry:last-child .tl-dot {
+      background:linear-gradient(135deg,var(--gold),var(--lav));
+    }
+
+    /* ── Entry card ──────────────────────────────── */
+    .tl-card {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:var(--r-xl); overflow:hidden;
+      transition:border-color .3s, box-shadow .3s, transform .12s;
+      transform-style:preserve-3d;
+    }
+    .tl-card:hover {
+      border-color:var(--border-hi);
+      box-shadow:0 16px 48px rgba(220,110,155,.09);
+    }
+    /* top gradient line */
+    .tl-card-line {
+      height:2px;
+      background:linear-gradient(90deg,var(--rose),var(--gold),var(--lav));
+    }
+    .tl-card-body { padding:2rem 2.2rem; }
+
+    /* ── Card header row ─────────────────────────── */
+    .tl-card-head {
+      display:flex; align-items:flex-start; justify-content:space-between;
+      margin-bottom:1.2rem; gap:1rem;
+    }
+    .tl-card-head-left {}
+    .tl-meta {
+      display:flex; align-items:center; gap:.55rem;
+      flex-wrap:wrap; margin-bottom:.55rem;
+    }
+    .tm-badge {
+      padding:.22rem .72rem; border-radius:99px;
+      font-size:.64rem; font-weight:700; letter-spacing:.06em;
+    }
+    .tb-rose { background:var(--rose-d); color:var(--rose2); border:1px solid rgba(220,110,155,.2); }
+    .tb-gold { background:var(--gold-d); color:var(--gold2); border:1px solid rgba(210,160,80,.2); }
+    .tb-lav  { background:var(--lav-d);  color:var(--lav2);  border:1px solid rgba(164,143,208,.2); }
+    .tb-mint { background:var(--mint-d); color:var(--mint);  border:1px solid rgba(98,201,176,.2); }
+    .tm-dur  { font-size:.7rem; color:var(--text3); display:flex; align-items:center; gap:.35rem; }
+
+    .tl-role {
+      font-family:'Cormorant Garamond',serif;
+      font-size:1.5rem; font-weight:700; color:var(--text); line-height:1.2;
+      margin-bottom:.3rem;
+    }
+    .tl-company {
+      display:flex; align-items:center; gap:.4rem;
+      font-size:.86rem; font-weight:600; color:var(--gold2);
+    }
+
+    /* Company logo box */
+    .tl-logo {
+      width:56px; height:56px; border-radius:13px; flex-shrink:0;
+      background:var(--rose-d); border:1px solid rgba(220,110,155,.2);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.4rem;
+    }
+
+    /* ── Description ─────────────────────────────── */
+    .tl-desc {
+      font-size:.88rem; color:var(--text2); line-height:1.88;
+      margin-bottom:1.4rem; padding-bottom:1.4rem;
+      border-bottom:1px solid var(--border);
+    }
+    .tl-desc strong { color:var(--text); font-weight:600; }
+
+    /* ── MSIB info callout ───────────────────────── */
+    .msib-callout {
+      display:flex; gap:.8rem; align-items:flex-start;
+      background:linear-gradient(135deg,rgba(164,143,208,.07),rgba(220,110,155,.04));
+      border:1px solid rgba(164,143,208,.2);
+      border-radius:var(--r); padding:1rem 1.2rem;
+      margin-bottom:1.4rem; font-size:.82rem; color:var(--text2); line-height:1.72;
+    }
+    .msib-callout > i { color:var(--lav2); font-size:.95rem; margin-top:.15rem; flex-shrink:0; }
+    .msib-callout strong { color:var(--lav2); }
+
+    /* ── Responsibilities list ───────────────────── */
+    .resp-section { margin-bottom:1.4rem; }
+    .resp-title {
+      font-size:.65rem; font-weight:700; text-transform:uppercase;
+      letter-spacing:.1em; color:var(--rose); margin-bottom:.75rem;
+      display:flex; align-items:center; gap:.45rem;
+    }
+    .resp-list { display:grid; grid-template-columns:1fr 1fr; gap:.55rem; }
+    .resp-item {
+      display:flex; align-items:flex-start; gap:.6rem;
+      padding:.75rem .9rem;
+      background:var(--bg2); border:1px solid var(--border); border-radius:var(--r);
+      font-size:.81rem; color:var(--text2); line-height:1.6;
+      transition:border-color .2s, background .2s, transform .2s;
+    }
+    .resp-item:hover { border-color:var(--border-hi); background:var(--rose-d); transform:translateX(3px); }
+    .resp-item i { color:var(--rose2); font-size:.68rem; margin-top:.25rem; flex-shrink:0; }
+
+    /* ── Tag cloud ───────────────────────────────── */
+    .tag-row {
+      display:flex; flex-wrap:wrap; gap:.38rem;
+      padding-top:1.2rem; border-top:1px solid var(--border);
+    }
+    .xtag {
+      display:inline-flex; align-items:center; gap:.35rem;
+      padding:.26rem .75rem; border-radius:7px;
+      font-size:.7rem; font-weight:500;
+      background:var(--card2); color:var(--text3); border:1px solid var(--border);
+      transition:all .18s;
+    }
+    .xtag i { font-size:.68rem; }
+    .xtag:hover { background:var(--rose-d); color:var(--rose2); border-color:rgba(220,110,155,.28); transform:translateY(-2px); }
+
+    /* ── Certificate bar ─────────────────────────── */
+    .cert-bar {
+      margin:1.4rem 2.2rem 2rem;
+      display:flex; align-items:center; gap:1rem; flex-wrap:wrap;
+      padding:1.1rem 1.3rem; border-radius:var(--r-lg);
+      background:linear-gradient(135deg,rgba(220,110,155,.06),rgba(210,160,80,.04));
+      border:1px solid var(--border-hi);
+      position:relative; overflow:hidden;
+    }
+    /* animated shimmer line */
+    .cert-bar::before {
+      content:''; position:absolute; top:0; left:-100%; width:100%; height:2px;
+      background:linear-gradient(90deg,transparent,var(--rose),var(--gold),transparent);
+      animation:shimBar 3.5s ease-in-out infinite;
+    }
+    @keyframes shimBar { 0%{left:-100%} 65%,100%{left:100%} }
+
+    .cert-bar-icon {
+      width:46px; height:46px; border-radius:12px; flex-shrink:0;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.25rem;
+    }
+    .cert-bar-info { flex:1; min-width:0; }
+    .cert-bar-label {
+      font-size:.62rem; font-weight:700; text-transform:uppercase;
+      letter-spacing:.09em; color:var(--text3);
+      display:flex; align-items:center; gap:.35rem; margin-bottom:.2rem;
+    }
+    .cert-bar-label i { color:var(--mint); font-size:.58rem; }
+    .cert-bar-name { font-size:.9rem; font-weight:700; color:var(--text); margin-bottom:.2rem; }
+    .cert-bar-id { font-size:.71rem; color:var(--rose2); font-family:monospace; display:flex; align-items:center; gap:.3rem; }
+
+    .cert-bar-actions { display:flex; gap:.55rem; flex-shrink:0; }
+    .cb-btn {
+      display:inline-flex; align-items:center; gap:.4rem;
+      padding:.5rem 1.1rem; border-radius:99px;
+      font-size:.77rem; font-weight:700; font-family:'Outfit',sans-serif;
+      border:none; cursor:pointer; text-decoration:none;
+      transition:transform .2s var(--ease), box-shadow .2s, opacity .2s;
+    }
+    .cb-btn:hover { transform:translateY(-2px); }
+    .cb-btn-primary {
+      background:linear-gradient(135deg,var(--rose),var(--gold)); color:var(--bg);
+      box-shadow:0 3px 14px rgba(220,110,155,.22);
+    }
+    .cb-btn-primary:hover { box-shadow:0 7px 22px rgba(220,110,155,.4); }
+    .cb-btn-ghost {
+      background:rgba(255,255,255,.04); color:var(--text2);
+      border:1px solid var(--border-hi);
+    }
+    .cb-btn-ghost:hover { color:var(--rose2); background:var(--rose-d); }
+
+    /* ════════════════════════════════════════
+       CERTIFICATE VIEWER MODAL
+    ════════════════════════════════════════ */
+    .cv-overlay {
+      position:fixed; inset:0; z-index:900;
+      background:rgba(4,4,12,.94); backdrop-filter:blur(22px);
+      display:flex; align-items:center; justify-content:center;
+      padding:1.5rem; opacity:0; pointer-events:none; transition:opacity .3s;
+    }
+    .cv-overlay.open { opacity:1; pointer-events:all; }
+    .cv-modal {
+      background:var(--card2); border:1px solid var(--border-hi);
+      border-radius:var(--r-xl); width:100%; max-width:900px; max-height:94vh;
+      display:flex; flex-direction:column; overflow:hidden;
+      transform:translateY(24px) scale(.97); transition:transform .38s var(--ease);
+      box-shadow:0 40px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(220,110,155,.09);
+    }
+    .cv-overlay.open .cv-modal { transform:translateY(0) scale(1); }
+    .cv-rainbow {
+      height:2.5px; flex-shrink:0;
+      background:linear-gradient(90deg,var(--rose),var(--gold),var(--mint),var(--lav),var(--rose));
+      background-size:200% 100%;
+      animation:rainbowShift 4s linear infinite;
+    }
+    @keyframes rainbowShift { from{background-position:0 0} to{background-position:200% 0} }
+    .cv-header {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:1.1rem 1.6rem; border-bottom:1px solid var(--border); flex-shrink:0;
+      background:linear-gradient(135deg,rgba(220,110,155,.05),rgba(210,160,80,.03));
+    }
+    .cv-header-left { display:flex; align-items:center; gap:.85rem; }
+    .cv-hicon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.05rem; flex-shrink:0; }
+    .cv-htitle { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:700; color:var(--text); }
+    .cv-hsub { font-size:.7rem; color:var(--text3); margin-top:.1rem; }
+    .cv-hbtn {
+      width:34px; height:34px; border-radius:8px;
+      background:var(--bg2); border:1px solid var(--border);
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; color:var(--text2); font-size:.88rem; transition:all .2s;
+    }
+    .cv-hbtn:hover { border-color:var(--border-hi); color:var(--rose2); }
+    .cv-info-bar {
+      display:flex; align-items:center; gap:1.6rem; padding:.75rem 1.6rem;
+      border-bottom:1px solid var(--border); background:var(--bg2); flex-shrink:0; flex-wrap:wrap;
+    }
+    .cv-info-item { display:flex; align-items:center; gap:.4rem; font-size:.74rem; }
+    .cv-info-item i { color:var(--rose2); font-size:.68rem; }
+    .cv-info-lbl { color:var(--text3); font-weight:600; }
+    .cv-info-val { color:var(--text2); font-family:monospace; }
+    .cv-verified {
+      margin-left:auto; display:flex; align-items:center; gap:.38rem;
+      padding:.25rem .75rem; border-radius:99px;
+      background:rgba(98,201,176,.1); border:1px solid rgba(98,201,176,.22);
+      font-size:.69rem; font-weight:700; color:var(--mint);
+    }
+    .cv-viewer {
+      flex:1; min-height:0; background:#0a0a14;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .cv-viewer iframe { width:100%; height:100%; min-height:500px; border:none; display:block; }
+    .cv-placeholder {
+      display:flex; flex-direction:column; align-items:center;
+      justify-content:center; gap:1rem; padding:4rem; text-align:center;
+    }
+    .cv-placeholder i { font-size:3rem; color:var(--text3); }
+    .cv-placeholder h3 { font-family:'Cormorant Garamond',serif; font-size:1.25rem; font-weight:700; color:var(--text); }
+    .cv-placeholder p { font-size:.86rem; color:var(--text2); line-height:1.7; max-width:320px; }
+    .cv-footer {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:.85rem 1.6rem; border-top:1px solid var(--border); flex-shrink:0;
+    }
+    .cv-footer-note { display:flex; align-items:center; gap:.4rem; font-size:.72rem; color:var(--text3); }
+    .cv-footer-note i { color:var(--mint); }
+    .cv-footer-actions { display:flex; gap:.5rem; }
+  </style>
+</head>
+<body>
+<div class="ambient"></div>
+<div class="grain"></div>
+<canvas id="bg3d"></canvas>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a class="nav-logo" href="index.html">Seli Octaria ✿</a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="skill.html">Skills</a></li>
+    <li><a href="experience.html">Experience</a></li>
+    <li><a href="project.html">Projects</a></li>
+    <li><a href="sertifikat.html">Sertifikat</a></li>
+    <li><a href="contact.html" class="nav-cta">Hire Me ✨</a></li>
+  </ul>
+</nav>
+
+<!-- ── PAGE HEADER ─────────────────────────── -->
+<div class="exp-page-header">
+  <div class="eph-inner reveal">
+    <div class="eph-left">
+      <div class="eph-eyebrow"><i class="fa-solid fa-briefcase"></i> Career Journey</div>
+      <h1 class="eph-title">Pengalaman <em>Magang</em></h1>
+      <div class="page-breadcrumb" style="margin-top:.6rem">
+        <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+        <i class="fa-solid fa-chevron-right"></i>
+        <span style="color:var(--rose2)">Experience</span>
+      </div>
+    </div>
+    <div class="eph-stats">
+      <div class="eph-stat">
+        <div class="eph-stat-num">2×</div>
+        <div class="eph-stat-lbl">Magang</div>
+      </div>
+      <div class="eph-stat">
+        <div class="eph-stat-num">8+</div>
+        <div class="eph-stat-lbl">Bulan</div>
+      </div>
+      <div class="eph-stat">
+        <div class="eph-stat-num">7+</div>
+        <div class="eph-stat-lbl">Tech Stack</div>
+      </div>
+      <div class="eph-stat">
+        <div class="eph-stat-num">🏅</div>
+        <div class="eph-stat-lbl">Bersertifikat</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Ticker -->
+<div class="ticker-strip">
+  <div class="ticker-track">
+    <span class="ticker-item"><i class="fa-brands fa-figma"></i> Figma <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item"><i class="fa-brands fa-android"></i> Android <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item"><i class="fa-brands fa-flutter"></i> Flutter <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item"><i class="fa-solid fa-k"></i> Kotlin <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item"><i class="fa-brands fa-react"></i> React Native <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item"><i class="fa-solid fa-fire"></i> Firebase <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item"><i class="fa-solid fa-pen-ruler"></i> UI/UX Design <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item"><i class="fa-solid fa-arrows-spin"></i> Agile/Scrum <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item"><i class="fa-brands fa-figma"></i> Figma <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item"><i class="fa-brands fa-android"></i> Android <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item"><i class="fa-brands fa-flutter"></i> Flutter <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item"><i class="fa-solid fa-k"></i> Kotlin <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item"><i class="fa-brands fa-react"></i> React Native <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item"><i class="fa-solid fa-fire"></i> Firebase <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item"><i class="fa-solid fa-pen-ruler"></i> UI/UX Design <span class="ticker-dot">✦</span></span>
+    <span class="ticker-item"><i class="fa-solid fa-arrows-spin"></i> Agile/Scrum <span class="ticker-dot">✦</span></span>
+  </div>
+</div>
+
+<!-- ── MAIN LAYOUT ─────────────────────────── -->
+<div class="exp-main">
+
+  <!-- SIDEBAR -->
+  <div class="exp-sidebar reveal">
+    <div class="esb-label"><i class="fa-solid fa-filter"></i> &nbsp;Navigasi</div>
+
+    <div class="esb-nav">
+      <a class="esb-nav-item active" href="#exp-2025">
+        <div class="esb-nav-dot"><i class="fa-solid fa-pen-ruler"></i></div>
+        <div>
+          <div class="esb-nav-year">2025 — Mandiri</div>
+          <div class="esb-nav-role">Android UI/UX Designer</div>
+        </div>
+      </a>
+      <a class="esb-nav-item" href="#exp-2024">
+        <div class="esb-nav-dot"><i class="fa-solid fa-mobile-screen"></i></div>
+        <div>
+          <div class="esb-nav-year">2024 — MSIB</div>
+          <div class="esb-nav-role">UI/UX &amp; Developer</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="esb-label"><i class="fa-solid fa-chart-bar"></i> &nbsp;Statistik</div>
+    <div class="esb-stats">
+      <div class="esb-stat"><div class="esb-stat-num">2×</div><div class="esb-stat-lbl">Magang</div></div>
+      <div class="esb-stat"><div class="esb-stat-num">1+</div><div class="esb-stat-lbl">Tahun</div></div>
+      <div class="esb-stat"><div class="esb-stat-num">7+</div><div class="esb-stat-lbl">Tech</div></div>
+      <div class="esb-stat"><div class="esb-stat-num">🏅</div><div class="esb-stat-lbl">Sertifikat</div></div>
+    </div>
+
+    <div class="esb-cert-title"><i class="fa-solid fa-certificate"></i> &nbsp;Sertifikat</div>
+    <div class="esb-cert-btns">
+      <button class="esb-cert-btn" onclick="openViewer('2025')">
+        <i class="fa-solid fa-eye" style="color:var(--rose2)"></i>
+        Sertifikat 2025
+      </button>
+      <button class="esb-cert-btn" onclick="openViewer('2024')">
+        <i class="fa-solid fa-eye" style="color:var(--gold2)"></i>
+        Sertifikat 2024
+      </button>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="exp-timeline">
+
+    <!-- ══ 2025 ══════════════════════════════ -->
+    <div class="tl-entry reveal" id="exp-2025">
+      <div class="tl-dot"></div>
+      <div class="tl-card" data-tilt>
+        <div class="tl-card-line"></div>
+        <div class="tl-card-body">
+
+          <div class="tl-card-head">
+            <div class="tl-card-head-left">
+              <div class="tl-meta">
+                <span class="tm-badge tb-rose"><i class="fa-solid fa-calendar"></i> 2025</span>
+                <span class="tm-badge tb-mint"><i class="fa-solid fa-certificate"></i> Bersertifikat</span>
+                <span class="tm-badge tb-rose"><i class="fa-solid fa-star"></i> Batch 8</span>
+                <span class="tm-dur"><i class="fa-regular fa-clock"></i> ±4 Bulan · Jalur Mandiri</span>
+              </div>
+              <h3 class="tl-role">Android Mobile Development &amp; UI/UX Design</h3>
+              <div class="tl-company">
+                <i class="fa-solid fa-building"></i> Infinite Learning — Batam, Kepulauan Riau
+              </div>
+            </div>
+            <div class="tl-logo">
+              <i class="fa-solid fa-pen-ruler" style="color:var(--rose2)"></i>
+            </div>
+          </div>
+
+          <p class="tl-desc">
+            Kembali bergabung melalui jalur mandiri sebagai <strong>Hipster / Designer</strong> dalam tim pengembang aplikasi Android. Bertanggung jawab penuh atas keseluruhan proses desain produk — dari riset pengguna, persona, user flow, wireframe, hingga high-fidelity prototype siap handoff ke developer.
+          </p>
+
+          <div class="resp-section">
+            <div class="resp-title"><i class="fa-solid fa-list-check"></i> Tanggung Jawab Utama</div>
+            <div class="resp-list">
+              <div class="resp-item"><i class="fa-solid fa-check"></i> User research &amp; competitive analysis pengguna nyata</div>
+              <div class="resp-item"><i class="fa-solid fa-check"></i> Wireframe &amp; user flow terstruktur di Figma</div>
+              <div class="resp-item"><i class="fa-solid fa-check"></i> High-fidelity UI design &amp; design system konsisten</div>
+              <div class="resp-item"><i class="fa-solid fa-check"></i> Interactive prototype &amp; usability testing</div>
+              <div class="resp-item"><i class="fa-solid fa-check"></i> Handoff desain ke tim developer</div>
+              <div class="resp-item"><i class="fa-solid fa-check"></i> Dokumentasi komponen &amp; panduan gaya visual</div>
+            </div>
+          </div>
+
+          <div class="tag-row">
+            <span class="xtag"><i class="fa-brands fa-figma" style="color:#f24e1e"></i> Figma</span>
+            <span class="xtag"><i class="fa-solid fa-pen-ruler" style="color:var(--rose2)"></i> UI/UX Design</span>
+            <span class="xtag"><i class="fa-solid fa-layer-group" style="color:var(--lav2)"></i> Prototyping</span>
+            <span class="xtag"><i class="fa-solid fa-magnifying-glass" style="color:var(--gold2)"></i> User Research</span>
+            <span class="xtag"><i class="fa-brands fa-android" style="color:#3ddc84"></i> Android</span>
+            <span class="xtag"><i class="fa-solid fa-palette" style="color:var(--rose2)"></i> Design System</span>
+          </div>
+        </div>
+
+        <!-- Certificate bar -->
+        <div class="cert-bar">
+          <div class="cert-bar-icon" style="background:var(--rose-d);border:1px solid rgba(220,110,155,.25)">
+            <i class="fa-solid fa-certificate" style="color:var(--rose2)"></i>
+          </div>
+          <div class="cert-bar-info">
+            <div class="cert-bar-label"><i class="fa-solid fa-shield-check"></i> Sertifikat Resmi · Terverifikasi</div>
+            <div class="cert-bar-name">Sertifikat Magang — Infinite Learning Batch 8</div>
+            <div class="cert-bar-id"><i class="fa-solid fa-hashtag"></i> No. 0503/IL-KMM/VII/2025</div>
+          </div>
+          <div class="cert-bar-actions">
+            <button class="cb-btn cb-btn-primary" onclick="openViewer('2025')">
+              <i class="fa-solid fa-eye"></i> Lihat
+            </button>
+            <a class="cb-btn cb-btn-ghost" href="503-Seli Octaria Simatupang.pdf" download="Sertifikat_Magang_2025_Seli_Octaria.pdf">
+              <i class="fa-solid fa-download"></i> Unduh
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 2024 MSIB ══════════════════════════ -->
+    <div class="tl-entry reveal d1" id="exp-2024">
+      <div class="tl-dot"></div>
+      <div class="tl-card" data-tilt>
+        <div class="tl-card-line" style="background:linear-gradient(90deg,var(--gold),var(--lav),var(--rose))"></div>
+        <div class="tl-card-body">
+
+          <div class="tl-card-head">
+            <div class="tl-card-head-left">
+              <div class="tl-meta">
+                <span class="tm-badge tb-gold"><i class="fa-solid fa-calendar"></i> 2024</span>
+                <span class="tm-badge tb-lav"><i class="fa-solid fa-certificate"></i> MSIB Bersertifikat</span>
+                <span class="tm-badge tb-gold"><i class="fa-solid fa-star"></i> Batch 7</span>
+                <span class="tm-dur"><i class="fa-regular fa-clock"></i> 6 Sep – 31 Des 2024</span>
+              </div>
+              <h3 class="tl-role">Android Mobile Development &amp; UI/UX Design</h3>
+              <div class="tl-company">
+                <i class="fa-solid fa-building"></i> Infinite Learning — Batam, Kepulauan Riau
+              </div>
+            </div>
+            <div class="tl-logo" style="background:var(--gold-d);border-color:rgba(210,160,80,.2)">
+              <i class="fa-solid fa-mobile-screen" style="color:var(--gold2)"></i>
+            </div>
+          </div>
+
+          <div class="msib-callout">
+            <i class="fa-solid fa-circle-info"></i>
+            <div><strong>Program MSIB (Magang dan Studi Independen Bersertifikat)</strong> adalah program Kemendikbudristek yang memungkinkan mahasiswa magang di industri selama satu semester penuh, setara 20 SKS, dan diakui resmi oleh universitas.</div>
+          </div>
+
+          <p class="tl-desc">
+            Bergabung dalam program <strong>MSIB</strong> — berkolaborasi dalam tim lintas fungsi membangun aplikasi Android end-to-end, mulai dari desain antarmuka hingga implementasi kode native dan cross-platform dengan Kotlin, Flutter, dan React Native.
+          </p>
+
+          <div class="resp-section">
+            <div class="resp-title"><i class="fa-solid fa-list-check"></i> Tanggung Jawab Utama</div>
+            <div class="resp-list">
+              <div class="resp-item"><i class="fa-solid fa-check"></i> Implementasi UI Android native dengan Kotlin</div>
+              <div class="resp-item"><i class="fa-solid fa-check"></i> Cross-platform development: Flutter &amp; React Native</div>
+              <div class="resp-item"><i class="fa-solid fa-check"></i> Desain UI/UX di Figma &amp; design-to-dev handoff</div>
+              <div class="resp-item"><i class="fa-solid fa-check"></i> Integrasi Firebase (Auth &amp; Realtime Database)</div>
+              <div class="resp-item"><i class="fa-solid fa-check"></i> Code review &amp; sprint planning Agile</div>
+              <div class="resp-item"><i class="fa-solid fa-check"></i> Kolaborasi tim lintas fungsi produk penuh</div>
+            </div>
+          </div>
+
+          <div class="tag-row">
+            <span class="xtag"><i class="fa-solid fa-k" style="color:#7f52ff"></i> Kotlin</span>
+            <span class="xtag"><i class="fa-brands fa-flutter" style="color:#54c5f8"></i> Flutter</span>
+            <span class="xtag"><i class="fa-brands fa-react" style="color:#61dafb"></i> React Native</span>
+            <span class="xtag"><i class="fa-solid fa-d" style="color:#0175c2"></i> Dart</span>
+            <span class="xtag"><i class="fa-brands fa-figma" style="color:#f24e1e"></i> Figma</span>
+            <span class="xtag"><i class="fa-solid fa-fire" style="color:#ffca28"></i> Firebase</span>
+            <span class="xtag"><i class="fa-brands fa-android" style="color:#3ddc84"></i> Android</span>
+            <span class="xtag"><i class="fa-solid fa-arrows-spin" style="color:var(--lav2)"></i> Agile</span>
+          </div>
+        </div>
+
+        <!-- Certificate bar -->
+        <div class="cert-bar" style="background:linear-gradient(135deg,rgba(210,160,80,.07),rgba(164,143,208,.05));border-color:rgba(210,160,80,.28)">
+          <div class="cert-bar-icon" style="background:var(--gold-d);border:1px solid rgba(210,160,80,.3)">
+            <i class="fa-solid fa-certificate" style="color:var(--gold2)"></i>
+          </div>
+          <div class="cert-bar-info">
+            <div class="cert-bar-label"><i class="fa-solid fa-shield-check"></i> Sertifikat Resmi · Terverifikasi</div>
+            <div class="cert-bar-name">MSIB Certificate — Infinite Learning Batch 7</div>
+            <div class="cert-bar-id" style="color:var(--gold2)"><i class="fa-solid fa-hashtag"></i> No. 4482/IL-SIB/XII/2024 &nbsp;·&nbsp; 6 Sep – 31 Des 2024</div>
+          </div>
+          <div class="cert-bar-actions">
+            <button class="cb-btn cb-btn-primary" onclick="openViewer('2024')" style="background:linear-gradient(135deg,var(--gold),var(--lav))">
+              <i class="fa-solid fa-eye"></i> Lihat
+            </button>
+            <a class="cb-btn cb-btn-ghost" href="4482-Seli Octaria Simatupang.pdf" download="Sertifikat_MSIB_2024_Seli_Octaria.pdf">
+              <i class="fa-solid fa-download"></i> Unduh
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /exp-timeline -->
+</div><!-- /exp-main -->
+
+<!-- ══ CERTIFICATE VIEWER MODAL ══ -->
+<div class="cv-overlay" id="cvOverlay">
+  <div class="cv-modal">
+    <div class="cv-rainbow"></div>
+    <div class="cv-header">
+      <div class="cv-header-left">
+        <div class="cv-hicon" id="cvIcon"><i class="fa-solid fa-certificate"></i></div>
+        <div>
+          <div class="cv-htitle" id="cvTitle">Sertifikat</div>
+          <div class="cv-hsub" id="cvSub">Infinite Learning</div>
+        </div>
+      </div>
+      <button class="cv-hbtn" id="cvClose"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="cv-info-bar">
+      <div class="cv-info-item">
+        <i class="fa-solid fa-user"></i>
+        <span class="cv-info-lbl">Nama:</span>
+        <span class="cv-info-val">Seli Octaria Simatupang</span>
+      </div>
+      <div class="cv-info-item">
+        <i class="fa-solid fa-layer-group"></i>
+        <span class="cv-info-lbl">Program:</span>
+        <span class="cv-info-val" id="cvProgram">—</span>
+      </div>
+      <div class="cv-info-item">
+        <i class="fa-solid fa-fingerprint"></i>
+        <span class="cv-info-lbl">No:</span>
+        <span class="cv-info-val" id="cvCertId">—</span>
+      </div>
+      <div class="cv-verified"><i class="fa-solid fa-circle-check"></i> Terverifikasi &amp; Valid</div>
+    </div>
+    <div class="cv-viewer" id="cvViewer"></div>
+    <div class="cv-footer">
+      <div class="cv-footer-note"><i class="fa-solid fa-circle-info"></i> Dokumen resmi · Infinite Learning &amp; Kemendikbudristek RI</div>
+      <div class="cv-footer-actions">
+        <a class="cb-btn cb-btn-primary" id="cvDownload" href="#" download style="text-decoration:none;font-size:.76rem">
+          <i class="fa-solid fa-download"></i> Unduh PDF
+        </a>
+        <button class="cb-btn cb-btn-ghost" id="cvCloseFooter" style="font-size:.76rem">
+          <i class="fa-solid fa-xmark"></i> Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-logo">Seli Octaria ✿</span>
+  <div class="footer-mid">
+    <div class="footer-copy">Made with <i class="fa-solid fa-heart" style="color:var(--rose)"></i> by <span class="grad">Seli Octaria Simatupang</span> · © 2026</div>
+    <div class="footer-sub"><i class="fa-solid fa-graduation-cap" style="color:var(--gold)"></i> Teknik Informatika · UMRAH</div>
+  </div>
+  <div class="footer-socials">
+    <a class="footer-social" href="mailto:selioctarias@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+    <a class="footer-social" href="https://linkedin.com/in/seli-octaria-simatupang-a46891343" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+    <a class="footer-social" href="https://github.com/selioctaria" target="_blank"><i class="fa-brands fa-github"></i></a>
+    <a class="footer-social" href="https://www.instagram.com/cellyy_28" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="main.js"></script>
+<script>
+/* ── Three.js subtle 3D background ────────── */
+(function(){
+  const canvas = document.getElementById('bg3d');
+  const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 0);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 100);
+  camera.position.z = 6;
+  function resize(){ renderer.setSize(innerWidth,innerHeight); camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); }
+  window.addEventListener('resize', resize); resize();
+
+  const mkMat = (color, opacity) => new THREE.MeshBasicMaterial({color, wireframe:true, transparent:true, opacity});
+  const objs = [];
+  [[new THREE.IcosahedronGeometry(1.3,1), mkMat(0xdc6e9b,.055), -4,2,-3],
+   [new THREE.IcosahedronGeometry(0.8,1), mkMat(0xd2a050,.045), 4,-1,-3],
+   [new THREE.OctahedronGeometry(1,0),    mkMat(0xa48fd0,.04),  -1,-2.5,-2],
+   [new THREE.OctahedronGeometry(0.65,0), mkMat(0xdc6e9b,.04),  3,2.5,-3],
+   [new THREE.TorusGeometry(1.1,.3,7,18), mkMat(0xd2a050,.04),  5,2,-4]
+  ].forEach(([geo,mat,x,y,z])=>{
+    const m=new THREE.Mesh(geo,mat); m.position.set(x,y,z); scene.add(m); objs.push(m);
+  });
+
+  // particles
+  const pg = new THREE.BufferGeometry();
+  const pos = new Float32Array(220*3);
+  for(let i=0;i<220*3;i++) pos[i]=(Math.random()-.5)*16;
+  pg.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  scene.add(new THREE.Points(pg, new THREE.PointsMaterial({color:0xdc6e9b,size:.028,transparent:true,opacity:.38})));
+
+  let mx=0,my=0,t=0;
+  document.addEventListener('mousemove',e=>{mx=(e.clientX/innerWidth-.5)*2;my=(e.clientY/innerHeight-.5)*2;});
+  (function tick(){
+    requestAnimationFrame(tick); t+=.004;
+    objs.forEach((o,i)=>{o.rotation.x+=.0016+i*.0003; o.rotation.y+=.002+i*.0002; o.position.y+=Math.sin(t+i*1.3)*.0012;});
+    camera.position.x+=(mx*.3-camera.position.x)*.04;
+    camera.position.y+=(-my*.22-camera.position.y)*.04;
+    renderer.render(scene,camera);
+  })();
+})();
+
+/* ── Card tilt effect ───────────────────── */
+document.querySelectorAll('[data-tilt]').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const dx=(e.clientX-r.left-r.width/2)/(r.width/2);
+    const dy=(e.clientY-r.top-r.height/2)/(r.height/2);
+    card.style.transform=`perspective(1000px) rotateX(${-dy*3.5}deg) rotateY(${dx*4}deg)`;
+  });
+  card.addEventListener('mouseleave',()=>{
+    card.style.transition='transform .5s var(--ease)';
+    card.style.transform='perspective(1000px) rotateX(0) rotateY(0)';
+    setTimeout(()=>card.style.transition='',500);
+  });
+});
+
+/* ── Sidebar active on scroll ───────────── */
+window.addEventListener('scroll',()=>{
+  document.querySelectorAll('.esb-nav-item').forEach(item=>{
+    const el=document.getElementById(item.getAttribute('href').replace('#',''));
+    if(!el) return;
+    const r=el.getBoundingClientRect();
+    item.classList.toggle('active', r.top<=innerHeight*.55 && r.bottom>0);
+  });
+},{passive:true});
+
+/* ── Certificate viewer ─────────────────── */
+const CERTS={
+  '2025':{title:'Sertifikat Magang 2025 — Batch 8',sub:'Android Mobile Dev & UI/UX Design · Jalur Mandiri',program:'Magang Mandiri — Batch 8',certId:'0503/IL-KMM/VII/2025',file:'503-Seli Octaria Simatupang.pdf',dl:'503-Seli Octaria Simatupang.pdf',dlName:'Sertifikat_Magang_2025_Seli_Octaria.pdf',iconBg:'var(--rose-d)',iconBorder:'rgba(220,110,155,.3)',iconColor:'var(--rose2)'},
+  '2024':{title:'MSIB Certificate — Batch 7',sub:'Independent Study Program · Android Mobile Dev & UI/UX Design',program:'MSIB Batch 7 — Infinite Learning',certId:'4482/IL-SIB/XII/2024',file:'4482-Seli Octaria Simatupang.pdf',dl:'4482-Seli Octaria Simatupang.pdf',dlName:'Sertifikat_MSIB_2024_Seli_Octaria.pdf',iconBg:'var(--gold-d)',iconBorder:'rgba(210,160,80,.3)',iconColor:'var(--gold2)'},
+};
+
+const cvOverlay=document.getElementById('cvOverlay');
+const cvViewer=document.getElementById('cvViewer');
+
+function openViewer(year){
+  const c=CERTS[year]; if(!c) return;
+  document.getElementById('cvTitle').textContent=c.title;
+  document.getElementById('cvSub').textContent=c.sub;
+  document.getElementById('cvProgram').textContent=c.program;
+  document.getElementById('cvCertId').textContent=c.certId;
+  const icon=document.getElementById('cvIcon');
+  icon.style.cssText=`background:${c.iconBg};border:1px solid ${c.iconBorder}`;
+  icon.querySelector('i').style.color=c.iconColor;
+  const dl=document.getElementById('cvDownload');
+  dl.href=c.dl; dl.download=c.dlName;
+  cvViewer.innerHTML='';
+  if(c.file){
+    const iframe=document.createElement('iframe');
+    iframe.src=c.file+'#toolbar=1&view=FitH&navpanes=0';
+    iframe.style.cssText='width:100%;height:100%;min-height:500px;border:none;display:block;';
+    cvViewer.appendChild(iframe);
+  } else {
+    cvViewer.innerHTML=`<div class="cv-placeholder"><i class="fa-solid fa-file-circle-question"></i><h3>File Belum Tersedia</h3><p>Sertifikat akan segera ditambahkan.</p></div>`;
+  }
+  cvOverlay.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeViewer(){ cvOverlay.classList.remove('open'); document.body.style.overflow=''; }
+document.getElementById('cvClose').addEventListener('click',closeViewer);
+document.getElementById('cvCloseFooter').addEventListener('click',closeViewer);
+cvOverlay.addEventListener('click',e=>{ if(e.target===cvOverlay) closeViewer(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeViewer(); });
+</script>
+</body>
+</html>
