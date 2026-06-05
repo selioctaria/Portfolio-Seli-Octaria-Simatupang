@@ -8,176 +8,269 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* ════════════════════════════════════════
-       CONTACT LAYOUT
-    ════════════════════════════════════════ */
-    .contact-grid {
-      display: grid; grid-template-columns: 1fr 1.1fr;
-      gap: 5rem; align-items: start; margin-top: 3rem;
-    }
+    /* ── Page canvas ── */
+    #bg3d { position:fixed; inset:0; z-index:-1; pointer-events:none; }
 
-    /* ── Availability Badge ─────────────── */
-    .avail-badge {
-      display: inline-flex; align-items: center; gap: .55rem;
-      padding: .45rem 1.1rem;
-      background: rgba(98,201,176,.10);
-      border: 1px solid rgba(98,201,176,.25);
-      border-radius: 99px;
-      font-size: .74rem; font-weight: 600; color: var(--mint);
-      letter-spacing: .07em; margin-bottom: 1.6rem;
+    /* ── HERO SECTION ── */
+    .contact-hero {
+      min-height: 38vh;
+      padding: calc(var(--nav-h) + 4.5rem) 5rem 3.5rem;
+      position: relative; z-index: 1;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 3rem;
+    }
+    .ch-left {}
+    .ch-eyebrow {
+      font-size: .65rem; font-weight: 700; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--rose);
+      display: flex; align-items: center; gap: .5rem; margin-bottom: .7rem;
+      opacity: 0; animation: fadeUp .7s var(--ease) both .1s;
+    }
+    .ch-eyebrow::before { content:''; width:20px; height:1.5px; background:linear-gradient(90deg,var(--rose),var(--lav)); border-radius:99px; }
+    .ch-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 700; line-height: .95; letter-spacing: -.02em;
+      color: var(--text);
+      opacity: 0; animation: fadeUp .85s var(--ease) both .18s;
+    }
+    .ch-title em {
+      font-style: italic;
+      background: linear-gradient(130deg, var(--rose), var(--lav2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .ch-desc {
+      font-size: .96rem; color: var(--text2); line-height: 1.82;
+      max-width: 480px; margin-top: 1.2rem;
+      opacity: 0; animation: fadeUp .85s var(--ease) both .26s;
+    }
+    .ch-right {
+      display: flex; flex-direction: column; align-items: flex-end; gap: 1rem;
+      flex-shrink: 0; padding-bottom: .3rem;
+      opacity: 0; animation: fadeIn .8s var(--ease) both .35s;
+    }
+    .ch-breadcrumb {
+      font-size: .74rem; color: var(--text3);
+      display: flex; align-items: center; gap: .4rem;
+    }
+    .ch-breadcrumb a { color: var(--text3); text-decoration: none; transition: color .2s; }
+    .ch-breadcrumb a:hover { color: var(--rose2); }
+
+    /* Status pill */
+    .avail-pill {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .4rem 1.1rem; border-radius: 99px;
+      background: rgba(52,211,153,.08); border: 1px solid rgba(52,211,153,.22);
+      font-size: .72rem; font-weight: 700; color: #34d399;
+      letter-spacing: .06em;
     }
     .avail-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--mint);
-      animation: blink 1.5s ease-in-out infinite;
+      width: 7px; height: 7px; border-radius: 50%; background: #34d399;
+      animation: pulse-pill 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse-pill {
+      0%,100% { box-shadow: 0 0 0 0 rgba(52,211,153,.5); }
+      50%      { box-shadow: 0 0 0 6px rgba(52,211,153,.0); }
     }
 
-    /* ── Contact Links ──────────────────── */
-    .c-links { display: flex; flex-direction: column; gap: .8rem; margin: 2rem 0; }
+    /* ══════════════════════════════════
+       CONTACT GRID — main layout
+    ══════════════════════════════════ */
+    .contact-wrap {
+      padding: 4rem 5rem 6rem;
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem; align-items: start;
+    }
+
+    /* ── LEFT — contact links ── */
+    .contact-left {}
+    .contact-section-label {
+      font-size: .62rem; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--rose);
+      display: flex; align-items: center; gap: .45rem;
+      margin-bottom: 1.4rem;
+    }
+    .contact-section-label::before {
+      content:''; width:16px; height:1.5px;
+      background: linear-gradient(90deg,var(--rose),var(--lav)); border-radius:99px;
+    }
+
+    .c-links { display: flex; flex-direction: column; gap: .72rem; }
+
     .c-link {
       display: flex; align-items: center; gap: 1rem;
-      padding: 1.05rem 1.25rem; border-radius: var(--r);
+      padding: 1.1rem 1.3rem;
       background: var(--card); border: 1px solid var(--border);
-      text-decoration: none; color: var(--text);
-      transition: all .25s var(--ease);
+      border-radius: var(--r-lg); text-decoration: none; color: var(--text);
+      position: relative; overflow: hidden;
+      transition: border-color .3s var(--ease), transform .3s var(--ease), box-shadow .3s;
     }
-    .c-link:hover { border-color: var(--border-hi); background: var(--card2); transform: translateX(6px); }
-    .c-icon {
-      width: 42px; height: 42px; border-radius: 11px; flex-shrink: 0;
-      background: var(--rose-d); border: 1px solid rgba(220,110,155,.2);
+    /* left accent bar */
+    .c-link::before {
+      content:''; position:absolute; left:0; top:0; bottom:0; width:2.5px;
+      background: linear-gradient(to bottom, var(--rose), var(--lav));
+      transform: scaleY(0); transform-origin: top;
+      transition: transform .35s var(--ease);
+    }
+    .c-link:hover {
+      border-color: var(--border-hi); transform: translateX(5px);
+      box-shadow: 0 8px 32px rgba(220,110,155,.08);
+    }
+    .c-link:hover::before { transform: scaleY(1); }
+
+    /* icon box */
+    .c-icon-box {
+      width: 46px; height: 46px; border-radius: 12px; flex-shrink: 0;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; color: var(--rose2);
-      transition: background .25s, border-color .25s;
+      font-size: 1.15rem;
+      transition: transform .25s var(--ease);
     }
-    .c-link:hover .c-icon { background: rgba(220,110,155,.18); border-color: rgba(220,110,155,.38); }
-    .cl-label { font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--rose); }
-    .cl-val { font-size: .86rem; font-weight: 500; color: var(--text2); margin-top: .1rem; }
-    .cl-arrow { margin-left: auto; color: var(--text3); font-size: .75rem; transition: transform .22s var(--ease), color .22s; }
-    .c-link:hover .cl-arrow { transform: translateX(4px); color: var(--rose2); }
+    .c-link:hover .c-icon-box { transform: scale(1.08); }
 
-    /* ── Open-to-work box ───────────────── */
-    .otw-box {
-      background: linear-gradient(135deg, var(--rose-d), var(--lav-d));
-      border: 1px solid var(--border-hi);
-      border-radius: var(--r-lg); padding: 1.4rem 1.6rem;
-      margin-top: .5rem;
-    }
-    .otw-title { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--rose); margin-bottom: .7rem; }
-    .otw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .55rem; }
-    .otw-item {
-      display: flex; align-items: center; gap: .5rem;
-      font-size: .8rem; color: var(--text2); font-weight: 500;
-    }
-    .otw-item i { color: var(--rose2); font-size: .75rem; width: 14px; }
+    .ci-email    { background: rgba(220,110,155,.1); border: 1px solid rgba(220,110,155,.2); color: var(--rose2); }
+    .ci-linkedin { background: rgba(10,102,194,.12);  border: 1px solid rgba(10,102,194,.25); color: #60a5fa; }
+    .ci-github   { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); color: var(--text2); }
+    .ci-instagram{ background: rgba(225,48,108,.10); border: 1px solid rgba(225,48,108,.22); color: #f472b6; }
+    .ci-wa       { background: rgba(37,211,102,.10);  border: 1px solid rgba(37,211,102,.22); color: #4ade80; }
 
-    /* ── FORM CARD ──────────────────────── */
-    .form-card {
+    .c-link-info { flex: 1; min-width: 0; }
+    .c-link-platform {
+      font-size: .6rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .1em; margin-bottom: .15rem;
+    }
+    .c-link-value {
+      font-size: .88rem; font-weight: 500; color: var(--text2);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .c-link-arrow {
+      color: var(--text3); font-size: .72rem; flex-shrink: 0;
+      transition: transform .25s var(--ease), color .25s;
+    }
+    .c-link:hover .c-link-arrow { transform: translateX(4px) rotate(-45deg); color: var(--rose2); }
+
+    /* ── RIGHT — sidebar info ── */
+    .contact-right {}
+
+    /* Open for card */
+    .open-for-card {
       background: var(--card); border: 1px solid var(--border);
-      border-radius: var(--r-xl); overflow: hidden;
+      border-radius: var(--r-xl); padding: 1.8rem 2rem;
+      margin-bottom: 1.4rem; position: relative; overflow: hidden;
     }
-    .form-card-header {
-      padding: 2rem 2.4rem 1.4rem;
-      border-bottom: 1px solid var(--border);
+    .open-for-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background: linear-gradient(90deg, var(--rose), var(--lav));
     }
-    .form-card-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.65rem; font-weight: 700; color: var(--text);
-      display: flex; align-items: center; gap: .65rem;
-      margin-bottom: .35rem;
+    .ofc-title {
+      font-size: .62rem; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--text3);
+      display: flex; align-items: center; gap: .4rem; margin-bottom: 1.1rem;
     }
-    .form-card-title i { color: var(--rose2); font-size: 1.3rem; }
-    .form-card-sub { font-size: .84rem; color: var(--text2); }
-
-    .form-body { padding: 1.8rem 2.4rem 2.2rem; }
-
-    /* Row layout for name/email */
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
-
-    .c-field { margin-bottom: .9rem; }
-    .c-field label {
-      display: flex; align-items: center; gap: .4rem;
-      font-size: .68rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: .09em; color: var(--text3); margin-bottom: .38rem;
+    .ofc-title i { color: var(--rose2); }
+    .ofc-list { display: flex; flex-direction: column; gap: .55rem; }
+    .ofc-item {
+      display: flex; align-items: center; gap: .75rem;
+      padding: .72rem .95rem; border-radius: var(--r);
+      background: rgba(255,255,255,.025); border: 1px solid var(--border);
+      font-size: .82rem; color: var(--text2); font-weight: 500;
+      transition: border-color .22s, background .22s;
     }
-    .c-field label i { color: var(--rose2); font-size: .65rem; }
-    .required { color: var(--rose) !important; }
-
-    .c-field input,
-    .c-field textarea,
-    .c-field select {
-      width: 100%; padding: .82rem 1rem; border-radius: 10px;
-      border: 1px solid var(--border); background: var(--bg2);
-      font-family: 'Outfit', sans-serif; font-size: .88rem; color: var(--text);
-      outline: none; resize: none;
-      transition: border-color .22s, box-shadow .22s;
-      -webkit-appearance: none;
-    }
-    .c-field input:focus,
-    .c-field textarea:focus,
-    .c-field select:focus {
-      border-color: rgba(220,110,155,.42);
-      box-shadow: 0 0 0 3px rgba(220,110,155,.08);
-    }
-    .c-field textarea { height: 110px; }
-    .c-field input::placeholder,
-    .c-field textarea::placeholder { color: var(--text3); }
-    .c-field select option { background: var(--bg2); }
-
-    /* Character count */
-    .char-count { font-size: .68rem; color: var(--text3); text-align: right; margin-top: .25rem; }
-
-    .c-send {
-      width: 100%; padding: .9rem; border-radius: 10px;
-      background: linear-gradient(135deg, var(--rose), var(--gold));
-      color: var(--bg); font-family: 'Outfit', sans-serif;
-      font-size: .9rem; font-weight: 700; border: none; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: .5rem;
-      transition: transform .22s var(--ease), box-shadow .22s, opacity .2s;
-      margin-top: .4rem;
-    }
-    .c-send:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(220,110,155,.30); }
-    .c-send:active { transform: translateY(0); }
-
-    .cf-feedback {
-      font-size: .8rem; font-weight: 600; text-align: center;
-      min-height: 1.2em; margin-top: .65rem;
-      transition: opacity .3s;
+    .ofc-item:hover { border-color: var(--border-hi); background: var(--rose-d); color: var(--text); }
+    .ofc-dot {
+      width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
     }
 
-    /* ── Map / Location visual ──────────── */
-    .location-box {
+    /* Location card */
+    .location-card {
       background: var(--card); border: 1px solid var(--border);
       border-radius: var(--r-lg); padding: 1.4rem 1.6rem;
-      display: flex; align-items: center; gap: 1rem; margin-top: 1rem;
+      display: flex; align-items: center; gap: .9rem;
+      margin-bottom: 1.4rem;
+      transition: border-color .25s, transform .25s;
     }
-    .loc-icon {
+    .location-card:hover { border-color: var(--border-hi); transform: translateY(-2px); }
+    .loc-icon-box {
       width: 44px; height: 44px; border-radius: 11px; flex-shrink: 0;
       background: var(--rose-d); border: 1px solid rgba(220,110,155,.2);
       display: flex; align-items: center; justify-content: center;
       font-size: 1.1rem; color: var(--rose2);
     }
-    .loc-label { font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--text3); margin-bottom: .2rem; }
-    .loc-val { font-size: .88rem; font-weight: 600; color: var(--text2); }
-    .loc-sub { font-size: .76rem; color: var(--text3); margin-top: .1rem; }
+    .loc-label { font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--text3); margin-bottom: .18rem; }
+    .loc-value { font-size: .88rem; font-weight: 600; color: var(--text2); }
+    .loc-note  { font-size: .74rem; color: var(--text3); margin-top: .12rem; }
 
-    /* ── FAQ / Response time ────────────── */
-    .response-row {
-      display: grid; grid-template-columns: repeat(3,1fr);
-      gap: .9rem; margin-top: 1.2rem;
-    }
+    /* Response stats */
+    .resp-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .7rem; }
     .resp-card {
       background: var(--card); border: 1px solid var(--border);
-      border-radius: var(--r); padding: 1rem; text-align: center;
+      border-radius: var(--r); padding: 1rem .9rem; text-align: center;
+      transition: border-color .25s, transform .25s;
     }
+    .resp-card:hover { border-color: var(--border-hi); transform: translateY(-3px); }
     .resp-icon { font-size: 1.3rem; margin-bottom: .4rem; }
-    .resp-val { font-size: .9rem; font-weight: 700; color: var(--text); margin-bottom: .1rem; }
-    .resp-lbl { font-size: .7rem; color: var(--text3); }
+    .resp-val { font-size: .88rem; font-weight: 700; color: var(--text); margin-bottom: .12rem; }
+    .resp-lbl { font-size: .66rem; color: var(--text3); }
+
+    /* ── BIG CTA BANNER ── */
+    .cta-banner {
+      margin: 0 5rem 5rem;
+      position: relative; z-index: 1;
+      background: linear-gradient(135deg, rgba(220,110,155,.07) 0%, rgba(164,143,208,.07) 50%, rgba(220,110,155,.04) 100%);
+      border: 1px solid var(--border-hi);
+      border-radius: var(--r-xl); padding: 3rem 3.5rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 2.5rem;
+      overflow: hidden;
+    }
+    .cta-banner::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background: linear-gradient(90deg, var(--rose), var(--lav), var(--rose));
+      background-size: 200% 100%; animation: bannerShine 4s linear infinite;
+    }
+    @keyframes bannerShine { from{background-position:0 0} to{background-position:200% 0} }
+    .cta-banner-bg {
+      position: absolute; right: -60px; top: -60px;
+      width: 280px; height: 280px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(220,110,155,.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-text {}
+    .cta-text h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 700; color: var(--text); line-height: 1.15;
+      margin-bottom: .5rem;
+    }
+    .cta-text h2 em {
+      font-style: italic;
+      background: linear-gradient(130deg, var(--rose), var(--lav2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .cta-text p { font-size: .88rem; color: var(--text2); line-height: 1.78; max-width: 480px; }
+    .cta-actions { display: flex; flex-direction: column; gap: .6rem; flex-shrink: 0; }
+
+    /* Floating 3D geometry decorators */
+    .geo-1 {
+      position: absolute; right: 200px; top: -20px;
+      width: 60px; height: 60px; opacity: .12;
+      animation: floatY 6s ease-in-out infinite;
+    }
+    .geo-2 {
+      position: absolute; right: 120px; bottom: -15px;
+      width: 40px; height: 40px; opacity: .08;
+      animation: floatY 8s ease-in-out infinite .5s;
+    }
+    @keyframes floatY { 0%,100%{transform:translateY(0) rotate(0)} 50%{transform:translateY(-12px) rotate(8deg)} }
+
+    /* Animations */
+    @keyframes fadeUp  { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeIn  { from{opacity:0;transform:scale(.96)} to{opacity:1;transform:scale(1)} }
   </style>
 </head>
 <body>
 <div class="ambient"></div>
 <div class="grain"></div>
-<canvas id="particles"></canvas>
+<canvas id="bg3d"></canvas>
 <div class="cursor-glow" id="cursorGlow"></div>
 
 <!-- NAV -->
@@ -193,200 +286,197 @@
   </ul>
 </nav>
 
-<!-- PAGE HEADER -->
-<div class="page-hero">
-  <div class="page-hero-inner reveal">
-    <div>
-      <p class="page-eyebrow">Get In Touch</p>
-      <h1 class="page-title">Mari <em>Berkolaborasi!</em></h1>
-    </div>
-    <div class="page-breadcrumb">
-      <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
-      <i class="fa-solid fa-chevron-right"></i>
+<!-- ══ HERO ══ -->
+<div class="contact-hero">
+  <div class="ch-left">
+    <div class="ch-eyebrow"><i class="fa-solid fa-satellite-dish"></i> Get In Touch</div>
+    <h1 class="ch-title">Mari<br/><em>Berkolaborasi!</em></h1>
+    <p class="ch-desc">
+      Terbuka untuk peluang kerja <strong style="color:var(--rose2)">full-time</strong>,
+      <strong style="color:var(--lav2)">part-time</strong>, maupun
+      <strong style="color:var(--cyan2)">freelance</strong> di bidang UI/UX Design,
+      Mobile &amp; Web Development, dan Data Analytics.
+    </p>
+  </div>
+  <div class="ch-right">
+    <div class="ch-breadcrumb">
+      <a href="index.html"><i class="fa-solid fa-house"></i></a>
+      <i class="fa-solid fa-chevron-right" style="font-size:.55rem"></i>
       <span style="color:var(--rose2)">Contact</span>
+    </div>
+    <div class="avail-pill">
+      <span class="avail-dot"></span>
+      Open to Work · Available 2026
     </div>
   </div>
 </div>
 
-<div class="section-wrap">
-  <div class="contact-grid">
+<!-- ══ MAIN CONTACT GRID ══ -->
+<div class="contact-wrap">
 
-    <!-- LEFT: Info -->
-    <div>
-      <div class="reveal">
-        <div class="avail-badge">
-          <span class="avail-dot"></span>
-          Open to Work — Tersedia Sekarang
+  <!-- LEFT: All contact links -->
+  <div class="contact-left reveal">
+    <div class="contact-section-label"><i class="fa-solid fa-address-book"></i> &nbsp;Kontak Langsung</div>
+
+    <div class="c-links">
+
+      <!-- Email -->
+      <a class="c-link" href="mailto:selioctarias@gmail.com">
+        <div class="c-icon-box ci-email">
+          <i class="fa-solid fa-envelope"></i>
         </div>
-
-        <h2 class="sec-title">Hubungi <em style="font-family:'Cormorant Garamond',serif;font-style:italic;background:linear-gradient(130deg,var(--rose),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Aku</em></h2>
-        <p class="sec-desc" style="margin-top:.6rem;">
-          Terbuka untuk peluang kerja <strong style="color:var(--rose2)">full-time</strong>, <strong style="color:var(--gold2)">part-time</strong>, maupun <strong style="color:var(--lav2)">freelance</strong> di bidang UI/UX Design, Mobile Development, Web Development, atau Data Analytics.
-        </p>
-      </div>
-
-      <!-- Contact links -->
-      <div class="c-links reveal d1">
-        <a class="c-link" href="mailto:selioctarias@gmail.com">
-          <div class="c-icon"><i class="fa-solid fa-envelope"></i></div>
-          <div style="flex:1">
-            <div class="cl-label">Email</div>
-            <div class="cl-val">selioctarias@gmail.com</div>
-          </div>
-          <i class="fa-solid fa-arrow-right cl-arrow"></i>
-        </a>
-
-        <a class="c-link" href="https://www.linkedin.com/in/seli-octaria-simatupang-a46891343" target="_blank" rel="noopener">
-          <div class="c-icon" style="background:rgba(10,102,194,.12);border-color:rgba(10,102,194,.25)">
-            <i class="fa-brands fa-linkedin" style="color:#0a66c2"></i>
-          </div>
-          <div style="flex:1">
-            <div class="cl-label" style="color:#0a66c2">LinkedIn</div>
-            <div class="cl-val">seli-octaria-simatupang</div>
-          </div>
-          <i class="fa-solid fa-arrow-right cl-arrow"></i>
-        </a>
-
-        <a class="c-link" href="https://github.com/selioctaria" target="_blank" rel="noopener">
-          <div class="c-icon" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1)">
-            <i class="fa-brands fa-github" style="color:var(--text2)"></i>
-          </div>
-          <div style="flex:1">
-            <div class="cl-label" style="color:var(--text3)">GitHub</div>
-            <div class="cl-val">github.com/selioctaria</div>
-          </div>
-          <i class="fa-solid fa-arrow-right cl-arrow"></i>
-        </a>
-
-        <a class="c-link" href="https://www.instagram.com/cellyy_28" target="_blank" rel="noopener">
-          <div class="c-icon" style="background:rgba(225,48,108,.10);border-color:rgba(225,48,108,.22)">
-            <i class="fa-brands fa-instagram" style="color:#e1306c"></i>
-          </div>
-          <div style="flex:1">
-            <div class="cl-label" style="color:#e1306c">Instagram</div>
-            <div class="cl-val">@cellyy_28</div>
-          </div>
-          <i class="fa-solid fa-arrow-right cl-arrow"></i>
-        </a>
-      </div>
-
-      <!-- Open-to-work box -->
-      <div class="otw-box reveal d2">
-        <div class="otw-title"><i class="fa-solid fa-suitcase"></i> &nbsp;Terbuka Untuk</div>
-        <div class="otw-grid">
-          <div class="otw-item"><i class="fa-solid fa-check"></i> Full-time Employment</div>
-          <div class="otw-item"><i class="fa-solid fa-check"></i> Part-time / Remote</div>
-          <div class="otw-item"><i class="fa-solid fa-check"></i> Freelance Project</div>
-          <div class="otw-item"><i class="fa-solid fa-check"></i> Internship / Magang</div>
-          <div class="otw-item"><i class="fa-solid fa-check"></i> Kolaborasi Proyek</div>
-          <div class="otw-item"><i class="fa-solid fa-check"></i> Konsultasi UI/UX</div>
+        <div class="c-link-info">
+          <div class="c-link-platform" style="color:var(--rose2)">Email</div>
+          <div class="c-link-value">selioctarias@gmail.com</div>
         </div>
-      </div>
+        <i class="fa-solid fa-arrow-up-right c-link-arrow"></i>
+      </a>
 
-      <!-- Location -->
-      <div class="location-box reveal d3">
-        <div class="loc-icon"><i class="fa-solid fa-location-dot"></i></div>
-        <div>
-          <div class="loc-label">Lokasi</div>
-          <div class="loc-val">Batam, Kepulauan Riau, Indonesia</div>
-          <div class="loc-sub">Remote friendly · Siap relokasi</div>
+      <!-- WhatsApp -->
+      <a class="c-link" href="https://wa.me/6281373338257" target="_blank" rel="noopener">
+        <div class="c-icon-box ci-wa">
+          <i class="fa-brands fa-whatsapp"></i>
         </div>
-      </div>
+        <div class="c-link-info">
+          <div class="c-link-platform" style="color:#4ade80">WhatsApp</div>
+          <div class="c-link-value">+62 813-7333-8257</div>
+        </div>
+        <i class="fa-solid fa-arrow-up-right c-link-arrow"></i>
+      </a>
 
-      <!-- Response time cards -->
-      <div class="response-row reveal d4">
-        <div class="resp-card">
-          <div class="resp-icon">⚡</div>
-          <div class="resp-val">&lt; 24 jam</div>
-          <div class="resp-lbl">Response Time</div>
+      <!-- LinkedIn -->
+      <a class="c-link" href="https://www.linkedin.com/in/seli-octaria-simatupang-a46891343" target="_blank" rel="noopener">
+        <div class="c-icon-box ci-linkedin">
+          <i class="fa-brands fa-linkedin"></i>
         </div>
-        <div class="resp-card">
-          <div class="resp-icon">🌏</div>
-          <div class="resp-val">Remote Ready</div>
-          <div class="resp-lbl">Work Mode</div>
+        <div class="c-link-info">
+          <div class="c-link-platform" style="color:#60a5fa">LinkedIn</div>
+          <div class="c-link-value">seli-octaria-simatupang</div>
         </div>
-        <div class="resp-card">
-          <div class="resp-icon">🤝</div>
-          <div class="resp-val">Fleksibel</div>
-          <div class="resp-lbl">Jadwal Kerja</div>
-        </div>
-      </div>
-    </div>
+        <i class="fa-solid fa-arrow-up-right c-link-arrow"></i>
+      </a>
 
-    <!-- RIGHT: Form Card -->
-    <div class="form-card reveal d1">
-      <div class="form-card-header">
-        <div class="form-card-title">
-          <i class="fa-solid fa-paper-plane"></i>
-          Kirim Pesan
+      <!-- GitHub -->
+      <a class="c-link" href="https://github.com/selioctaria" target="_blank" rel="noopener">
+        <div class="c-icon-box ci-github">
+          <i class="fa-brands fa-github"></i>
         </div>
-        <div class="form-card-sub">Isi form di bawah dan aku akan membalas dalam 24 jam.</div>
-      </div>
-
-      <div class="form-body">
-        <!-- Name + Email row -->
-        <div class="form-row">
-          <div class="c-field">
-            <label>
-              <i class="fa-solid fa-user"></i> Nama
-              <span class="required">*</span>
-            </label>
-            <input type="text" id="cf-name" placeholder="Nama lengkap kamu" autocomplete="name" />
-          </div>
-          <div class="c-field">
-            <label>
-              <i class="fa-solid fa-at"></i> Email
-              <span class="required">*</span>
-            </label>
-            <input type="email" id="cf-email" placeholder="email@contoh.com" autocomplete="email" />
-          </div>
+        <div class="c-link-info">
+          <div class="c-link-platform" style="color:var(--text2)">GitHub</div>
+          <div class="c-link-value">github.com/selioctaria</div>
         </div>
+        <i class="fa-solid fa-arrow-up-right c-link-arrow"></i>
+      </a>
 
-        <!-- Company -->
-        <div class="c-field">
-          <label>
-            <i class="fa-solid fa-building"></i> Perusahaan / Instansi
-          </label>
-          <input type="text" id="cf-company" placeholder="Nama perusahaan (opsional)" />
+      <!-- Instagram -->
+      <a class="c-link" href="https://www.instagram.com/cellyy_28" target="_blank" rel="noopener">
+        <div class="c-icon-box ci-instagram">
+          <i class="fa-brands fa-instagram"></i>
         </div>
-
-        <!-- Subject / Type -->
-        <div class="c-field">
-          <label>
-            <i class="fa-solid fa-tag"></i> Tujuan
-            <span class="required">*</span>
-          </label>
-          <select id="cf-subj">
-            <option value="" disabled selected>Pilih tujuan pesan...</option>
-            <option value="job">💼 Tawaran Kerja / Rekrutmen</option>
-            <option value="freelance">🛠️ Proyek Freelance</option>
-            <option value="collab">🤝 Kolaborasi Proyek</option>
-            <option value="internship">🎓 Magang / Internship</option>
-            <option value="consult">💡 Konsultasi UI/UX</option>
-            <option value="other">✉️ Lainnya</option>
-          </select>
+        <div class="c-link-info">
+          <div class="c-link-platform" style="color:#f472b6">Instagram</div>
+          <div class="c-link-value">@cellyy_28</div>
         </div>
+        <i class="fa-solid fa-arrow-up-right c-link-arrow"></i>
+      </a>
 
-        <!-- Message -->
-        <div class="c-field">
-          <label>
-            <i class="fa-solid fa-message"></i> Pesan
-            <span class="required">*</span>
-          </label>
-          <textarea id="cf-msg" placeholder="Ceritakan kebutuhanmu — posisi yang ditawarkan, deskripsi proyek, atau apa pun yang ingin kamu sampaikan..." maxlength="800" oninput="document.getElementById('charCount').textContent=this.value.length+'/800'"></textarea>
-          <div class="char-count" id="charCount">0/800</div>
+    </div><!-- /c-links -->
+  </div><!-- /contact-left -->
+
+  <!-- RIGHT: Sidebar info -->
+  <div class="contact-right">
+
+    <!-- Open for -->
+    <div class="open-for-card reveal d1">
+      <div class="ofc-title"><i class="fa-solid fa-circle-check"></i> &nbsp;Terbuka Untuk</div>
+      <div class="ofc-list">
+        <div class="ofc-item">
+          <span class="ofc-dot" style="background:var(--rose2)"></span>
+          Full-time Employment
         </div>
-
-        <button class="c-send" id="cf-send">
-          <i class="fa-solid fa-paper-plane"></i> Kirim Pesan
-        </button>
-
-        <div class="cf-feedback" id="cf-feedback"></div>
+        <div class="ofc-item">
+          <span class="ofc-dot" style="background:var(--lav2)"></span>
+          Part-time / Remote Work
+        </div>
+        <div class="ofc-item">
+          <span class="ofc-dot" style="background:var(--cyan2)"></span>
+          Freelance Project
+        </div>
+        <div class="ofc-item">
+          <span class="ofc-dot" style="background:var(--amber2)"></span>
+          Internship / Magang
+        </div>
+        <div class="ofc-item">
+          <span class="ofc-dot" style="background:#4ade80"></span>
+          Kolaborasi Proyek
+        </div>
+        <div class="ofc-item">
+          <span class="ofc-dot" style="background:var(--rose2)"></span>
+          Konsultasi UI/UX
+        </div>
       </div>
     </div>
 
-  </div><!-- /contact-grid -->
-</div><!-- /section-wrap -->
+    <!-- Location -->
+    <div class="location-card reveal d2">
+      <div class="loc-icon-box"><i class="fa-solid fa-location-dot"></i></div>
+      <div>
+        <div class="loc-label">Lokasi</div>
+        <div class="loc-value">Batam, Kepulauan Riau</div>
+        <div class="loc-note"><i class="fa-solid fa-wifi" style="color:var(--rose2);font-size:.65rem"></i> Remote friendly &nbsp;·&nbsp; <i class="fa-solid fa-plane" style="color:var(--lav2);font-size:.65rem"></i> Siap relokasi</div>
+      </div>
+    </div>
+
+    <!-- Response stats -->
+    <div class="resp-grid reveal d3">
+      <div class="resp-card">
+        <div class="resp-icon">⚡</div>
+        <div class="resp-val">&lt; 24 jam</div>
+        <div class="resp-lbl">Response Time</div>
+      </div>
+      <div class="resp-card">
+        <div class="resp-icon">🌏</div>
+        <div class="resp-val">Remote</div>
+        <div class="resp-lbl">Work Mode</div>
+      </div>
+      <div class="resp-card">
+        <div class="resp-icon">🤝</div>
+        <div class="resp-val">Fleksibel</div>
+        <div class="resp-lbl">Jadwal</div>
+      </div>
+    </div>
+
+  </div><!-- /contact-right -->
+</div><!-- /contact-wrap -->
+
+<!-- ══ CTA BANNER ══ -->
+<div class="cta-banner reveal">
+  <div class="cta-banner-bg"></div>
+
+  <!-- Geo shapes -->
+  <svg class="geo-1" viewBox="0 0 60 60" fill="none">
+    <path d="M30 5L55 50H5L30 5Z" stroke="var(--rose)" stroke-width="1.5"/>
+    <path d="M30 18L46 46H14L30 18Z" stroke="var(--lav)" stroke-width="1"/>
+  </svg>
+  <svg class="geo-2" viewBox="0 0 40 40" fill="none">
+    <rect x="4" y="4" width="32" height="32" rx="4" stroke="var(--lav)" stroke-width="1.5" transform="rotate(15 20 20)"/>
+    <rect x="10" y="10" width="20" height="20" rx="3" stroke="var(--rose)" stroke-width="1" transform="rotate(30 20 20)"/>
+  </svg>
+
+  <div class="cta-text">
+    <h2>Punya Proyek <em>Menarik?</em></h2>
+    <p>Hubungi aku langsung melalui WhatsApp atau email — aku akan membalas dalam waktu kurang dari 24 jam dan siap berdiskusi tentang kebutuhanmu.</p>
+  </div>
+
+  <div class="cta-actions">
+    <a class="btn btn-primary" href="https://wa.me/6281373338257" target="_blank">
+      <i class="fa-brands fa-whatsapp"></i> Chat WhatsApp
+    </a>
+    <a class="btn btn-ghost" href="mailto:selioctarias@gmail.com">
+      <i class="fa-solid fa-envelope"></i> Kirim Email
+    </a>
+  </div>
+</div>
 
 <footer>
   <span class="footer-logo">Seli Octaria ✿</span>
@@ -396,12 +486,46 @@
   </div>
   <div class="footer-socials">
     <a class="footer-social" href="mailto:selioctarias@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+    <a class="footer-social" href="https://wa.me/6281373338257" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
     <a class="footer-social" href="https://linkedin.com/in/seli-octaria-simatupang-a46891343" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
     <a class="footer-social" href="https://github.com/selioctaria" target="_blank"><i class="fa-brands fa-github"></i></a>
     <a class="footer-social" href="https://www.instagram.com/cellyy_28" target="_blank"><i class="fa-brands fa-instagram"></i></a>
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="main.js"></script>
+<script>
+/* ── Three.js background ── */
+(function(){
+  const cv=document.getElementById('bg3d');
+  if(!cv||!window.THREE) return;
+  const ren=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+  ren.setPixelRatio(Math.min(devicePixelRatio,2)); ren.setClearColor(0,0);
+  const sc=new THREE.Scene(), cam=new THREE.PerspectiveCamera(55,innerWidth/innerHeight,.1,100);
+  cam.position.z=7;
+  function rsz(){ren.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();}
+  window.addEventListener('resize',rsz);rsz();
+  const mk=(c,o)=>new THREE.MeshBasicMaterial({color:c,wireframe:true,transparent:true,opacity:o});
+  const objs=[];
+  [[new THREE.IcosahedronGeometry(1.4,1),mk(0xe11d78,.042),-5,2.5,-3],
+   [new THREE.OctahedronGeometry(1,0),  mk(0x7c3aed,.036), 5,-2,-3],
+   [new THREE.TorusGeometry(1.2,.3,7,18),mk(0x06b6d4,.03),-6,-2,-5],
+   [new THREE.IcosahedronGeometry(.7,1),mk(0xe11d78,.034), 3,3,-3]
+  ].forEach(([g,m,x,y,z])=>{const o=new THREE.Mesh(g,m);o.position.set(x,y,z);sc.add(o);objs.push(o);});
+  const pg=new THREE.BufferGeometry(),pos=new Float32Array(180*3);
+  for(let i=0;i<180*3;i++) pos[i]=(Math.random()-.5)*16;
+  pg.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  sc.add(new THREE.Points(pg,new THREE.PointsMaterial({color:0xe11d78,size:.022,transparent:true,opacity:.25})));
+  let mx=0,my=0,t=0;
+  document.addEventListener('mousemove',e=>{mx=(e.clientX/innerWidth-.5)*2;my=(e.clientY/innerHeight-.5)*2;});
+  (function tick(){requestAnimationFrame(tick);t+=.004;
+    objs.forEach((o,i)=>{o.rotation.x+=.0013+i*.0002;o.rotation.y+=.0016+i*.0002;o.position.y+=Math.sin(t+i*1.2)*.001;});
+    cam.position.x+=(mx*.3-cam.position.x)*.03;
+    cam.position.y+=(-my*.2-cam.position.y)*.03;
+    ren.render(sc,cam);
+  })();
+})();
+</script>
 </body>
 </html>
